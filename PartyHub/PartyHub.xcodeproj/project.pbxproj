@@ -40,6 +40,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2CCA56C128A2DF2400934F99 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B330662E28A2578800528BCE /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		2CCA56C228A2DF5800934F99 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B330662A28A2578800528BCE /* AppDelegate.swift */,
+				B330662C28A2578800528BCE /* SceneDelegate.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		2CCA56C328A2DF7700934F99 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				B330663528A2578900528BCE /* LaunchScreen.storyboard */,
+				B330663328A2578900528BCE /* Assets.xcassets */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		5FD6FFE6107AAAEED0F57977 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -78,11 +104,9 @@
 		B330662928A2578800528BCE /* PartyHub */ = {
 			isa = PBXGroup;
 			children = (
-				B330662A28A2578800528BCE /* AppDelegate.swift */,
-				B330662C28A2578800528BCE /* SceneDelegate.swift */,
-				B330662E28A2578800528BCE /* ViewController.swift */,
-				B330663328A2578900528BCE /* Assets.xcassets */,
-				B330663528A2578900528BCE /* LaunchScreen.storyboard */,
+				2CCA56C128A2DF2400934F99 /* Controllers */,
+				2CCA56C228A2DF5800934F99 /* Sources */,
+				2CCA56C328A2DF7700934F99 /* Other */,
 				B330663828A2578900528BCE /* Info.plist */,
 			);
 			path = PartyHub;
