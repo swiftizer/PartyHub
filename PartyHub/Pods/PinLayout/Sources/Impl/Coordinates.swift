@@ -64,7 +64,7 @@ final class Coordinates<PinView: Layoutable> {
         let rect = view.getRect(keepTransform: keepTransform)
         return CGPoint(x: rect.minX, y: rect.minY + (rect.height / 2))
     }
-    
+
     static func center(_ view: PinView, keepTransform: Bool) -> CGPoint {
         let rect = view.getRect(keepTransform: keepTransform)
         return CGPoint(x: rect.minX + (rect.width / 2), y: rect.minY + (rect.height / 2))
@@ -74,7 +74,7 @@ final class Coordinates<PinView: Layoutable> {
         let rect = view.getRect(keepTransform: keepTransform)
         return CGPoint(x: rect.minX + rect.width, y: rect.minY + (rect.height / 2))
     }
-    
+
     static func bottomLeft(_ view: PinView, keepTransform: Bool) -> CGPoint {
         let rect = view.getRect(keepTransform: keepTransform)
         return CGPoint(x: rect.minX, y: rect.minY + rect.height)

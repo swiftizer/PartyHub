@@ -22,7 +22,7 @@
 #else
     import AppKit
 #endif
-    
+
 extension PinLayout {
 
     //

@@ -125,7 +125,7 @@ extension UIView: AutoSizeCalculable {
     public func autoSizeThatFits(_ size: CGSize, layoutClosure: () -> Void) -> CGSize {
         let isAlreadyAutoSizing = Pin.autoSizingInProgress
 
-        if (!isAlreadyAutoSizing) {
+        if !isAlreadyAutoSizing {
             Pin.autoSizingInProgress = true
         }
 

@@ -34,80 +34,80 @@ extension PinLayout {
     internal func pointContext(method: String, point: CGPoint) -> String {
         return "\(method)(to: CGPoint(x: \(point.x), y: \(point.y)))"
     }
-    
+
     internal func relativeEdgeContext(method: String, edge: VerticalEdge) -> String {
         let edge = edge as! VerticalEdgeImpl<PinView>
         return "\(method)(to: .\(edge.type.rawValue), of: \(viewDescription(edge.view)))"
     }
-    
+
     internal func relativeEdgeContext(method: String, edge: HorizontalEdge) -> String {
         let edge = edge as! HorizontalEdgeImpl<PinView>
         return "\(method)(to: .\(edge.type.rawValue), of: \(viewDescription(edge.view))"
     }
-    
+
     internal func relativeAnchorContext(method: String, anchor: Anchor) -> String {
         let anchor = anchor as! AnchorImpl<PinView>
         return "\(method)(to: .\(anchor.type.rawValue), of: \(viewDescription(anchor.view)))"
     }
-    
+
     internal func warnWontBeApplied(_ text: String, _ context: Context) {
         guard Pin.logWarnings else { return }
         warn("\(context()) won't be applied, \(text)")
     }
-        
+
     internal func warn(_ text: String) {
         guard Pin.logWarnings else { return }
         pinLayoutDisplayConsoleWarning("PinLayout Warning: \(text)", view)
     }
-    
+
     internal func warnPropertyAlreadySet(_ propertyName: String, propertyValue: CGFloat, _ context: Context) {
         guard Pin.logWarnings else { return }
         pinLayoutDisplayConsoleWarning("PinLayout Conflict: \(context()) won't be applied since it value has already been set to \(propertyValue.description).", view)
     }
-    
+
     internal func warnPropertyAlreadySet(_ propertyName: String, propertyValue: CGSize, _ context: Context) {
         guard Pin.logWarnings else { return }
         pinLayoutDisplayConsoleWarning("PinLayout Conflict: \(context()) won't be applied since it value has already been set to CGSize(width: \(propertyValue.width.description), height: \(propertyValue.height.description)).", view)
     }
-    
+
     internal func warnConflict(_ context: Context, _ properties: [String: Any]) {
         guard Pin.logWarnings else { return }
         var warning = "PinLayout Conflict: \(context()) won't be applied since it conflicts with the following already set properties:"
         properties.forEach { (property) in
             warning += "\n \(property.key): "
-            
+
             if let floatValue = property.value as? CGFloat {
                 warning += "\(floatValue.description)"
             } else {
                 warning += "\(property.value)"
             }
         }
-        
+
         pinLayoutDisplayConsoleWarning(warning, view)
     }
-    
+
     internal func displayLayoutWarnings() {
         if !Thread.isMainThread {
             warn("Layout must be executed from the Main Thread!")
         }
-        
+
         if let justify = justify {
             func context() -> String { return "justify(.\(justify.description))" }
             if !((_left != nil && _right != nil) || (shouldPinEdges && width != nil && (_left != nil || _right != nil || _hCenter != nil))) {
                 warnWontBeApplied("the left and right coordinates must be set to justify the view horizontally.", context)
             }
-            
+
             if _hCenter != nil {
                 warnWontBeApplied("justification is not applied when hCenter has been set. By default the view will be centered around the hCenter.", context)
             }
         }
-        
+
         if let align = align {
             func context() -> String { return "align(.\(align.description))" }
             if !((_top != nil && _bottom != nil) || (shouldPinEdges && height != nil && (_top != nil || _bottom != nil || _vCenter != nil))) {
                 warnWontBeApplied("the top and bottom coordinates must be set to align the view vertically.", context)
             }
-            
+
             if _vCenter != nil {
                 warnWontBeApplied("alignment is not applied when vCenter has been set. By default the view will be centered around the specified vCenter.", context)
             }
@@ -118,7 +118,7 @@ extension PinLayout {
         let rect = view.getRect(keepTransform: keepTransform)
         return "(\(viewName(view)), Frame: \(rect))"
     }
-    
+
     internal func viewName(_ view: PinView) -> String {
         return "\(type(of: view))"
     }

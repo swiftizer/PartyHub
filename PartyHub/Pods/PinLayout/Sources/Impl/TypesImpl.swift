@@ -46,7 +46,7 @@ class EdgeListImpl<PinView: Layoutable>: EdgeList {
     var left: HorizontalEdge { return HorizontalEdgeImpl(view: view, type: .left) }
     var hCenter: HorizontalEdge { return HorizontalEdgeImpl(view: view, type: .hCenter) }
     var right: HorizontalEdge { return HorizontalEdgeImpl(view: view, type: .right) }
-    
+
     // RTL support
     var start: HorizontalEdge { return view.isLTR() ? left : right }
     var end: HorizontalEdge { return view.isLTR() ? right : left }
@@ -64,7 +64,7 @@ class HorizontalEdgeImpl<PinView: Layoutable>: HorizontalEdge {
 
     func x(keepTransform: Bool) -> CGFloat {
         let rect = view.getRect(keepTransform: keepTransform)
-        
+
         switch type {
         case .left:    return rect.origin.x
         case .hCenter: return rect.midX
@@ -84,13 +84,13 @@ class VerticalEdgeImpl<PinView: Layoutable>: VerticalEdge {
         case vCenter
         case bottom
     }
-    
+
     internal let view: PinView
     internal let type: EdgeType
 
     func y(keepTransform: Bool) -> CGFloat {
         let rect = view.getRect(keepTransform: keepTransform)
-        
+
         switch type {
         case .top:     return rect.origin.y
         case .vCenter: return rect.midY

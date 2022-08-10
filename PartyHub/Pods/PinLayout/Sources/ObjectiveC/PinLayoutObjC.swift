@@ -33,7 +33,7 @@ import AppKit
     #if os(iOS) || os(tvOS)
     var safeArea: PEdgeInsets { get }
     #endif
-    
+
     typealias POVoid = () -> PinLayoutObjC?
     typealias POValue = (_ value: CGFloat) -> PinLayoutObjC?
     typealias POEdgeInsets = (_ insets: PEdgeInsets) -> PinLayoutObjC?
@@ -173,7 +173,7 @@ import AppKit
         typealias POViewVAligned = (_ view: NSView, _ aligned: VerticalAlign) -> PinLayoutObjC?
         typealias POViewsVAligned = (_ views: [NSView], _ aligned: VerticalAlign) -> PinLayoutObjC?
     #endif
-    
+
     var aboveOf: POView { get }
     var aboveOfViews: POViews { get }
     var aboveOfAligned: POViewHAligned { get }
@@ -233,7 +233,7 @@ import AppKit
     var size: POSize { get }
     var sizeLength: POValue { get }
     var sizePercent: POValue { get }
-    var sizeOf: POView{ get }
+    var sizeOf: POView { get }
 
     //
     // MARK: wrapContent
@@ -279,7 +279,7 @@ import AppKit
     #endif
 
     var sizeToFit: POVoid { get }
-    
+
     var sizeToFitType: POFitType { get }
 
     //

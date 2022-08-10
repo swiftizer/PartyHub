@@ -44,16 +44,16 @@ extension PinLayout {
         apply(onView: view)
         isLayouted = true
     }
-    
+
     private func apply(onView view: PinView) {
         displayLayoutWarnings()
-        
+
         var newRect = view.getRect(keepTransform: keepTransform)
-        
+
         handlePinEdges()
-        
+
         let newSize = computeSize()
-        
+
         // Compute horizontal position
         if let left = _left, let right = _right {
             // left & right is set
@@ -89,7 +89,7 @@ extension PinLayout {
             // Only width is set
             newRect.size.width = width
         }
-        
+
         // Compute vertical position
         if let top = _top, let bottom = _bottom {
             // top & bottom is set
@@ -125,11 +125,11 @@ extension PinLayout {
             // Only height is set
             newRect.size.height = height
         }
-        
+
         if !validateComputedWidth(newRect.size.width) {
             newRect.size.width = view.getRect(keepTransform: keepTransform).width
         }
-        
+
         if !validateComputedHeight(newRect.size.height) {
             newRect.size.height = view.getRect(keepTransform: keepTransform).height
         }
@@ -141,13 +141,13 @@ extension PinLayout {
             view.setRect(newRect, keepTransform: keepTransform)
         }
     }
-    
+
     private func handlePinEdges() {
         guard shouldPinEdges else { return }
         guard _top == nil || _bottom == nil || _left == nil || _right == nil else {
             return warn("pinEdges() won't be applied, top, left, bottom and right coordinates are already set.")
         }
-        
+
         if let width = applyMinMax(toWidth: width), _left == nil || _right == nil {
             if let left = _left {
                 // convert the width into a right
@@ -169,7 +169,7 @@ extension PinLayout {
                 self.width = nil
             }
         }
-        
+
         if let height = applyMinMax(toHeight: height), _top == nil || _bottom == nil {
             if let top = _top {
                 // convert the height into a bottom
@@ -268,7 +268,7 @@ extension PinLayout {
         let sizeThatFits = sizeCalculableView.sizeThatFits(CGSize(width: fitWidth, height: fitHeight))
 
         switch adjustSizeType {
-        case .fitTypeWidth, .fitTypeWidthFlexible, .fitTypeHeight, .fitTypeHeightFlexible, .aspectRatio(_):
+        case .fitTypeWidth, .fitTypeWidthFlexible, .fitTypeHeight, .fitTypeHeightFlexible, .aspectRatio:
             if fitWidth != .greatestFiniteMagnitude {
                 size.width = adjustSizeType.isFlexible ? sizeThatFits.width : fitWidth
             } else {
@@ -325,31 +325,31 @@ extension PinLayout {
 
     private func applyMinMax(toWidth width: CGFloat?) -> CGFloat? {
         var result = width
-        
+
         // Handle minWidth
         if let minWidth = minWidth, minWidth > (result ?? 0) {
             result = minWidth
         }
-        
+
         // Handle maxWidth
         if let maxWidth = maxWidth, maxWidth < (result ?? CGFloat.greatestFiniteMagnitude) {
             result = maxWidth
         }
-        
+
         return result
     }
-    
+
     private func applyJustify(rect: CGRect, betweenLeft left: CGFloat, andRight right: CGFloat) -> CGRect {
         let containerWidth = right - left - _marginLeft - _marginRight
         let remainingWidth = containerWidth - rect.width
         var justifyType = HorizontalAlign.left
-        
+
         if let justify = justify, justify != .none {
             justifyType = justify
         }
-        
+
         var rect = rect
-        
+
         switch justifyType {
         case .left:
             rect.origin.x = left + _marginLeft
@@ -357,7 +357,7 @@ extension PinLayout {
             rect.origin.x = left + _marginLeft + remainingWidth / 2
         case .right:
             rect.origin.x = right - _marginRight - rect.width
-            
+
         case .start:
             if isLTR() {
                 rect.origin.x = left + _marginLeft
@@ -373,37 +373,37 @@ extension PinLayout {
         case .none:
             break
         }
-        
+
         return rect
     }
-    
+
     private func applyMinMax(toHeight height: CGFloat?) -> CGFloat? {
         var result = height
-        
+
         // Handle minHeight
         if let minHeight = minHeight, minHeight > (result ?? 0) {
             result = minHeight
         }
-        
+
         // Handle maxHeight
         if let maxHeight = maxHeight, maxHeight < (result ?? CGFloat.greatestFiniteMagnitude) {
             result = maxHeight
         }
-        
+
         return result
     }
-    
+
     private func applyAlign(rect: CGRect, betweenTop top: CGFloat, andBottom bottom: CGFloat) -> CGRect {
         let containerHeight = bottom - top - _marginTop - _marginBottom
         let remainingHeight = containerHeight - rect.height
         var alignType = VerticalAlign.top
-        
+
         if let align = align, align != .none {
             alignType = align
         }
-        
+
         var rect = rect
-        
+
         switch alignType {
         case .top:
             rect.origin.y = top + _marginTop
@@ -414,10 +414,10 @@ extension PinLayout {
         case .none:
             break
         }
-        
+
         return rect
     }
-    
+
     internal func isLTR() -> Bool {
         return view.isLTR()
     }

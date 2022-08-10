@@ -35,10 +35,10 @@ public class PinLayout<PinView: Layoutable> {
     internal var _left: CGFloat?      // offset from superview's left edge
     internal var _bottom: CGFloat?    // offset from superview's top edge
     internal var _right: CGFloat?     // offset from superview's left edge
-    
+
     internal var _hCenter: CGFloat?
     internal var _vCenter: CGFloat?
-    
+
     internal var width: CGFloat?
     internal var minWidth: CGFloat?
     internal var maxWidth: CGFloat?
@@ -51,21 +51,21 @@ public class PinLayout<PinView: Layoutable> {
     internal var shouldKeepViewDimension: Bool {
         return adjustSizeType == nil
     }
-    
+
     internal var marginTop: CGFloat?
     internal var marginLeft: CGFloat?
     internal var marginBottom: CGFloat?
     internal var marginRight: CGFloat?
     internal var shouldPinEdges = false
-    
+
     internal var justify: HorizontalAlign?
     internal var align: VerticalAlign?
-    
+
     internal var _marginTop: CGFloat { return marginTop ?? 0 }
     internal var _marginLeft: CGFloat { return marginLeft ?? 0 }
     internal var _marginBottom: CGFloat { return marginBottom ?? 0 }
     internal var _marginRight: CGFloat { return marginRight ?? 0 }
-    
+
     internal var isLayouted = false
 
     init(view: PinView, keepTransform: Bool) {
@@ -76,7 +76,7 @@ public class PinLayout<PinView: Layoutable> {
         Pin.initPinLayout()
         #endif
     }
-    
+
     deinit {
         if !isLayouted && Pin.logMissingLayoutCalls {
             warn("PinLayout commands have been issued without calling the 'layout()' method to complete the layout. (These warnings can be disabled by setting Pin.logMissingLayoutCalls to false)")
@@ -96,14 +96,14 @@ public class PinLayout<PinView: Layoutable> {
             return .zero
         }
     }
-    
+
     public var readableMargins: PEdgeInsets {
         guard #available(iOS 9.0, *) else { return .zero }
         guard let view = view as? UIView else { return .zero }
 
         let layoutFrame = view.readableContentGuide.layoutFrame
         guard !layoutFrame.isEmpty else { return .zero }
-        
+
         return UIEdgeInsets(top: layoutFrame.origin.y, left: layoutFrame.origin.x,
                             bottom: view.frame.height - layoutFrame.origin.y - layoutFrame.height,
                             right: view.frame.width - layoutFrame.origin.x - layoutFrame.width)
@@ -114,12 +114,12 @@ public class PinLayout<PinView: Layoutable> {
         return view.layoutMargins
     }
     #endif
-    
+
     #if os(iOS) && compiler(>=5.5) // Xcode 13+
     public var keyboardArea: CGRect {
         guard #available(iOS 15.0, *) else { return .zero }
         guard let view = view as? UIView else { return .zero }
-        
+
         return view.keyboardLayoutGuide.layoutFrame
     }
     #endif
@@ -218,7 +218,7 @@ public class PinLayout<PinView: Layoutable> {
         func context() -> String { return "start(\(insetsDescription(insets))" }
         return isLTR() ? left(insets.left, context) : right(insets.right, context)
     }
-    
+
     @discardableResult
     public func bottom(_ offset: CGFloat = 0) -> PinLayout {
         return bottom(offset, { return "bottom(\(offset.optionnalDescription))" })
@@ -248,7 +248,7 @@ public class PinLayout<PinView: Layoutable> {
     public func right(_ insets: PEdgeInsets) -> PinLayout {
         return right(insets.right, { return "right(\(insetsDescription(insets))" })
     }
-    
+
     @discardableResult
     public func end(_ margin: CGFloat = 0) -> PinLayout {
         func context() -> String { return "end(\(margin.optionnalDescription))" }
@@ -562,7 +562,7 @@ public class PinLayout<PinView: Layoutable> {
     public func topRight(_ margin: CGFloat = 0) -> PinLayout {
         return topRight(margin, context: { return "topRight(\(margin.optionnalDescription))" })
     }
-    
+
     @discardableResult
     public func topEnd(to anchor: Anchor) -> PinLayout {
         func context() -> String { return relativeAnchorContext(method: "topEnd", anchor: anchor) }
@@ -598,7 +598,7 @@ public class PinLayout<PinView: Layoutable> {
     public func centerLeft(_ leftMargin: CGFloat = 0) -> PinLayout {
         return centerLeft(leftMargin, context: { return "centerLeft(\(leftMargin.optionnalDescription))" })
     }
-    
+
     @discardableResult
     public func centerStart(to anchor: Anchor) -> PinLayout {
         func context() -> String { return relativeAnchorContext(method: "centerStart", anchor: anchor) }
@@ -870,7 +870,7 @@ public class PinLayout<PinView: Layoutable> {
         align = value
         return self
     }
-    
+
     //
     // MARK: Margins
     //
@@ -1213,18 +1213,18 @@ extension PinLayout {
         } else {
             // Disable this warning: Using XIB, layoutSubview() is called even before views have been
             // added, and there is no way to modify that strange behaviour of UIKit.
-            //warnWontBeApplied("the view must be added as a sub-view before being layouted using this method.", context)
+            // warnWontBeApplied("the view must be added as a sub-view before being layouted using this method.", context)
             return nil
         }
     }
-    
+
     internal func layoutSuperview(_ context: Context) -> PinView? {
         if let superview = view.superview {
             return superview as? PinView
         } else {
             // Disable this warning: Using XIB, layoutSubview() is called even before views have been
             // added, and there is no way to modify that strange behaviour of UIKit.
-            //warnWontBeApplied("the view must be added as a sub-view before being layouted using this method.", context)
+            // warnWontBeApplied("the view must be added as a sub-view before being layouted using this method.", context)
             return nil
         }
     }

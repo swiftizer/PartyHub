@@ -29,7 +29,7 @@ public struct Percent {
     public func of(_ value: CGFloat) -> CGFloat {
         return value * self.value / 100
     }
-    
+
     public var description: String {
         if value.truncatingRemainder(dividingBy: 1) == 0.0 {
             return "\(Int(value))%"

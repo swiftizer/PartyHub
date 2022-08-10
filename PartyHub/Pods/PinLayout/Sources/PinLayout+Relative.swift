@@ -22,9 +22,9 @@
 #else
     import AppKit
 #endif
-    
+
 extension PinLayout {
-    
+
     //
     // above(of ...)
     //

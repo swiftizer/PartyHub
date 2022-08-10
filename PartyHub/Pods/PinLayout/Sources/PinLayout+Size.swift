@@ -48,7 +48,7 @@ enum AdjustSizeType {
              .fitTypeWidthFlexible, .fitTypeHeightFlexible,
              .fitTypeContent:
             return true
-        case .aspectRatio(_):
+        case .aspectRatio:
             return false
         }
     }

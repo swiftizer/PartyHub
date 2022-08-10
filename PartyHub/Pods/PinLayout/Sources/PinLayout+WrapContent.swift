@@ -42,7 +42,7 @@ extension PinLayout {
     public func wrapContent(padding: CGFloat) -> PinLayout {
         return wrapContent(.all, padding: PEdgeInsets(top: padding, left: padding, bottom: padding, right: padding), { return "wrapContent(padding: \(padding)" })
     }
-    
+
     /**
      The method...
         - Adjust the view's width and height to wrap all its subviews.

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		21A4708DBFE1157FFACD9D22 /* Pods_PartyHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 987809CF8142C2A20619407A /* Pods_PartyHub.framework */; };
+		2CCA56D428A3935100934F99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CCA56D328A3935000934F99 /* Localizable.strings */; };
+		2CCA56DB28A3D48C00934F99 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56DA28A3D48C00934F99 /* R.generated.swift */; };
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
 		B330662D28A2578800528BCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662C28A2578800528BCE /* SceneDelegate.swift */; };
 		B330662F28A2578800528BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662E28A2578800528BCE /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2CCA56D328A3935000934F99 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		2CCA56DA28A3D48C00934F99 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		50B326832CFED75469491F5F /* Pods-PartyHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.release.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.release.xcconfig"; sourceTree = "<group>"; };
 		581F7A790F3FD049323D6791 /* Pods-PartyHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.debug.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.debug.xcconfig"; sourceTree = "<group>"; };
 		987809CF8142C2A20619407A /* Pods_PartyHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PartyHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +55,7 @@
 		2CCA56C228A2DF5800934F99 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2CCA56D928A3D0DB00934F99 /* Generated */,
 				B330662A28A2578800528BCE /* AppDelegate.swift */,
 				B330662C28A2578800528BCE /* SceneDelegate.swift */,
 			);
@@ -64,6 +69,22 @@
 				B330663328A2578900528BCE /* Assets.xcassets */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		2CCA56D528A3937A00934F99 /* SupportinFiles */ = {
+			isa = PBXGroup;
+			children = (
+				2CCA56D328A3935000934F99 /* Localizable.strings */,
+			);
+			path = SupportinFiles;
+			sourceTree = "<group>";
+		};
+		2CCA56D928A3D0DB00934F99 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				2CCA56DA28A3D48C00934F99 /* R.generated.swift */,
+			);
+			path = Generated;
 			sourceTree = "<group>";
 		};
 		5FD6FFE6107AAAEED0F57977 /* Frameworks */ = {
@@ -108,6 +129,7 @@
 				2CCA56C228A2DF5800934F99 /* Sources */,
 				2CCA56C328A2DF7700934F99 /* Other */,
 				B330663828A2578900528BCE /* Info.plist */,
+				2CCA56D528A3937A00934F99 /* SupportinFiles */,
 			);
 			path = PartyHub;
 			sourceTree = "<group>";
@@ -120,6 +142,8 @@
 			buildConfigurationList = B330663B28A2578900528BCE /* Build configuration list for PBXNativeTarget "PartyHub" */;
 			buildPhases = (
 				DBE3B5AC19D7F116A7F4BEFD /* [CP] Check Pods Manifest.lock */,
+				2CCA56DC28A3E87E00934F99 /* SwiftLint */,
+				2CCA56D628A3D00E00934F99 /* R.Swift */,
 				B330662328A2578800528BCE /* Sources */,
 				B330662428A2578800528BCE /* Frameworks */,
 				B330662528A2578800528BCE /* Resources */,
@@ -173,6 +197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */,
+				2CCA56D428A3935100934F99 /* Localizable.strings in Resources */,
 				B330663428A2578900528BCE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,6 +205,43 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2CCA56D628A3D00E00934F99 /* R.Swift */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = R.Swift;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/$TARGET_NAME/Sources/Generated/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/$TARGET_NAME/Sources/Generated/R.generated.swift\"\n";
+		};
+		2CCA56DC28A3E87E00934F99 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 		54648ECD61F7C68AAE6BC67A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,6 +291,7 @@
 				B330662F28A2578800528BCE /* ViewController.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
 				B330662D28A2578800528BCE /* SceneDelegate.swift in Sources */,
+				2CCA56DB28A3D48C00934F99 /* R.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

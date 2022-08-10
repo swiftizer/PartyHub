@@ -157,7 +157,7 @@ struct PinLayoutSwizzling {
 
         if let view = viewController.view {
             let safeAreaInsets: UIEdgeInsets
-            
+
             if #available(iOS 11.0, tvOS 11.0, *) {
                 safeAreaInsets = UIEdgeInsets(top: viewController.view.safeAreaInsets.top, left: 0,
                                                   bottom: viewController.view.safeAreaInsets.bottom, right: 0)
