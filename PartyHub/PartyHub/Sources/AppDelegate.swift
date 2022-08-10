@@ -11,6 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var coordinator: TabBarCoordinator?
 
     func application(
         _ application: UIApplication,
@@ -24,8 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func startApp() {
-        window?.rootViewController = ViewController()
+        coordinator = .init(tabBarVC: UITabBarController())
+        coordinator?.start()
+        window?.rootViewController = coordinator?.tabBarVC
         window?.makeKeyAndVisible()
     }
-
 }

@@ -9,11 +9,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // MARK: - Public Properties
+
+    weak public var coordinator: TabBarCoordinator?
+
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemPink
     }
 }
