@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ListVC: UIViewController {
 
     // MARK: - Life Cycle
     
