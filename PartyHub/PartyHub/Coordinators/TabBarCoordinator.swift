@@ -33,43 +33,19 @@ final class TabBarCoordinator: TabBarCoordinatorProtocol {
               let personImage = UIImage(systemName: "person.circle")
         else { return }
 
-        tabBarVC.tabBar.backgroundColor = .secondarySystemBackground
-        tabBarVC.setViewControllers(
-            [
-                createNavigationControllerFrom(
-                    viewController: UIViewController(),
-                    title: "Menu",
-                    image: menuImage
-                ),
-                createNavigationControllerFrom(
-                    viewController: UIViewController(),
-                    title: "Map",
-                    image: mapImage
-                ),
-                createNavigationControllerFrom(
-                    viewController: UIViewController(),
-                    title: "Profile",
-                    image: personImage
-                )
-            ], animated: false
+        let menuCoordinator = MenuCoordinator(with: .init(title: "Menu", image: menuImage), isloggedin: isLoggedIn)
+        let mapCoordinator = MapCoordinator(with: .init(title: "Map", image: mapImage), isloggedin: isLoggedIn)
+        let profileCoordinator = ProfileCoordinator(with: .init(
+            title: "Profile",
+            image: personImage),
+            isloggedin: isLoggedIn
         )
-    }
-}
 
-extension TabBarCoordinator {
-
-    // MARK: - Private Methods
-
-    private func createNavigationControllerFrom(
-        viewController: UIViewController,
-        title: String,
-        image: UIImage
-    ) -> UIViewController {
-        viewController.title = title
-
-        let navigationVC = UINavigationController(rootViewController: viewController)
-        navigationVC.navigationBar.prefersLargeTitles = false
-        navigationVC.tabBarItem = UITabBarItem(title: title, image: image, tag: 1)
-        return navigationVC
+        tabBarVC.tabBar.backgroundColor = .secondarySystemBackground
+        tabBarVC.setViewControllers([
+            menuCoordinator.start(UIViewController()),
+            mapCoordinator.start(UIViewController()),
+            profileCoordinator.start(UIViewController())
+        ], animated: false)
     }
 }

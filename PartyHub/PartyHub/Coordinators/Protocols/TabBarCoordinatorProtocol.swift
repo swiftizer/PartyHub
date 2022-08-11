@@ -8,7 +8,7 @@
 import UIKit
 
 /// Протокол TabBar координатора
-protocol TabBarCoordinatorProtocol {
+protocol TabBarCoordinatorProtocol: AnyObject {
     var tabBarVC: UITabBarController { get set }
     func start()
 }
