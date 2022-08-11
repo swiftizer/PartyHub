@@ -8,7 +8,7 @@
 import UIKit
 
 /// Координатор для TabBarControler'а
-final class TabBarCoordinator: Coordinator {
+final class TabBarCoordinator: TabBarCoordinatorProtocol {
 
     // MARK: - Public Properties
 
@@ -33,30 +33,31 @@ final class TabBarCoordinator: Coordinator {
               let personImage = UIImage(systemName: "person.circle")
         else { return }
 
-        tabBarVC.tabBar.backgroundColor = .systemBackground
+        tabBarVC.tabBar.backgroundColor = .secondarySystemBackground
         tabBarVC.setViewControllers(
             [
                 createNavigationControllerFrom(
                     viewController: UIViewController(),
-                    title: "menu",
+                    title: "Menu",
                     image: menuImage
                 ),
                 createNavigationControllerFrom(
                     viewController: UIViewController(),
-                    title: "map",
+                    title: "Map",
                     image: mapImage
                 ),
                 createNavigationControllerFrom(
                     viewController: UIViewController(),
-                    title: "person",
+                    title: "Profile",
                     image: personImage
                 )
-            ], animated: true
+            ], animated: false
         )
     }
 }
 
 extension TabBarCoordinator {
+
     // MARK: - Private Methods
 
     private func createNavigationControllerFrom(
@@ -65,11 +66,9 @@ extension TabBarCoordinator {
         image: UIImage
     ) -> UIViewController {
         viewController.title = title
-        viewController.navigationItem.largeTitleDisplayMode = .always
 
         let navigationVC = UINavigationController(rootViewController: viewController)
-        navigationVC.navigationBar.tintColor = .red
-        navigationVC.navigationBar.prefersLargeTitles = true
+        navigationVC.navigationBar.prefersLargeTitles = false
         navigationVC.tabBarItem = UITabBarItem(title: title, image: image, tag: 1)
         return navigationVC
     }

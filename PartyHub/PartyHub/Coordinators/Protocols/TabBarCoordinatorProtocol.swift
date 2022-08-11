@@ -1,5 +1,5 @@
 //
-//  Coordinator.swift
+//  TabBarCoordinatorProtocol.swift
 //  PartyHub
 //
 //  Created by Dinar Garaev on 10.08.2022.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Протокол координатора
-protocol Coordinator {
+/// Протокол TabBar координатора
+protocol TabBarCoordinatorProtocol {
     var tabBarVC: UITabBarController { get set }
     func start()
 }

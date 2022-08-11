@@ -17,14 +17,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        if window == nil {
-            window = UIWindow(frame: UIScreen.main.bounds)
+        if #available(iOS 15, *) {
+            UINavigationBar.appearance().scrollEdgeAppearance = UINavigationBarAppearance()
+            UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance()
         }
         startApp()
         return true
     }
 
-    func startApp() {
+    func application(
+        _ application: UIApplication,
+        supportedInterfaceOrientationsFor window: UIWindow?
+    ) -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask(rawValue: UIInterfaceOrientationMask.portrait.rawValue)
+    }
+}
+
+extension AppDelegate {
+
+    // MARK: - Private Methods
+
+    private func startApp() {
+        if window == nil {
+            window = UIWindow(frame: UIScreen.main.bounds)
+        }
         coordinator = .init(tabBarVC: UITabBarController())
         coordinator?.start()
         window?.rootViewController = coordinator?.tabBarVC
