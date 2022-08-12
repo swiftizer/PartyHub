@@ -14,6 +14,7 @@
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
 		E921D5E928A433A0001DFB51 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D5E828A433A0001DFB51 /* TabBarController.swift */; };
+		E921D5F328A68B17001DFB51 /* TabBarVCFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D5F228A68B16001DFB51 /* TabBarVCFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E921D5E828A433A0001DFB51 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		E921D5F228A68B16001DFB51 /* TabBarVCFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVCFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,8 +47,8 @@
 		2CCA56C128A2DF2400934F99 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E921D5F428A68CEF001DFB51 /* TabBarVC */,
 				B330662E28A2578800528BCE /* ListVC.swift */,
-				E921D5E828A433A0001DFB51 /* TabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -113,6 +115,15 @@
 				B330663828A2578900528BCE /* Info.plist */,
 			);
 			path = PartyHub;
+			sourceTree = "<group>";
+		};
+		E921D5F428A68CEF001DFB51 /* TabBarVC */ = {
+			isa = PBXGroup;
+			children = (
+				E921D5E828A433A0001DFB51 /* TabBarController.swift */,
+				E921D5F228A68B16001DFB51 /* TabBarVCFactory.swift */,
+			);
+			path = TabBarVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +243,7 @@
 				B330662F28A2578800528BCE /* ListVC.swift in Sources */,
 				E921D5E928A433A0001DFB51 /* TabBarController.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
+				E921D5F328A68B17001DFB51 /* TabBarVCFactory.swift in Sources */,
 				B330662D28A2578800528BCE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
