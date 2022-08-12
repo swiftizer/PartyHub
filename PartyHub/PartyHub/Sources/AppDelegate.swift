@@ -11,7 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var coordinator: TabBarCoordinator?
+    var appCoordinator: AppCoordinator?
 
     func application(
         _ application: UIApplication,
@@ -41,9 +41,12 @@ extension AppDelegate {
         if window == nil {
             window = UIWindow(frame: UIScreen.main.bounds)
         }
-        coordinator = .init(tabBarVC: UITabBarController())
-        coordinator?.start()
-        window?.rootViewController = coordinator?.tabBarVC
+        let navigationController: UINavigationController = .init()
+
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+
+        appCoordinator = AppCoordinator.init(navigationController)
+        appCoordinator?.start()
     }
 }

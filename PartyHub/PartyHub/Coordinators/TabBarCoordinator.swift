@@ -7,45 +7,186 @@
 
 import UIKit
 
-/// Координатор для TabBarControler'а
-final class TabBarCoordinator: TabBarCoordinatorProtocol {
+/// Тип страницы TabBar'a
+enum TabBarPage {
+    case menu
+    case map
+    case profile
 
-    // MARK: - Public Properties
-
-    public var tabBarVC: UITabBarController
-    public var isLoggedIn: Bool = false
-
-    // MARK: - Initialization
-
-    init(tabBarVC: UITabBarController) {
-        self.tabBarVC = tabBarVC
+    init?(index: Int) {
+        switch index {
+        case 0:
+            self = .menu
+        case 1:
+            self = .map
+        case 2:
+            self = .profile
+        default:
+            return nil
+        }
     }
 
-    // MARK: - Public Methods
-
-    public func start() {
-        showMain()
+    func pageTitleValue() -> String {
+        switch self {
+        case .menu:
+            return "Menu"
+        case .map:
+            return "Map"
+        case .profile:
+            return "Profile"
+        }
     }
 
-    public func showMain() {
-        guard let menuImage = UIImage(systemName: "list.bullet"),
-              let mapImage = UIImage(systemName: "map"),
-              let personImage = UIImage(systemName: "person.circle")
-        else { return }
+    func pageOrderNumber() -> Int {
+        switch self {
+        case .menu:
+            return 0
+        case .map:
+            return 1
+        case .profile:
+            return 2
+        }
+    }
 
-        let menuCoordinator = MenuCoordinator(with: .init(title: "Menu", image: menuImage), isloggedin: isLoggedIn)
-        let mapCoordinator = MapCoordinator(with: .init(title: "Map", image: mapImage), isloggedin: isLoggedIn)
-        let profileCoordinator = ProfileCoordinator(with: .init(
-            title: "Profile",
-            image: personImage),
-            isloggedin: isLoggedIn
+    func pageIcon() -> UIImage {
+        switch self {
+        case .menu:
+            return UIImage(systemName: "list.bullet") ?? UIImage.add
+        case .map:
+            return UIImage(systemName: "map") ?? UIImage.add
+        case .profile:
+            return UIImage(systemName: "person.circle") ?? UIImage.add
+        }
+    }
+}
+
+protocol TabCoordinatorProtocol: Coordinator {
+    var tabBarController: UITabBarController { get set }
+
+    func selectPage(_ page: TabBarPage)
+    func setSelectedIndex(_ index: Int)
+    func currentPage() -> TabBarPage?
+}
+
+class TabCoordinator: NSObject, Coordinator {
+    weak var finishDelegate: CoordinatorFinishDelegate?
+    var navigationController: UINavigationController
+    var childCoordinators: [Coordinator] = []
+    var tabBarController: UITabBarController
+    var type: CoordinatorType { .tab }
+
+    required init(_ navigationController: UINavigationController) {
+        self.navigationController = navigationController
+        self.tabBarController = .init()
+    }
+
+    func start() {
+        let pages: [TabBarPage] = [.menu, .map, .profile]
+            .sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
+        let controllers: [UINavigationController] = pages.map({ getTabController($0) })
+        prepareTabBarController(withTabControllers: controllers)
+    }
+
+    // TODO: - убарать перед финальной частью
+    deinit {
+        print("[DEBUG] TabCoordinator deinit")
+    }
+
+    private func prepareTabBarController(withTabControllers tabControllers: [UIViewController]) {
+        // Устанавливаем делегат для TabBarVC
+        tabBarController.delegate = self
+        // Назначаем контроллеры страницы
+        tabBarController.setViewControllers(tabControllers, animated: false)
+        // Индексируем
+        tabBarController.selectedIndex = TabBarPage.menu.pageOrderNumber()
+        // Стилизация
+        tabBarController.tabBar.isTranslucent = false
+        // На этом этапе мы присоединяем tabBarController к навигационному контроллеру, связанному с этим координатором.
+        navigationController.viewControllers = [tabBarController]
+    }
+
+    private func getTabController(_ page: TabBarPage) -> UINavigationController {
+        let navController = UINavigationController()
+        navController.setNavigationBarHidden(false, animated: false)
+
+        navController.tabBarItem = UITabBarItem(
+            title: page.pageTitleValue(),
+            image: page.pageIcon(),
+            tag: page.pageOrderNumber()
         )
 
-        tabBarVC.tabBar.backgroundColor = .secondarySystemBackground
-        tabBarVC.setViewControllers([
-            menuCoordinator.start(UIViewController()),
-            mapCoordinator.start(UIViewController()),
-            profileCoordinator.start(UIViewController())
-        ], animated: false)
+        switch page {
+        case .menu:
+            // При необходимости: у каждого контролерра панели вкладок может быть свой координатор.
+            let menuVC = ViewController()
+            menuVC.title = page.pageTitleValue()
+            // TODO: - расскомитить когда появится VC
+
+//            menuVC.didSendEventClosure = { [weak self] event in
+//                switch event {
+//                case .menu:
+//                    self?.selectPage(.menu)
+//                case .map:
+//                    self?.selectPage(.map)
+//                case .profile:
+//                    self?.selectPage(.profile)
+//                }
+//            }
+
+            navController.pushViewController(menuVC, animated: true)
+        case .map:
+            let mapVC = ViewController()
+            mapVC.title = page.pageTitleValue()
+//            mapVC.didSendEventClosure = { [weak self] event in
+//                switch event {
+//                case .menu:
+//                    self?.selectPage(.menu)
+//                case .map:
+//                    self?.selectPage(.map)
+//                case .profile:
+//                    self?.selectPage(.profile)
+//                }
+//            }
+
+            navController.pushViewController(mapVC, animated: true)
+        case .profile:
+            let profileVC = ViewController()
+            profileVC.title = page.pageTitleValue()
+//            profileVC.didSendEventClosure = { [weak self] event in
+//                switch event {
+//                case .menu:
+//                    self?.selectPage(.menu)
+//                case .map:
+//                    self?.selectPage(.map)
+//                case .profile:
+//                    self?.selectPage(.profile)
+//                }
+//            }
+
+            navController.pushViewController(profileVC, animated: true)
+        }
+
+        return navController
+    }
+
+    func currentPage() -> TabBarPage? {
+        TabBarPage(index: tabBarController.selectedIndex)
+    }
+
+    func selectPage(_ page: TabBarPage) {
+        tabBarController.selectedIndex = page.pageOrderNumber()
+    }
+
+    func setSelectedIndex(_ index: Int) {
+        guard let page = TabBarPage(index: index) else { return }
+
+        tabBarController.selectedIndex = page.pageOrderNumber()
+    }
+}
+
+// MARK: - UITabBarControllerDelegate
+extension TabCoordinator: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController,
+                          didSelect viewController: UIViewController) {
     }
 }
