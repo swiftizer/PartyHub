@@ -6,3 +6,21 @@
 //
 
 import UIKit
+
+final class ProfileCoordinator: Coordinator {
+    var finishDelegate: CoordinatorFinishDelegate?
+
+    var navigationController: UINavigationController
+
+    var childCoordinators: [Coordinator] = []
+
+    var type: CoordinatorType { .profile }
+
+    init(_ navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
+
+    func start() {
+    }
+
+}

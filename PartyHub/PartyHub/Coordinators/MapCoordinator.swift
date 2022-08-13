@@ -6,3 +6,21 @@
 //
 
 import UIKit
+
+final class MapCoordinator: Coordinator {
+    var finishDelegate: CoordinatorFinishDelegate?
+
+    var navigationController: UINavigationController
+
+    var childCoordinators: [Coordinator] = []
+
+    var type: CoordinatorType { .map }
+
+    init(_ navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
+
+    func start() {
+    }
+
+}

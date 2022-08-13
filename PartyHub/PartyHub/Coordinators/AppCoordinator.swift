@@ -12,7 +12,7 @@ protocol AppCoordinatorProtocol: Coordinator {
     func showMainFlow()
 }
 
-class AppCoordinator: AppCoordinatorProtocol {
+final class AppCoordinator: AppCoordinatorProtocol {
     weak var finishDelegate: CoordinatorFinishDelegate?
 
     var navigationController: UINavigationController

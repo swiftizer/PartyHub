@@ -46,5 +46,5 @@ protocol CoordinatorFinishDelegate: AnyObject {
 
 /// Используя эту структуру, мы можем определить, какой тип flow мы будем использовать в приложении.
 enum CoordinatorType {
-    case app, login, tab
+    case app, login, tab, menu, map, profile
 }

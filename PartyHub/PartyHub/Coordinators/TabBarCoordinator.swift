@@ -68,7 +68,7 @@ protocol TabCoordinatorProtocol: Coordinator {
     func currentPage() -> TabBarPage?
 }
 
-class TabCoordinator: NSObject, Coordinator {
+final class TabCoordinator: NSObject, Coordinator {
     weak var finishDelegate: CoordinatorFinishDelegate?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []

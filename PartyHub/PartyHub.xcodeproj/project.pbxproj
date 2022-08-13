@@ -16,7 +16,6 @@
 		2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F028A588A900934F99 /* MenuCoordinator.swift */; };
 		2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F228A588BA00934F99 /* MapCoordinator.swift */; };
 		2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F428A588CA00934F99 /* ProfileCoordinator.swift */; };
-		2CCA56FA28A58F4400934F99 /* TabBarItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F928A58F4400934F99 /* TabBarItemModel.swift */; };
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
 		B330662F28A2578800528BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662E28A2578800528BCE /* ViewController.swift */; };
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
@@ -32,7 +31,6 @@
 		2CCA56F028A588A900934F99 /* MenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCoordinator.swift; sourceTree = "<group>"; };
 		2CCA56F228A588BA00934F99 /* MapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCoordinator.swift; sourceTree = "<group>"; };
 		2CCA56F428A588CA00934F99 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
-		2CCA56F928A58F4400934F99 /* TabBarItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemModel.swift; sourceTree = "<group>"; };
 		50B326832CFED75469491F5F /* Pods-PartyHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.release.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.release.xcconfig"; sourceTree = "<group>"; };
 		581F7A790F3FD049323D6791 /* Pods-PartyHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.debug.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.debug.xcconfig"; sourceTree = "<group>"; };
 		987809CF8142C2A20619407A /* Pods_PartyHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PartyHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,14 +117,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		2CCA56F828A58F2F00934F99 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				2CCA56F928A58F4400934F99 /* TabBarItemModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		5FD6FFE6107AAAEED0F57977 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,7 +155,6 @@
 		B330662928A2578800528BCE /* PartyHub */ = {
 			isa = PBXGroup;
 			children = (
-				2CCA56F828A58F2F00934F99 /* Models */,
 				2CCA56DD28A42C6500934F99 /* Coordinators */,
 				2CCA56C128A2DF2400934F99 /* Controllers */,
 				2CCA56C328A2DF7700934F99 /* Other */,
@@ -339,7 +328,6 @@
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
-				2CCA56FA28A58F4400934F99 /* TabBarItemModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
