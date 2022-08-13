@@ -46,7 +46,7 @@ extension AppDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
 
-        appCoordinator = AppCoordinator.init(navigationController)
+        appCoordinator = AppCoordinator(navigationController)
         appCoordinator?.start()
     }
 }

@@ -77,7 +77,7 @@ final class TabCoordinator: NSObject, Coordinator {
 
     required init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.tabBarController = .init()
+        self.tabBarController = UITabBarController()
     }
 
     func start() {
@@ -89,7 +89,7 @@ final class TabCoordinator: NSObject, Coordinator {
 
     // TODO: - убарать перед финальной частью
     deinit {
-        print("[DEBUG] TabCoordinator deinit")
+        debugPrint("TabCoordinator deinit")
     }
 
     private func prepareTabBarController(withTabControllers tabControllers: [UIViewController]) {
