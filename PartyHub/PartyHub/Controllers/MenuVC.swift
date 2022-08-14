@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MenuVC: UIViewController {
 
     // MARK: - Life Cycle
 
