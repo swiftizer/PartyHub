@@ -77,7 +77,7 @@ final class TabCoordinator: NSObject, Coordinator {
 
     required init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.tabBarController = UITabBarController()
+        self.tabBarController = TabBarVC()
     }
 
     func start() {
@@ -118,7 +118,7 @@ final class TabCoordinator: NSObject, Coordinator {
         switch page {
         case .menu:
             // При необходимости: у каждого контролерра панели вкладок может быть свой координатор.
-            let menuVC = ViewController()
+            let menuVC = MenuVC()
             menuVC.title = page.pageTitleValue()
             // TODO: - расскомитить когда появится VC
 
@@ -135,7 +135,7 @@ final class TabCoordinator: NSObject, Coordinator {
 
             navController.pushViewController(menuVC, animated: true)
         case .map:
-            let mapVC = ViewController()
+            let mapVC = MapVC()
             mapVC.title = page.pageTitleValue()
 //            mapVC.didSendEventClosure = { [weak self] event in
 //                switch event {
@@ -150,7 +150,7 @@ final class TabCoordinator: NSObject, Coordinator {
 
             navController.pushViewController(mapVC, animated: true)
         case .profile:
-            let profileVC = ViewController()
+            let profileVC = ProfileVC()
             profileVC.title = page.pageTitleValue()
 //            profileVC.didSendEventClosure = { [weak self] event in
 //                switch event {

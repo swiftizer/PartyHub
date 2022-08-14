@@ -17,9 +17,12 @@
 		2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F228A588BA00934F99 /* MapCoordinator.swift */; };
 		2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F428A588CA00934F99 /* ProfileCoordinator.swift */; };
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
-		B330662F28A2578800528BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662E28A2578800528BCE /* ViewController.swift */; };
+		B330662F28A2578800528BCE /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662E28A2578800528BCE /* MenuVC.swift */; };
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
+		E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60328A8F829001DFB51 /* TabBarVC.swift */; };
+		E921D60628A8F873001DFB51 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60528A8F873001DFB51 /* MapVC.swift */; };
+		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,10 +39,13 @@
 		987809CF8142C2A20619407A /* Pods_PartyHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PartyHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B330662728A2578800528BCE /* PartyHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PartyHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B330662A28A2578800528BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B330662E28A2578800528BCE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B330662E28A2578800528BCE /* MenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		B330663328A2578900528BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E921D60328A8F829001DFB51 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
+		E921D60528A8F873001DFB51 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +63,10 @@
 		2CCA56C128A2DF2400934F99 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B330662E28A2578800528BCE /* ViewController.swift */,
+				E921D60328A8F829001DFB51 /* TabBarVC.swift */,
+				B330662E28A2578800528BCE /* MenuVC.swift */,
+				E921D60528A8F873001DFB51 /* MapVC.swift */,
+				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -319,11 +328,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
 				2C52F2A128A6F5B80007938C /* AppCoordinator.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
-				B330662F28A2578800528BCE /* ViewController.swift in Sources */,
+				B330662F28A2578800528BCE /* MenuVC.swift in Sources */,
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
+				E921D60628A8F873001DFB51 /* MapVC.swift in Sources */,
+				E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,

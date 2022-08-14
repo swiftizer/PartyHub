@@ -1,17 +1,18 @@
 //
-//  ViewController.swift
+//  MapVC.swift
 //  PartyHub
 //
-//  Created by Сергей Николаев on 09.08.2022.
+//  Created by juliemoorled on 14.08.2022.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class MapVC: UIViewController {
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
 }
