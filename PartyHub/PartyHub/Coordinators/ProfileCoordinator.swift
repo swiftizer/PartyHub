@@ -7,20 +7,23 @@
 
 import UIKit
 
-final class ProfileCoordinator: Coordinator {
-    var finishDelegate: CoordinatorFinishDelegate?
+final class ProfileCoordinator: Presentable {
 
-    var navigationController: UINavigationController
+    let router = DefaultRouter(with: nil)
 
-    var childCoordinators: [Coordinator] = []
-
-    var type: CoordinatorType { .profile }
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init() {
+        (router.toPresent() as? UINavigationController)?.setNavigationBarHidden(false, animated: false)
+        start()
     }
 
     func start() {
+        let module = ProfileVC()
+        module.title = "Profile"
+        router.setRootModule(module)
+    }
+
+    func toPresent() -> UIViewController {
+        return router.toPresent()
     }
 
 }

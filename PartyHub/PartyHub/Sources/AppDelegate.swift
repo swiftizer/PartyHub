@@ -11,16 +11,12 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var appCoordinator: AppCoordinator?
+    private var appCoordinator: Presentable?
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        if #available(iOS 15, *) {
-            UINavigationBar.appearance().scrollEdgeAppearance = UINavigationBarAppearance()
-            UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance()
-        }
         startApp()
         return true
     }
@@ -41,12 +37,42 @@ extension AppDelegate {
         if window == nil {
             window = UIWindow(frame: UIScreen.main.bounds)
         }
-        let navigationController: UINavigationController = .init()
 
-        window?.rootViewController = navigationController
+        let menuCordinator = MenuCoordinator()
+        menuCordinator.start()
+        let mapCordinator = MapCoordinator()
+        mapCordinator.start()
+        let profileCordinator = ProfileCoordinator()
+        profileCordinator.start()
+
+        appCoordinator = TabBarCoordinator(with: [
+            .init(module: menuCordinator, icon: UIImage(systemName: "list.bullet")!, title: "Menu", tag: 0),
+            .init(module: mapCordinator, icon: UIImage(systemName: "map")!, title: "Map", tag: 1),
+            .init(module: profileCordinator, icon: UIImage(systemName: "person.circle")!, title: "Profile", tag: 2)
+        ])
+
+        window?.rootViewController = appCoordinator?.toPresent()
         window?.makeKeyAndVisible()
+    }
+}
 
-        appCoordinator = AppCoordinator(navigationController)
-        appCoordinator?.start()
+// TODO: - вынести в отдельный extension
+// UIApplication.shared.windows.filter {$0.isKeyWindow}.first.rootViewController
+extension UIApplication {
+    class func topViewController(
+        controller: UIViewController? = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
+    ) -> UIViewController? {
+        if let navigationController = controller as? UINavigationController {
+            return topViewController(controller: navigationController.visibleViewController)
+        }
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return topViewController(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
     }
 }
