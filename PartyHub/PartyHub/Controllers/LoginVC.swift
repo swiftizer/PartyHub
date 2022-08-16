@@ -8,7 +8,7 @@
 import UIKit
 import PinLayout
 
-final class UnloggedProfileVC: UIViewController {
+final class LoginVC: UIViewController {
 
     enum Navigation {
         case register
@@ -21,8 +21,6 @@ final class UnloggedProfileVC: UIViewController {
 
     private let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.dropShadow(shadowColor: UIColor(hexString: "#000000", alpha: 0.3), shadowOpacity: 1, shadowOffset: CGSize(width: 0, height: 0.5), shadowRadius: 0)
-        textField.font = UIFont.boldSystemFont(ofSize: 16)
         textField.attributedPlaceholder = NSAttributedString(
             string: "Email",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
@@ -32,8 +30,6 @@ final class UnloggedProfileVC: UIViewController {
 
     private let passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.dropShadow(shadowColor: UIColor(hexString: "#000000", alpha: 0.3), shadowOpacity: 1, shadowOffset: CGSize(width: 0, height: 0.5), shadowRadius: 0)
-        textField.font = UIFont.boldSystemFont(ofSize: 16)
         textField.attributedPlaceholder = NSAttributedString(
             string: "Password",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
@@ -45,10 +41,6 @@ final class UnloggedProfileVC: UIViewController {
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Log in", for: .normal)
-        button.backgroundColor = .systemGray6
-        button.layer.cornerRadius = 15
-        button.tintColor = .label
-        button.dropShadow(shadowColor: UIColor(hexString: "#000000", alpha: 0.3), shadowOpacity: 1, shadowOffset: CGSize(width: 0, height: 0.5), shadowRadius: 0)
         button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -56,11 +48,7 @@ final class UnloggedProfileVC: UIViewController {
     private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Add account", for: .normal)
-        button.backgroundColor = .systemGray6.withAlphaComponent(0.6)
-        button.layer.cornerRadius = 15
-        button.tintColor = .label
         button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
-        button.dropShadow(shadowColor: UIColor(hexString: "#000000", alpha: 0.3), shadowOpacity: 1, shadowOffset: CGSize(width: 0, height: 0.5), shadowRadius: 0)
         return button
     }()
 
@@ -115,6 +103,25 @@ final class UnloggedProfileVC: UIViewController {
             $0.keyboardType = .default
             $0.returnKeyType = .default
             $0.clearButtonMode = .whileEditing
+            $0.dropShadow(
+                shadowColor: UIColor(hexString: "#000000", alpha: 0.3),
+                shadowOpacity: 1,
+                shadowOffset: CGSize(width: 0, height: 0.5),
+                shadowRadius: 0
+            )
+            $0.font = UIFont.boldSystemFont(ofSize: 16)
+        }
+
+        [loginButton, registerButton].forEach {
+            $0.backgroundColor = .systemGray6
+            $0.layer.cornerRadius = 15
+            $0.tintColor = .label
+            $0.dropShadow(
+                shadowColor: UIColor(hexString: "#000000", alpha: 0.3),
+                shadowOpacity: 1,
+                shadowOffset: CGSize(width: 0, height: 0.5),
+                shadowRadius: 0
+            )
         }
         view.backgroundColor = .systemBackground
         view.addSubview(emailTextField)

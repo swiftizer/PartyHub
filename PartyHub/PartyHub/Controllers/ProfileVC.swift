@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoggedProfileVC: UIViewController {
+class ProfileVC: UIViewController {
 
     // MARK: - Life Cycle
 

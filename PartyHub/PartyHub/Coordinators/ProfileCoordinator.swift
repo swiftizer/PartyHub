@@ -17,7 +17,7 @@ final class ProfileCoordinator: Presentable {
     }
 
     func start() {
-        let module = UnloggedProfileVC()
+        let module = LoginVC()
         module.title = "Profile"
         module.navigation = { [weak self] navType in
             switch navType {

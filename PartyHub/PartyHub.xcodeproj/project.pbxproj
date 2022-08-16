@@ -12,11 +12,13 @@
 		2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DB28AB04A60007938C /* TabBarRouter.swift */; };
 		2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DE28AB04D20007938C /* DefaultRouter.swift */; };
 		2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */; };
-		2CA580F528AB96950070F943 /* UnloggedProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F428AB96950070F943 /* UnloggedProfileVC.swift */; };
+		2CA580F528AB96950070F943 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F428AB96950070F943 /* LoginVC.swift */; };
 		2CA580F728AB980D0070F943 /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F628AB980D0070F943 /* UIColor+HexString.swift */; };
 		2CA580F928AB984F0070F943 /* UIVIew+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F828AB984F0070F943 /* UIVIew+Frame.swift */; };
 		2CA580FC28ABBBED0070F943 /* UIView+DropShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580FB28ABBBED0070F943 /* UIView+DropShadow.swift */; };
 		2CA5810328ABD6A70070F943 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA5810228ABD6A70070F943 /* RegistrationVC.swift */; };
+		2CB7D0AE28AC34B100AB7C74 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7D0AD28AC34B100AB7C74 /* RegistrationView.swift */; };
+		2CB7D0B028AC3E0100AB7C74 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7D0AF28AC3E0100AB7C74 /* LoginView.swift */; };
 		2CCA56D428A3935100934F99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CCA56D328A3935000934F99 /* Localizable.strings */; };
 		2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56E728A443EA00934F99 /* CoordinatorProtocol.swift */; };
 		2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56E928A4451700934F99 /* TabBarCoordinator.swift */; };
@@ -30,7 +32,7 @@
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
 		E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60328A8F829001DFB51 /* TabBarVC.swift */; };
 		E921D60628A8F873001DFB51 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60528A8F873001DFB51 /* MapVC.swift */; };
-		E921D60828A8F8A0001DFB51 /* LoggedProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* LoggedProfileVC.swift */; };
+		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,11 +40,13 @@
 		2C52F2DB28AB04A60007938C /* TabBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarRouter.swift; sourceTree = "<group>"; };
 		2C52F2DE28AB04D20007938C /* DefaultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRouter.swift; sourceTree = "<group>"; };
 		2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
-		2CA580F428AB96950070F943 /* UnloggedProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnloggedProfileVC.swift; sourceTree = "<group>"; };
+		2CA580F428AB96950070F943 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		2CA580F628AB980D0070F943 /* UIColor+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
 		2CA580F828AB984F0070F943 /* UIVIew+Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+Frame.swift"; sourceTree = "<group>"; };
 		2CA580FB28ABBBED0070F943 /* UIView+DropShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+DropShadow.swift"; sourceTree = "<group>"; };
 		2CA5810228ABD6A70070F943 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
+		2CB7D0AD28AC34B100AB7C74 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		2CB7D0AF28AC3E0100AB7C74 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		2CCA56D328A3935000934F99 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		2CCA56E728A443EA00934F99 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		2CCA56E928A4451700934F99 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
@@ -61,7 +65,7 @@
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E921D60328A8F829001DFB51 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		E921D60528A8F873001DFB51 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
-		E921D60728A8F8A0001DFB51 /* LoggedProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedProfileVC.swift; sourceTree = "<group>"; };
+		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,14 +100,23 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		2CB7D0AC28AC348E00AB7C74 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2CB7D0AD28AC34B100AB7C74 /* RegistrationView.swift */,
+				2CB7D0AF28AC3E0100AB7C74 /* LoginView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2CCA56C128A2DF2400934F99 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E921D60328A8F829001DFB51 /* TabBarVC.swift */,
 				B330662E28A2578800528BCE /* MenuVC.swift */,
 				E921D60528A8F873001DFB51 /* MapVC.swift */,
-				E921D60728A8F8A0001DFB51 /* LoggedProfileVC.swift */,
-				2CA580F428AB96950070F943 /* UnloggedProfileVC.swift */,
+				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
+				2CA580F428AB96950070F943 /* LoginVC.swift */,
 				2CA5810228ABD6A70070F943 /* RegistrationVC.swift */,
 			);
 			path = Controllers;
@@ -206,6 +219,7 @@
 			children = (
 				2CCA56DD28A42C6500934F99 /* Coordinators */,
 				2CCA56C128A2DF2400934F99 /* Controllers */,
+				2CB7D0AC28AC348E00AB7C74 /* Views */,
 				2CCA56C328A2DF7700934F99 /* Other */,
 				2CCA56C228A2DF5800934F99 /* Sources */,
 				2CCA56D528A3937A00934F99 /* SupportinFiles */,
@@ -370,18 +384,20 @@
 			files = (
 				2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */,
 				2CA5810328ABD6A70070F943 /* RegistrationVC.swift in Sources */,
-				E921D60828A8F8A0001DFB51 /* LoggedProfileVC.swift in Sources */,
+				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
+				2CB7D0AE28AC34B100AB7C74 /* RegistrationView.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
 				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
 				B330662F28A2578800528BCE /* MenuVC.swift in Sources */,
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
+				2CB7D0B028AC3E0100AB7C74 /* LoginView.swift in Sources */,
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
 				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
 				E921D60628A8F873001DFB51 /* MapVC.swift in Sources */,
 				2CA580FC28ABBBED0070F943 /* UIView+DropShadow.swift in Sources */,
 				E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
-				2CA580F528AB96950070F943 /* UnloggedProfileVC.swift in Sources */,
+				2CA580F528AB96950070F943 /* LoginVC.swift in Sources */,
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
 				2CA580F728AB980D0070F943 /* UIColor+HexString.swift in Sources */,
 				2CA580F928AB984F0070F943 /* UIVIew+Frame.swift in Sources */,
