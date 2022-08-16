@@ -43,6 +43,8 @@ final class RegistrationVC: UIViewController {
     // MARK: - Private Methods
 
     private func setupUI() {
+        mainView.delegate = self
+
         let backNavigationItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.backward"),
             style: .plain,
@@ -57,7 +59,7 @@ final class RegistrationVC: UIViewController {
 // MARK: - RegistrationViewDelegate
 
 extension RegistrationVC: RegistrationViewDelegate {
-    func registerButtonTapped() {
+    func registerationButtonTapped() {
         generator.impactOccurred(intensity: 0.6)
         self.navigation?(.registration)
     }

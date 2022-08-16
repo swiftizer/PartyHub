@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import PinLayout
 
 protocol RegistrationViewDelegate: AnyObject {
-    func registerButtonTapped()
+    func registerationButtonTapped()
 }
 
 /// Кастомная view регистрации
@@ -108,7 +109,7 @@ final class RegistrationView: UIView {
 
     @objc
     private func registerButtonTapped() {
-        delegate?.registerButtonTapped()
+        delegate?.registerationButtonTapped()
     }
 
     // MARK: - Private Methods

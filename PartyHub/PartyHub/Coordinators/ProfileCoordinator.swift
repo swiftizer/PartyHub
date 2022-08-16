@@ -18,7 +18,7 @@ final class ProfileCoordinator: Presentable {
 
     func start() {
         let module = LoginVC()
-        module.title = "Profile"
+        module.title = "Login"
         module.navigation = { [weak self] navType in
             switch navType {
             case .login:

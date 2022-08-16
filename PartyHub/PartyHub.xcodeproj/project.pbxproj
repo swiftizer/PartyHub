@@ -103,8 +103,8 @@
 		2CB7D0AC28AC348E00AB7C74 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2CB7D0AD28AC34B100AB7C74 /* RegistrationView.swift */,
 				2CB7D0AF28AC3E0100AB7C74 /* LoginView.swift */,
+				2CB7D0AD28AC34B100AB7C74 /* RegistrationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
