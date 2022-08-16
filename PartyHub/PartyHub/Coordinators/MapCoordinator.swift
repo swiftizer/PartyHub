@@ -15,12 +15,12 @@ final class MapCoordinator: Presentable {
         (router.toPresent() as? UINavigationController)?.setNavigationBarHidden(false, animated: false)
         start()
     }
-    
+
     func start() {
         let module = MapVC()
         module.title = "Map"
-        
-        // MARK: - передача точек
+
+        // TODO: - убрать позже
         let points = [
             GeoPoint(name: "event1", latitude: 43.41, longtitude: 39.946),
             GeoPoint(name: "event2", latitude: 43.41, longtitude: 39.959),
@@ -28,7 +28,7 @@ final class MapCoordinator: Presentable {
             GeoPoint(name: "event4", latitude: 43.40, longtitude: 39.954),
             GeoPoint(name: "event5", latitude: 43.39, longtitude: 39.976)
         ]
-        
+
         module.loadPoints(points: points)
         router.setRootModule(module)
     }

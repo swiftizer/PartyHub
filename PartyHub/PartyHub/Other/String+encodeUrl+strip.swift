@@ -33,15 +33,16 @@ extension String {
     }
 
     subscript (range: Range<Int>) -> String {
-        let range = Range(uncheckedBounds: (lower: max(0, min(length, range.lowerBound)),
-                                            upper: min(length, max(0, range.upperBound))))
+        let range = Range(uncheckedBounds: (
+            lower: max(0, min(length, range.lowerBound)),
+            upper: min(length, max(0, range.upperBound)))
+        )
         let start = index(startIndex, offsetBy: range.lowerBound)
         let end = index(start, offsetBy: range.upperBound - range.lowerBound)
         return String(self[start ..< end])
     }
 
     func strip(by str: String) -> String {
-        let cs = CharacterSet.init(charactersIn: str)
-        return self.trimmingCharacters(in: cs)
+        return self.trimmingCharacters(in: CharacterSet.init(charactersIn: str))
     }
 }
