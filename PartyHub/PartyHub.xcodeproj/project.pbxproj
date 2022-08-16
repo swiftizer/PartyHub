@@ -12,6 +12,11 @@
 		2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DB28AB04A60007938C /* TabBarRouter.swift */; };
 		2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DE28AB04D20007938C /* DefaultRouter.swift */; };
 		2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */; };
+		2CA580F528AB96950070F943 /* UnloggedProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F428AB96950070F943 /* UnloggedProfileVC.swift */; };
+		2CA580F728AB980D0070F943 /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F628AB980D0070F943 /* UIColor+HexString.swift */; };
+		2CA580F928AB984F0070F943 /* UIVIew+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F828AB984F0070F943 /* UIVIew+Frame.swift */; };
+		2CA580FC28ABBBED0070F943 /* UIView+DropShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580FB28ABBBED0070F943 /* UIView+DropShadow.swift */; };
+		2CA5810328ABD6A70070F943 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA5810228ABD6A70070F943 /* RegistrationVC.swift */; };
 		2CCA56D428A3935100934F99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CCA56D328A3935000934F99 /* Localizable.strings */; };
 		2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56E728A443EA00934F99 /* CoordinatorProtocol.swift */; };
 		2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56E928A4451700934F99 /* TabBarCoordinator.swift */; };
@@ -25,7 +30,7 @@
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
 		E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60328A8F829001DFB51 /* TabBarVC.swift */; };
 		E921D60628A8F873001DFB51 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60528A8F873001DFB51 /* MapVC.swift */; };
-		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
+		E921D60828A8F8A0001DFB51 /* LoggedProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* LoggedProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +38,11 @@
 		2C52F2DB28AB04A60007938C /* TabBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarRouter.swift; sourceTree = "<group>"; };
 		2C52F2DE28AB04D20007938C /* DefaultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRouter.swift; sourceTree = "<group>"; };
 		2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
+		2CA580F428AB96950070F943 /* UnloggedProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnloggedProfileVC.swift; sourceTree = "<group>"; };
+		2CA580F628AB980D0070F943 /* UIColor+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
+		2CA580F828AB984F0070F943 /* UIVIew+Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+Frame.swift"; sourceTree = "<group>"; };
+		2CA580FB28ABBBED0070F943 /* UIView+DropShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+DropShadow.swift"; sourceTree = "<group>"; };
+		2CA5810228ABD6A70070F943 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
 		2CCA56D328A3935000934F99 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		2CCA56E728A443EA00934F99 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		2CCA56E928A4451700934F99 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
@@ -51,7 +61,7 @@
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E921D60328A8F829001DFB51 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		E921D60528A8F873001DFB51 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
-		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		E921D60728A8F8A0001DFB51 /* LoggedProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +89,9 @@
 			isa = PBXGroup;
 			children = (
 				2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */,
+				2CA580F628AB980D0070F943 /* UIColor+HexString.swift */,
+				2CA580F828AB984F0070F943 /* UIVIew+Frame.swift */,
+				2CA580FB28ABBBED0070F943 /* UIView+DropShadow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -89,7 +102,9 @@
 				E921D60328A8F829001DFB51 /* TabBarVC.swift */,
 				B330662E28A2578800528BCE /* MenuVC.swift */,
 				E921D60528A8F873001DFB51 /* MapVC.swift */,
-				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
+				E921D60728A8F8A0001DFB51 /* LoggedProfileVC.swift */,
+				2CA580F428AB96950070F943 /* UnloggedProfileVC.swift */,
+				2CA5810228ABD6A70070F943 /* RegistrationVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -354,7 +369,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */,
-				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
+				2CA5810328ABD6A70070F943 /* RegistrationVC.swift in Sources */,
+				E921D60828A8F8A0001DFB51 /* LoggedProfileVC.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
 				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
 				B330662F28A2578800528BCE /* MenuVC.swift in Sources */,
@@ -362,9 +378,13 @@
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
 				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
 				E921D60628A8F873001DFB51 /* MapVC.swift in Sources */,
+				2CA580FC28ABBBED0070F943 /* UIView+DropShadow.swift in Sources */,
 				E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
+				2CA580F528AB96950070F943 /* UnloggedProfileVC.swift in Sources */,
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
+				2CA580F728AB980D0070F943 /* UIColor+HexString.swift in Sources */,
+				2CA580F928AB984F0070F943 /* UIVIew+Frame.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
 				2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */,
@@ -507,7 +527,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
+				DEVELOPMENT_TEAM = 69S65245DU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -537,7 +557,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
+				DEVELOPMENT_TEAM = 69S65245DU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
