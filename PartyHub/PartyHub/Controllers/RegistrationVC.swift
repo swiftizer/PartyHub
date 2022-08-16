@@ -21,82 +21,38 @@ final class RegistrationVC: UIViewController {
 
     private let firstNameTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .systemGray6
-        textField.textColor = .label
-        textField.tintColor = .label
-        textField.font = UIFont.boldSystemFont(ofSize: 16)
         textField.attributedPlaceholder = NSAttributedString(
             string: "First Name",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
         )
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
-        textField.layer.cornerRadius = 15
-        textField.autocorrectionType = .no
-        textField.leftViewMode = .always
-        textField.keyboardType = .default
-        textField.returnKeyType = .default
-        textField.clearButtonMode = .whileEditing
         return textField
     }()
 
     private let secondNameTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .systemGray6
-        textField.textColor = .label
-        textField.tintColor = .label
-        textField.font = UIFont.boldSystemFont(ofSize: 16)
         textField.attributedPlaceholder = NSAttributedString(
             string: "Second Name",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
         )
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
-        textField.layer.cornerRadius = 15
-        textField.autocorrectionType = .no
-        textField.leftViewMode = .always
-        textField.keyboardType = .default
-        textField.returnKeyType = .default
-        textField.clearButtonMode = .whileEditing
         return textField
     }()
 
     private let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .systemGray6
-        textField.textColor = .label
-        textField.tintColor = .label
-        textField.font = UIFont.boldSystemFont(ofSize: 16)
         textField.attributedPlaceholder = NSAttributedString(
             string: "Email",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
         )
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
-        textField.layer.cornerRadius = 15
-        textField.autocorrectionType = .no
-        textField.leftViewMode = .always
-        textField.keyboardType = .default
-        textField.returnKeyType = .default
-        textField.clearButtonMode = .whileEditing
         return textField
     }()
 
     private let passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .systemGray6
-        textField.tintColor = .label
-        textField.textColor = .label
-        textField.font = UIFont.boldSystemFont(ofSize: 16)
         textField.attributedPlaceholder = NSAttributedString(
             string: "Password",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
         )
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
-        textField.layer.cornerRadius = 15
         textField.isSecureTextEntry = true
-        textField.autocorrectionType = .no
-        textField.leftViewMode = .always
-        textField.keyboardType = .default
-        textField.returnKeyType = .default
-        textField.clearButtonMode = .whileEditing
         textField.textContentType = .oneTimeCode
         return textField
     }()
@@ -153,13 +109,6 @@ final class RegistrationVC: UIViewController {
     // MARK: - Private Methods
 
     private func setupUI() {
-        view.backgroundColor = .systemBackground
-        view.addSubview(firstNameTextField)
-        view.addSubview(secondNameTextField)
-        view.addSubview(emailTextField)
-        view.addSubview(passwordTextField)
-        view.addSubview(registerButton)
-
         let backNavigationItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.backward"),
             style: .plain,
@@ -168,6 +117,20 @@ final class RegistrationVC: UIViewController {
         )
         backNavigationItem.tintColor = .label
         navigationItem.leftBarButtonItem = backNavigationItem
+
+        [firstNameTextField, secondNameTextField, emailTextField, passwordTextField].forEach {
+            $0.font = UIFont.boldSystemFont(ofSize: 16)
+            $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
+            $0.layer.cornerRadius = 15
+            $0.autocorrectionType = .no
+            $0.leftViewMode = .always
+            $0.keyboardType = .default
+            $0.returnKeyType = .default
+            $0.clearButtonMode = .whileEditing
+            $0.backgroundColor = .systemGray6
+            $0.textColor = .label
+            $0.tintColor = .label
+        }
 
         NotificationCenter.default.addObserver(
             self,
@@ -178,6 +141,12 @@ final class RegistrationVC: UIViewController {
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
         view.addGestureRecognizer(tapGesture)
+        view.backgroundColor = .systemBackground
+        view.addSubview(firstNameTextField)
+        view.addSubview(secondNameTextField)
+        view.addSubview(emailTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(registerButton)
     }
 
     private func setupLayout() {

@@ -21,44 +21,24 @@ final class UnloggedProfileVC: UIViewController {
 
     private let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .systemGray6
-        textField.textColor = .label
-        textField.tintColor = .label
         textField.dropShadow(shadowColor: UIColor(hexString: "#000000", alpha: 0.3), shadowOpacity: 1, shadowOffset: CGSize(width: 0, height: 0.5), shadowRadius: 0)
         textField.font = UIFont.boldSystemFont(ofSize: 16)
         textField.attributedPlaceholder = NSAttributedString(
             string: "Email",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
         )
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
-        textField.layer.cornerRadius = 8
-        textField.autocorrectionType = .no
-        textField.leftViewMode = .always
-        textField.keyboardType = .default
-        textField.returnKeyType = .default
-        textField.clearButtonMode = .whileEditing
         return textField
     }()
 
     private let passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .systemGray6
-        textField.tintColor = .label
-        textField.textColor = .label
         textField.dropShadow(shadowColor: UIColor(hexString: "#000000", alpha: 0.3), shadowOpacity: 1, shadowOffset: CGSize(width: 0, height: 0.5), shadowRadius: 0)
         textField.font = UIFont.boldSystemFont(ofSize: 16)
         textField.attributedPlaceholder = NSAttributedString(
             string: "Password",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
         )
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
-        textField.layer.cornerRadius = 8
         textField.isSecureTextEntry = true
-        textField.autocorrectionType = .no
-        textField.leftViewMode = .always
-        textField.keyboardType = .default
-        textField.returnKeyType = .default
-        textField.clearButtonMode = .whileEditing
         return textField
     }()
 
@@ -124,6 +104,18 @@ final class UnloggedProfileVC: UIViewController {
     // MARK: - Private Methods
 
     private func setupUI() {
+        [emailTextField, passwordTextField].forEach {
+            $0.backgroundColor = .systemGray6
+            $0.tintColor = .label
+            $0.textColor = .label
+            $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
+            $0.layer.cornerRadius = 15
+            $0.autocorrectionType = .no
+            $0.leftViewMode = .always
+            $0.keyboardType = .default
+            $0.returnKeyType = .default
+            $0.clearButtonMode = .whileEditing
+        }
         view.backgroundColor = .systemBackground
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
