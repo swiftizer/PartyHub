@@ -7,20 +7,23 @@
 
 import UIKit
 
-final class MapCoordinator: Coordinator {
-    var finishDelegate: CoordinatorFinishDelegate?
+final class MapCoordinator: Presentable {
 
-    var navigationController: UINavigationController
+    let router = DefaultRouter(with: nil)
 
-    var childCoordinators: [Coordinator] = []
-
-    var type: CoordinatorType { .map }
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init() {
+        (router.toPresent() as? UINavigationController)?.setNavigationBarHidden(false, animated: false)
+        start()
     }
 
     func start() {
+        let module = MapVC()
+        module.title = "Map"
+        router.setRootModule(module)
+    }
+
+    func toPresent() -> UIViewController {
+        return router.toPresent()
     }
 
 }

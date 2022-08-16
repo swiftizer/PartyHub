@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		21A4708DBFE1157FFACD9D22 /* Pods_PartyHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 987809CF8142C2A20619407A /* Pods_PartyHub.framework */; };
-		2C52F2A128A6F5B80007938C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2A028A6F5B80007938C /* AppCoordinator.swift */; };
+		2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2D928AB047E0007938C /* PresentableProtocol.swift */; };
+		2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DB28AB04A60007938C /* TabBarRouter.swift */; };
+		2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DE28AB04D20007938C /* DefaultRouter.swift */; };
+		2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */; };
 		2CCA56D428A3935100934F99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CCA56D328A3935000934F99 /* Localizable.strings */; };
 		2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56E728A443EA00934F99 /* CoordinatorProtocol.swift */; };
 		2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56E928A4451700934F99 /* TabBarCoordinator.swift */; };
@@ -26,7 +29,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2C52F2A028A6F5B80007938C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		2C52F2D928AB047E0007938C /* PresentableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableProtocol.swift; sourceTree = "<group>"; };
+		2C52F2DB28AB04A60007938C /* TabBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarRouter.swift; sourceTree = "<group>"; };
+		2C52F2DE28AB04D20007938C /* DefaultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRouter.swift; sourceTree = "<group>"; };
+		2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
 		2CCA56D328A3935000934F99 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		2CCA56E728A443EA00934F99 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		2CCA56E928A4451700934F99 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
@@ -60,6 +66,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C52F2D228AAC5F00007938C /* Routers */ = {
+			isa = PBXGroup;
+			children = (
+				2C52F2DB28AB04A60007938C /* TabBarRouter.swift */,
+				2C52F2DE28AB04D20007938C /* DefaultRouter.swift */,
+			);
+			path = Routers;
+			sourceTree = "<group>";
+		};
+		2C52F2E228AB8E700007938C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		2CCA56C128A2DF2400934F99 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +106,7 @@
 		2CCA56C328A2DF7700934F99 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				2C52F2E228AB8E700007938C /* Extensions */,
 				B330663528A2578900528BCE /* LaunchScreen.storyboard */,
 				B330663328A2578900528BCE /* Assets.xcassets */,
 			);
@@ -109,7 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCA56E028A42EF800934F99 /* Protocols */,
-				2C52F2A028A6F5B80007938C /* AppCoordinator.swift */,
+				2C52F2D228AAC5F00007938C /* Routers */,
 				2CCA56E928A4451700934F99 /* TabBarCoordinator.swift */,
 				2CCA56F028A588A900934F99 /* MenuCoordinator.swift */,
 				2CCA56F228A588BA00934F99 /* MapCoordinator.swift */,
@@ -122,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCA56E728A443EA00934F99 /* CoordinatorProtocol.swift */,
+				2C52F2D928AB047E0007938C /* PresentableProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -328,18 +353,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */,
 				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
-				2C52F2A128A6F5B80007938C /* AppCoordinator.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
+				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
 				B330662F28A2578800528BCE /* MenuVC.swift in Sources */,
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
+				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
 				E921D60628A8F873001DFB51 /* MapVC.swift in Sources */,
 				E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
+				2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

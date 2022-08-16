@@ -7,19 +7,23 @@
 
 import UIKit
 
-final class MenuCoordinator: Coordinator {
-    var finishDelegate: CoordinatorFinishDelegate?
+final class MenuCoordinator: Presentable {
 
-    var navigationController: UINavigationController
+    let router = DefaultRouter(with: nil)
 
-    var childCoordinators: [Coordinator] = []
-
-    var type: CoordinatorType { .menu }
-
-    init(_ navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init() {
+        (router.toPresent() as? UINavigationController)?.setNavigationBarHidden(false, animated: false)
+        start()
     }
 
     func start() {
+        let module = MenuVC()
+        module.title = "Menu"
+        router.setRootModule(module)
     }
+
+    func toPresent() -> UIViewController {
+        return router.toPresent()
+    }
+
 }
