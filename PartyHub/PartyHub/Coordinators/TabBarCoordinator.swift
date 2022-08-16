@@ -14,7 +14,6 @@ final class TabBarCoordinator: NSObject, Coordinator {
     init(with items: [TabBarControllerItem]) {
         self.router = .init(with: items.map { $0.module })
         super.init()
-        router.container.delegate = self
         items.forEach { (item) in
             item.module.toPresent().tabBarItem = .init(title: item.title, image: item.icon, tag: item.tag)
         }
@@ -36,7 +35,4 @@ extension TabBarCoordinator {
         let title: String
         let tag: Int
     }
-}
-
-extension TabBarCoordinator: UITabBarControllerDelegate {
 }
