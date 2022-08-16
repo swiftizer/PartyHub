@@ -18,10 +18,14 @@
 		2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F028A588A900934F99 /* MenuCoordinator.swift */; };
 		2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F228A588BA00934F99 /* MapCoordinator.swift */; };
 		2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F428A588CA00934F99 /* ProfileCoordinator.swift */; };
+		B31126BE28ABF263007923F1 /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31126BD28ABF263007923F1 /* MapModel.swift */; };
+		B31126C028AC07BC007923F1 /* UIImage+resizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31126BF28AC07BC007923F1 /* UIImage+resizeImage.swift */; };
+		B31126C228AC0B26007923F1 /* String+encodeUrl+strip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31126C128AC0B26007923F1 /* String+encodeUrl+strip.swift */; };
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
 		B330662F28A2578800528BCE /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662E28A2578800528BCE /* MenuVC.swift */; };
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
+		B346C39C28AB875E00162A1A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B346C39B28AB875E00162A1A /* NetworkManager.swift */; };
 		E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60328A8F829001DFB51 /* TabBarVC.swift */; };
 		E921D60628A8F873001DFB51 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60528A8F873001DFB51 /* MapVC.swift */; };
 		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
@@ -41,12 +45,16 @@
 		50B326832CFED75469491F5F /* Pods-PartyHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.release.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.release.xcconfig"; sourceTree = "<group>"; };
 		581F7A790F3FD049323D6791 /* Pods-PartyHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.debug.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.debug.xcconfig"; sourceTree = "<group>"; };
 		987809CF8142C2A20619407A /* Pods_PartyHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PartyHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B31126BD28ABF263007923F1 /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
+		B31126BF28AC07BC007923F1 /* UIImage+resizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+resizeImage.swift"; sourceTree = "<group>"; };
+		B31126C128AC0B26007923F1 /* String+encodeUrl+strip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+encodeUrl+strip.swift"; sourceTree = "<group>"; };
 		B330662728A2578800528BCE /* PartyHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PartyHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B330662A28A2578800528BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B330662E28A2578800528BCE /* MenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		B330663328A2578900528BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B346C39B28AB875E00162A1A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E921D60328A8F829001DFB51 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		E921D60528A8F873001DFB51 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -80,6 +88,7 @@
 				B330662E28A2578800528BCE /* MenuVC.swift */,
 				E921D60528A8F873001DFB51 /* MapVC.swift */,
 				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
+				B31126BD28ABF263007923F1 /* MapModel.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -98,6 +107,8 @@
 			children = (
 				B330663528A2578900528BCE /* LaunchScreen.storyboard */,
 				B330663328A2578900528BCE /* Assets.xcassets */,
+				B31126BF28AC07BC007923F1 /* UIImage+resizeImage.swift */,
+				B31126C128AC0B26007923F1 /* String+encodeUrl+strip.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -178,6 +189,7 @@
 		B330662928A2578800528BCE /* PartyHub */ = {
 			isa = PBXGroup;
 			children = (
+				B346C39A28AB86E100162A1A /* Managers */,
 				2CCA56DD28A42C6500934F99 /* Coordinators */,
 				2CCA56C128A2DF2400934F99 /* Controllers */,
 				2CCA56C328A2DF7700934F99 /* Other */,
@@ -186,6 +198,14 @@
 				B330663828A2578900528BCE /* Info.plist */,
 			);
 			path = PartyHub;
+			sourceTree = "<group>";
+		};
+		B346C39A28AB86E100162A1A /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				B346C39B28AB875E00162A1A /* NetworkManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +222,7 @@
 				B330662428A2578800528BCE /* Frameworks */,
 				B330662528A2578800528BCE /* Resources */,
 				54648ECD61F7C68AAE6BC67A /* [CP] Embed Pods Frameworks */,
+				CFB857AF5121DBD95BEA8F4A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -313,6 +334,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CFB857AF5121DBD95BEA8F4A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DBE3B5AC19D7F116A7F4BEFD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -344,16 +382,20 @@
 			files = (
 				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
+				B31126C228AC0B26007923F1 /* String+encodeUrl+strip.swift in Sources */,
 				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
+				B31126C028AC07BC007923F1 /* UIImage+resizeImage.swift in Sources */,
 				B330662F28A2578800528BCE /* MenuVC.swift in Sources */,
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
 				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
 				E921D60628A8F873001DFB51 /* MapVC.swift in Sources */,
+				B31126BE28ABF263007923F1 /* MapModel.swift in Sources */,
 				E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
+				B346C39C28AB875E00162A1A /* NetworkManager.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
 				2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */,
 			);

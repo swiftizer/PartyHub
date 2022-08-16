@@ -9,5 +9,6 @@ target 'PartyHub' do
   pod 'PinLayout'
   pod 'R.swift'
   pod 'SwiftLint'
+  pod 'YandexMapsMobile', '4.1.0-lite'
 
 end

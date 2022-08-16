@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import YandexMapsMobile
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        YMKMapKit.setApiKey("d0ee692b-3897-4784-99ca-0c0896e50e1e")
+        YMKMapKit.sharedInstance()
         startApp()
         return true
     }
