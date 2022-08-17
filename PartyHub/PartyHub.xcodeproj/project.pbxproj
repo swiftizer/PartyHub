@@ -24,6 +24,7 @@
 		E921D60628A8F873001DFB51 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60528A8F873001DFB51 /* MapVC.swift */; };
 		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
 		E921D60A28A992F2001DFB51 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60928A992F1001DFB51 /* MenuTableViewCell.swift */; };
+		E9573A2F28AD3923007B278D /* MenuTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9573A2E28AD3923007B278D /* MenuTableViewAdapter.swift */; };
 		E9AF483928AA6CED00BD3C45 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF483828AA6CED00BD3C45 /* Extensions.swift */; };
 		E9AF483B28AAC26700BD3C45 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF483A28AAC26700BD3C45 /* AddTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		E921D60528A8F873001DFB51 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		E921D60928A992F1001DFB51 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		E9573A2E28AD3923007B278D /* MenuTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewAdapter.swift; sourceTree = "<group>"; };
 		E9AF483828AA6CED00BD3C45 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E9AF483A28AAC26700BD3C45 /* AddTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				B330662E28A2578800528BCE /* MenuVC.swift */,
+				E9573A2E28AD3923007B278D /* MenuTableViewAdapter.swift */,
 				E921D60928A992F1001DFB51 /* MenuTableViewCell.swift */,
 				E9AF483A28AAC26700BD3C45 /* AddTableViewCell.swift */,
 			);
@@ -367,6 +370,7 @@
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
+				E9573A2F28AD3923007B278D /* MenuTableViewAdapter.swift in Sources */,
 				E9AF483928AA6CED00BD3C45 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
