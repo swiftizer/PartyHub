@@ -57,18 +57,24 @@ final class RegistrationView: UIView {
         return textField
     }()
 
+    private let repeatePsswordTextField: UITextField = {
+        let textField = UITextField()
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "Repeat password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
+        )
+        textField.isSecureTextEntry = true
+        textField.textContentType = .oneTimeCode
+        return textField
+    }()
+
     private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Regiter", for: .normal)
         button.backgroundColor = .systemGray6.withAlphaComponent(0.6)
         button.layer.cornerRadius = 15
         button.tintColor = .label
-        button.dropShadow(
-            shadowColor: UIColor(hexString: "#000000", alpha: 0.3),
-            shadowOpacity: 1,
-            shadowOffset: CGSize(width: 0, height: 0.5),
-            shadowRadius: 0
-        )
+        button.dropShadow()
         return button
     }()
 
@@ -98,6 +104,7 @@ final class RegistrationView: UIView {
         secondNameTextField.resignFirstResponder()
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
+        repeatePsswordTextField.resignFirstResponder()
     }
 
     @objc
@@ -115,7 +122,7 @@ final class RegistrationView: UIView {
     // MARK: - Private Methods
 
     private func setupUI() {
-        [firstNameTextField, secondNameTextField, emailTextField, passwordTextField].forEach {
+        [firstNameTextField, secondNameTextField, emailTextField, passwordTextField, repeatePsswordTextField].forEach {
             $0.font = UIFont.boldSystemFont(ofSize: 16)
             $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
             $0.layer.cornerRadius = 15
@@ -127,6 +134,7 @@ final class RegistrationView: UIView {
             $0.backgroundColor = .systemGray6
             $0.textColor = .label
             $0.tintColor = .label
+            $0.dropShadow()
         }
 
         NotificationCenter.default.addObserver(
@@ -144,6 +152,7 @@ final class RegistrationView: UIView {
         addSubview(emailTextField)
         addSubview(passwordTextField)
         addSubview(registerButton)
+        addSubview(repeatePsswordTextField)
     }
 
     private func setupLayout() {
@@ -171,10 +180,16 @@ final class RegistrationView: UIView {
             .width(of: emailTextField)
             .height(50)
 
-        registerButton.pin
+        repeatePsswordTextField.pin
             .below(of: passwordTextField, aligned: .left)
             .marginTop(12)
             .width(of: passwordTextField)
+            .height(50)
+
+        registerButton.pin
+            .below(of: repeatePsswordTextField, aligned: .left)
+            .marginTop(12)
+            .width(of: repeatePsswordTextField)
             .height(50)
     }
 

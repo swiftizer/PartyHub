@@ -5,14 +5,13 @@
 //  Created by Dinar Garaev on 16.08.2022.
 //
 
-import Foundation
 import UIKit
 
 extension UIView {
     func dropShadow(
         scale: Bool = true,
         shadowColor: UIColor = UIColor(hexString: "#000000", alpha: 0.12),
-        shadowOpacity: Float = 1,
+        shadowOpacity: Float = 0.12,
         shadowOffset: CGSize = CGSize(width: 0, height: 4),
         shadowRadius: CGFloat = 24
     ) {

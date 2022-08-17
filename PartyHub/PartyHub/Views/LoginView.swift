@@ -20,6 +20,8 @@ final class LoginView: UIView {
 
     // MARK: - Private Properties
 
+    private var isFirstTouch: Bool = true
+
     private let emailTextField: UITextField = {
         let textField = UITextField()
         textField.attributedPlaceholder = NSAttributedString(
@@ -75,7 +77,36 @@ final class LoginView: UIView {
 
     @objc
     private func loginButtonTapped() {
-        delegate?.loginingButtonTapped()
+        if isFirstTouch {
+            emailTextField.pin
+                .top(pin.safeArea.top + 24)
+                .left(pin.safeArea.left + 20)
+                .right(pin.safeArea.right + 20)
+                .height(50)
+
+            passwordTextField.pin
+                .below(of: emailTextField, aligned: .left)
+                .marginTop(12)
+                .width(of: emailTextField)
+                .height(50)
+
+            UIView.animate(withDuration: 0.3) {
+                self.loginButton.pin
+                    .below(of: self.passwordTextField, aligned: .left)
+                    .marginTop(12)
+                    .width(of: self.passwordTextField)
+                    .height(50)
+
+                self.registerButton.pin
+                    .below(of: self.loginButton, aligned: .left)
+                    .marginTop(12)
+                    .width(of: self.loginButton)
+                    .height(50)
+            }
+            isFirstTouch = false
+        } else {
+            delegate?.loginingButtonTapped()
+        }
     }
 
     @objc
@@ -110,12 +141,7 @@ final class LoginView: UIView {
             $0.keyboardType = .default
             $0.returnKeyType = .default
             $0.clearButtonMode = .whileEditing
-            $0.dropShadow(
-                shadowColor: UIColor(hexString: "#000000", alpha: 0.3),
-                shadowOpacity: 1,
-                shadowOffset: CGSize(width: 0, height: 0.5),
-                shadowRadius: 0
-            )
+            $0.dropShadow()
             $0.font = UIFont.boldSystemFont(ofSize: 16)
         }
 
@@ -123,12 +149,7 @@ final class LoginView: UIView {
             $0.backgroundColor = .systemGray6
             $0.layer.cornerRadius = 15
             $0.tintColor = .label
-            $0.dropShadow(
-                shadowColor: UIColor(hexString: "#000000", alpha: 0.3),
-                shadowOpacity: 1,
-                shadowOffset: CGSize(width: 0, height: 0.5),
-                shadowRadius: 0
-            )
+            $0.dropShadow()
         }
 
         NotificationCenter.default.addObserver(
@@ -149,29 +170,19 @@ final class LoginView: UIView {
     }
 
     private func setupLayout() {
-        emailTextField.pin
-            .top(pin.safeArea.top + 24)
-            .left(pin.safeArea.left + 20)
-            .right(pin.safeArea.right + 20)
-            .height(50)
+        if isFirstTouch {
+            loginButton.pin
+                .top(pin.safeArea.top + 24)
+                .left(pin.safeArea.left + 20)
+                .right(pin.safeArea.right + 20)
+                .height(50)
 
-        passwordTextField.pin
-            .below(of: emailTextField, aligned: .left)
-            .marginTop(12)
-            .width(of: emailTextField)
-            .height(50)
-
-        loginButton.pin
-            .below(of: passwordTextField, aligned: .left)
-            .marginTop(12)
-            .width(of: passwordTextField)
-            .height(50)
-
-        registerButton.pin
-            .below(of: loginButton, aligned: .left)
-            .marginTop(12)
-            .width(of: loginButton)
-            .height(50)
+            registerButton.pin
+                .below(of: loginButton, aligned: .left)
+                .marginTop(12)
+                .width(of: loginButton)
+                .height(50)
+        }
     }
 
 }
