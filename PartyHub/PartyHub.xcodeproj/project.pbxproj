@@ -23,6 +23,9 @@
 		E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60328A8F829001DFB51 /* TabBarVC.swift */; };
 		E921D60628A8F873001DFB51 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60528A8F873001DFB51 /* MapVC.swift */; };
 		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
+		E921D60A28A992F2001DFB51 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60928A992F1001DFB51 /* MenuTableViewCell.swift */; };
+		E9AF483928AA6CED00BD3C45 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF483828AA6CED00BD3C45 /* Extensions.swift */; };
+		E9AF483B28AAC26700BD3C45 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF483A28AAC26700BD3C45 /* AddTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +49,9 @@
 		E921D60328A8F829001DFB51 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		E921D60528A8F873001DFB51 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		E921D60928A992F1001DFB51 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		E9AF483828AA6CED00BD3C45 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		E9AF483A28AAC26700BD3C45 /* AddTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				E921D60328A8F829001DFB51 /* TabBarVC.swift */,
-				B330662E28A2578800528BCE /* MenuVC.swift */,
+				E921D60B28A992F6001DFB51 /* MenuVC */,
 				E921D60528A8F873001DFB51 /* MapVC.swift */,
 				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
 			);
@@ -83,6 +89,7 @@
 		2CCA56C328A2DF7700934F99 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				E9573A2D28ACDADF007B278D /* Extensions */,
 				B330663528A2578900528BCE /* LaunchScreen.storyboard */,
 				B330663328A2578900528BCE /* Assets.xcassets */,
 			);
@@ -172,6 +179,24 @@
 				B330663828A2578900528BCE /* Info.plist */,
 			);
 			path = PartyHub;
+			sourceTree = "<group>";
+		};
+		E921D60B28A992F6001DFB51 /* MenuVC */ = {
+			isa = PBXGroup;
+			children = (
+				B330662E28A2578800528BCE /* MenuVC.swift */,
+				E921D60928A992F1001DFB51 /* MenuTableViewCell.swift */,
+				E9AF483A28AAC26700BD3C45 /* AddTableViewCell.swift */,
+			);
+			path = MenuVC;
+			sourceTree = "<group>";
+		};
+		E9573A2D28ACDADF007B278D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E9AF483828AA6CED00BD3C45 /* Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9AF483B28AAC26700BD3C45 /* AddTableViewCell.swift in Sources */,
 				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
 				2C52F2A128A6F5B80007938C /* AppCoordinator.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
@@ -337,9 +363,11 @@
 				E921D60628A8F873001DFB51 /* MapVC.swift in Sources */,
 				E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
+				E921D60A28A992F2001DFB51 /* MenuTableViewCell.swift in Sources */,
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
+				E9AF483928AA6CED00BD3C45 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
