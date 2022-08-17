@@ -19,12 +19,16 @@
 		2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F028A588A900934F99 /* MenuCoordinator.swift */; };
 		2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F228A588BA00934F99 /* MapCoordinator.swift */; };
 		2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA56F428A588CA00934F99 /* ProfileCoordinator.swift */; };
+		2CCB627628AD5BE6005586AF /* MenuTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB627228AD5BE6005586AF /* MenuTableViewAdapter.swift */; };
+		2CCB627728AD5BE6005586AF /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB627328AD5BE6005586AF /* MenuTableViewCell.swift */; };
+		2CCB627828AD5BE6005586AF /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */; };
+		2CCB627928AD5BE6005586AF /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB627528AD5BE6005586AF /* MenuVC.swift */; };
+		2CCB627B28AD5C3D005586AF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB627A28AD5C3D005586AF /* Extensions.swift */; };
+		2CCB627D28AD5CA4005586AF /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB627C28AD5CA4005586AF /* MapVC.swift */; };
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
-		B330662F28A2578800528BCE /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662E28A2578800528BCE /* MenuVC.swift */; };
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
 		E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60328A8F829001DFB51 /* TabBarVC.swift */; };
-		E921D60628A8F873001DFB51 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60528A8F873001DFB51 /* MapVC.swift */; };
 		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,17 +44,21 @@
 		2CCA56F028A588A900934F99 /* MenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCoordinator.swift; sourceTree = "<group>"; };
 		2CCA56F228A588BA00934F99 /* MapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCoordinator.swift; sourceTree = "<group>"; };
 		2CCA56F428A588CA00934F99 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		2CCB627228AD5BE6005586AF /* MenuTableViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewAdapter.swift; sourceTree = "<group>"; };
+		2CCB627328AD5BE6005586AF /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
+		2CCB627528AD5BE6005586AF /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
+		2CCB627A28AD5C3D005586AF /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		2CCB627C28AD5CA4005586AF /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		50B326832CFED75469491F5F /* Pods-PartyHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.release.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.release.xcconfig"; sourceTree = "<group>"; };
 		581F7A790F3FD049323D6791 /* Pods-PartyHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.debug.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.debug.xcconfig"; sourceTree = "<group>"; };
 		987809CF8142C2A20619407A /* Pods_PartyHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PartyHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B330662728A2578800528BCE /* PartyHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PartyHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B330662A28A2578800528BCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B330662E28A2578800528BCE /* MenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		B330663328A2578900528BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E921D60328A8F829001DFB51 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
-		E921D60528A8F873001DFB51 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,6 +86,7 @@
 		2C52F2E228AB8E700007938C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2CCB627A28AD5C3D005586AF /* Extensions.swift */,
 				2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */,
 			);
 			path = Extensions;
@@ -86,9 +95,9 @@
 		2CCA56C128A2DF2400934F99 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2CCB627128AD5BE6005586AF /* MenuVC */,
+				2CCB627C28AD5CA4005586AF /* MapVC.swift */,
 				E921D60328A8F829001DFB51 /* TabBarVC.swift */,
-				B330662E28A2578800528BCE /* MenuVC.swift */,
-				E921D60528A8F873001DFB51 /* MapVC.swift */,
 				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
 			);
 			path = Controllers;
@@ -149,6 +158,17 @@
 				2C52F2D928AB047E0007938C /* PresentableProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2CCB627128AD5BE6005586AF /* MenuVC */ = {
+			isa = PBXGroup;
+			children = (
+				2CCB627228AD5BE6005586AF /* MenuTableViewAdapter.swift */,
+				2CCB627328AD5BE6005586AF /* MenuTableViewCell.swift */,
+				2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */,
+				2CCB627528AD5BE6005586AF /* MenuVC.swift */,
+			);
+			path = MenuVC;
 			sourceTree = "<group>";
 		};
 		5FD6FFE6107AAAEED0F57977 /* Frameworks */ = {
@@ -354,15 +374,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */,
+				2CCB627B28AD5C3D005586AF /* Extensions.swift in Sources */,
 				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
 				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
-				B330662F28A2578800528BCE /* MenuVC.swift in Sources */,
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
+				2CCB627928AD5BE6005586AF /* MenuVC.swift in Sources */,
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
 				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
-				E921D60628A8F873001DFB51 /* MapVC.swift in Sources */,
+				2CCB627828AD5BE6005586AF /* AddTableViewCell.swift in Sources */,
+				2CCB627628AD5BE6005586AF /* MenuTableViewAdapter.swift in Sources */,
+				2CCB627D28AD5CA4005586AF /* MapVC.swift in Sources */,
 				E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */,
+				2CCB627728AD5BE6005586AF /* MenuTableViewCell.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
