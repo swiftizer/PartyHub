@@ -10,7 +10,7 @@ import PinLayout
 
 final class MenuTableViewCell: UITableViewCell {
 
-    // MARK: - Public properties
+    // MARK: - Internal properties
 
     var eventName: String = "Event Name"
     var distance: Float = 0.0

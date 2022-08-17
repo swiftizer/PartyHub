@@ -11,12 +11,15 @@ class MenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Private properties
 
-    private let menuTableView = UITableView()
-
     private struct Cells {
         static let addCell = "AddTableViewCell"
         static let menuCell = "MenuTableViewCell"
     }
+
+    private let menuTableView = UITableView()
+
+    private let addCellHeight: CGFloat = 80
+    private let menuCellHeight: CGFloat = 150
 
     // MARK: - Life cycle
 
@@ -41,9 +44,9 @@ class MenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 80
+            return addCellHeight
         } else {
-            return 150
+            return menuCellHeight
         }
     }
 

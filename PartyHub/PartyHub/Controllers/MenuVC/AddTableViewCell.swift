@@ -12,10 +12,8 @@ final class AddTableViewCell: UITableViewCell {
 
     // MARK: - Public Properties
 
-    public let containerView: UIView = {
+    let containerView: UIView = {
         let view = UIView()
-        view.layer.masksToBounds = false
-        view.clipsToBounds = false
         view.layer.cornerRadius = 15
         return view
     }()
