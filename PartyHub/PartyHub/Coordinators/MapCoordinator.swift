@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class MapCoordinator: Presentable {
-
+final class MapCoordinator: Coordinator {
+    var result: ((FlowResult<Void>) -> Void)?
     let router = DefaultRouter(with: nil)
 
     init() {

@@ -7,8 +7,7 @@
 
 import UIKit
 
-final class AuthRegCoordinator: Presentable {
-    typealias Result = Void
+final class AuthRegCoordinator: Coordinator {
     let router = DefaultRouter(with: nil)
     var result: ((FlowResult<Void>) -> Void)?
 
@@ -41,7 +40,6 @@ final class AuthRegCoordinator: Presentable {
             case .back:
                 self?.router.popModule(animated: true)
             case .enter:
-                print("registration")
                 self?.result?(.success(Void()))
             }
 

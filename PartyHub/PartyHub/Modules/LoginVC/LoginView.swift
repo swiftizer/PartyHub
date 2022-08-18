@@ -7,6 +7,7 @@
 
 import UIKit
 import PinLayout
+import FirebaseAuth
 
 protocol LoginViewDelegate: AnyObject {
     func loginingButtonTapped()
@@ -55,7 +56,7 @@ final class LoginView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        setupLayout()
+        setupFirstLayout()
     }
 
     // MARK: - Actions
@@ -63,33 +64,20 @@ final class LoginView: UIView {
     @objc
     private func loginButtonTapped() {
         if isFirstTouch {
-            emailTextField.pin
-                .top(pin.safeArea.top + 24)
-                .left(pin.safeArea.left + 20)
-                .right(pin.safeArea.right + 20)
-                .height(50)
-
-            passwordTextField.pin
-                .below(of: emailTextField, aligned: .left)
-                .marginTop(12)
-                .width(of: emailTextField)
-                .height(50)
-
-            UIView.animate(withDuration: 0.3) {
-                self.loginButton.pin
-                    .below(of: self.passwordTextField, aligned: .left)
-                    .marginTop(28)
-                    .width(of: self.passwordTextField)
-                    .height(50)
-
-                self.registerButton.pin
-                    .below(of: self.loginButton, aligned: .left)
-                    .marginTop(12)
-                    .width(of: self.loginButton)
-                    .height(50)
-            }
+            setupSecondLayout()
             isFirstTouch = false
         } else {
+//            guard let email = emailTextField.text, let password = passwordTextField.text else {
+//                return
+//            }
+//            FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+//                guard let result = authResult, error == nil else {
+//                    debugPrint(error?.localizedDescription ?? "Error")
+//                    return
+//                }
+//
+//                debugPrint(result.user)
+//            }
             delegate?.loginingButtonTapped()
         }
     }
@@ -130,7 +118,11 @@ final class LoginView: UIView {
         )
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        swipeGesture.direction = .down
+
         addGestureRecognizer(tapGesture)
+        addGestureRecognizer(swipeGesture)
 
         backgroundColor = .systemBackground
         addSubview(emailTextField)
@@ -139,7 +131,35 @@ final class LoginView: UIView {
         addSubview(registerButton)
     }
 
-    private func setupLayout() {
+    private func setupSecondLayout() {
+        emailTextField.pin
+            .top(pin.safeArea.top + 24)
+            .left(pin.safeArea.left + 20)
+            .right(pin.safeArea.right + 20)
+            .height(50)
+
+        passwordTextField.pin
+            .below(of: emailTextField, aligned: .left)
+            .marginTop(12)
+            .width(of: emailTextField)
+            .height(50)
+
+        UIView.animate(withDuration: 0.3) {
+            self.loginButton.pin
+                .below(of: self.passwordTextField, aligned: .left)
+                .marginTop(28)
+                .width(of: self.passwordTextField)
+                .height(50)
+
+            self.registerButton.pin
+                .below(of: self.loginButton, aligned: .left)
+                .marginTop(12)
+                .width(of: self.loginButton)
+                .height(50)
+        }
+    }
+
+    private func setupFirstLayout() {
         if isFirstTouch {
             loginButton.pin
                 .top(pin.safeArea.top + 24)

@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class ProfileCoordinator: Presentable {
-
+final class ProfileCoordinator: Coordinator {
+    var result: ((FlowResult<Void>) -> Void)?
     let router = DefaultRouter(with: nil)
 
     init() {

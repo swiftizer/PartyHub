@@ -8,10 +8,7 @@
 import UIKit
 
 final class TabBarCoordinator: NSObject, Coordinator {
-    typealias Result = Void
-
     var result: ((FlowResult<Void>) -> Void)?
-
     private let router: TabBarRouter
 
     init(with items: [TabBarControllerItem]) {
@@ -39,3 +36,17 @@ extension TabBarCoordinator {
         let tag: Int
     }
 }
+
+extension TabBarCoordinator: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        let item = tabBarController.tabBar.selectedItem
+        
+        switch item?.tag {
+        case 2:
+            break
+        default:
+            break
+        }
+    }
+}
+

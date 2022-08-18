@@ -7,6 +7,7 @@
 
 import UIKit
 import PinLayout
+import FirebaseAuth
 
 protocol RegistrationViewDelegate: AnyObject {
     func registerationButtonTapped()
@@ -76,24 +77,40 @@ final class RegistrationView: UIView {
 
     @objc
     private func registerButtonTapped() {
+        resignFirstResponders()
+
+        if !validateTextFields() {
+            invalidAnimation(for: registerButton)
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            return
+        }
+
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            return
+        }
+
+//        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] _, error in
+//            guard error == nil else {
+//                debugPrint(error?.localizedDescription ?? "Error")
+//                return
+//            }
+
+            self?.delegate?.registerationButtonTapped()
+//        }
+    }
+
+    // MARK: - Private Methods
+
+    private func resignFirstResponders() {
         firstNameTextField.resignFirstResponder()
         lastNameTextField.resignFirstResponder()
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         confirmPasswordTextField.resignFirstResponder()
-
-        if !validateTextFields() {
-            invalidRegisterAnimation()
-            UINotificationFeedbackGenerator().notificationOccurred(.error)
-            return
-        }
-
-        delegate?.registerationButtonTapped()
     }
 
-    // MARK: - Private Methods
-
     private func validateTextFields() -> Bool {
+        // TODO: - это пиздец, надо фиксить
         [firstNameTextField, lastNameTextField].forEach {
             if !($0.text?.isValidName ?? false) {
                 repaintBorder(for: $0, borderWidth: 1, color: .red.withAlphaComponent(0.6))
@@ -114,7 +131,8 @@ final class RegistrationView: UIView {
            !repeatePassword.isValidPassword {
             repaintBorder(for: passwordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
             repaintBorder(for: confirmPasswordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
-            invalidRegisterAnimation()
+            invalidAnimation(for: registerButton)
+            showAlertUserRegiestrationError()
             return false
         } else {
             repaintBorder(for: passwordTextField, borderWidth: 0, color: .clear)
@@ -124,7 +142,8 @@ final class RegistrationView: UIView {
         if passwordTextField.text != confirmPasswordTextField.text {
             repaintBorder(for: passwordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
             repaintBorder(for: confirmPasswordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
-            invalidRegisterAnimation()
+            invalidAnimation(for: registerButton)
+            showAlertUserRegiestrationError()
             return false
         } else {
             repaintBorder(for: passwordTextField, borderWidth: 0, color: .clear)
@@ -142,30 +161,38 @@ final class RegistrationView: UIView {
               !password.isEmpty,
               password == repeatepassword
         else {
-            invalidRegisterAnimation()
+            invalidAnimation(for: registerButton)
+            showAlertUserRegiestrationError()
             return false
         }
 
         return true
     }
 
-    private func repaintBorder(for view: UIView, borderWidth: CGFloat, color: UIColor) {
-        view.layer.borderWidth = borderWidth
-        view.layer.borderColor = color.cgColor
-    }
+    private func showAlertUserRegiestrationError() {
+        let alert = UIAlertController(
+            title: "Woops",
+            message: "Please enter all information to create a new account.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
 
-    private func invalidRegisterAnimation() {
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.06
-        animation.repeatCount = 2
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: registerButton.center.x - 10, y: registerButton.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: registerButton.center.x + 10, y: registerButton.center.y))
-        registerButton.layer.add(animation, forKey: "position")
+        let keyWindow = UIApplication.shared.connectedScenes
+                .filter({$0.activationState == .foregroundActive})
+                .compactMap({$0 as? UIWindowScene})
+                .first?.windows
+                .filter({$0.isKeyWindow})
+                .first
+        keyWindow?.rootViewController?.presentedViewController?.present(
+            alert,
+            animated: true,
+            completion: nil
+        )
     }
 
     private func setupUI() {
         backgroundColor = .systemBackground
-        
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide),
@@ -225,4 +252,14 @@ final class RegistrationView: UIView {
             .height(50)
     }
 
+}
+
+extension RegistrationView {
+
+    // MARK: - Animation
+
+    private func repaintBorder(for view: UIView, borderWidth: CGFloat, color: UIColor) {
+        view.layer.borderWidth = borderWidth
+        view.layer.borderColor = color.cgColor
+    }
 }
