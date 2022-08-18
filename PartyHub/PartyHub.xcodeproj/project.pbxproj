@@ -163,10 +163,10 @@
 		2CCB627128AD5BE6005586AF /* MenuVC */ = {
 			isa = PBXGroup;
 			children = (
-				2CCB627228AD5BE6005586AF /* MenuTableViewAdapter.swift */,
 				2CCB627328AD5BE6005586AF /* MenuTableViewCell.swift */,
 				2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */,
 				2CCB627528AD5BE6005586AF /* MenuVC.swift */,
+				2CCB627228AD5BE6005586AF /* MenuTableViewAdapter.swift */,
 			);
 			path = MenuVC;
 			sourceTree = "<group>";
