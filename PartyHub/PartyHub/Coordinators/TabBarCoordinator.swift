@@ -8,6 +8,9 @@
 import UIKit
 
 final class TabBarCoordinator: NSObject, Coordinator {
+    typealias Result = Void
+
+    var result: ((FlowResult<Void>) -> Void)?
 
     private let router: TabBarRouter
 
@@ -25,6 +28,7 @@ final class TabBarCoordinator: NSObject, Coordinator {
     func toPresent() -> UIViewController {
         return self.router.toPresent()
     }
+
 }
 
 extension TabBarCoordinator {

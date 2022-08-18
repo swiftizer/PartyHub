@@ -13,7 +13,7 @@ extension UIView {
         shadowColor: UIColor = UIColor(hexString: "#000000").withAlphaComponent(0.12),
         shadowOpacity: Float = 0.12,
         shadowOffset: CGSize = CGSize(width: 0, height: 4),
-        shadowRadius: CGFloat = 2.4
+        shadowRadius: CGFloat = 24
     ) {
         layer.masksToBounds = false
         layer.shadowColor = shadowColor.cgColor

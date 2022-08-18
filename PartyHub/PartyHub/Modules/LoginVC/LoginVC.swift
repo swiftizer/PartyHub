@@ -11,7 +11,7 @@ final class LoginVC: UIViewController {
 
     enum Navigation {
         case register
-        case login
+        case enter
     }
 
     var navigation: ((Navigation) -> Void)?
@@ -39,7 +39,7 @@ final class LoginVC: UIViewController {
 extension LoginVC: LoginViewDelegate {
     func loginingButtonTapped() {
         generator.impactOccurred(intensity: 0.6)
-        navigation?(.login)
+        navigation?(.enter)
     }
 
     func registrationButtonTapped() {

@@ -42,7 +42,7 @@ extension AppDelegate {
         menuCordinator.start()
         let mapCordinator = MapCoordinator()
         mapCordinator.start()
-        let profileCordinator = ProfileCoordinator()
+        let profileCordinator = AuthRegCoordinator()
         profileCordinator.start()
 
         appCoordinator = TabBarCoordinator(with: [

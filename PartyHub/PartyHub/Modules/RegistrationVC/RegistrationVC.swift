@@ -10,7 +10,7 @@ import UIKit
 final class RegistrationVC: UIViewController {
     enum Navigation {
         case back
-        case registration
+        case enter
     }
 
     var navigation: ((Navigation) -> Void)?
@@ -59,6 +59,6 @@ final class RegistrationVC: UIViewController {
 extension RegistrationVC: RegistrationViewDelegate {
     func registerationButtonTapped() {
         FeedbackGenerator.shared.feedbackGeneration(.medium)
-        self.navigation?(.registration)
+        self.navigation?(.enter)
     }
 }

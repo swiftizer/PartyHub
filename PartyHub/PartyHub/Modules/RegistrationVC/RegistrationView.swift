@@ -34,6 +34,7 @@ final class RegistrationView: UIView {
         button.layer.cornerRadius = 15
         button.tintColor = .label
         button.dropShadow()
+        button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -75,10 +76,93 @@ final class RegistrationView: UIView {
 
     @objc
     private func registerButtonTapped() {
+        firstNameTextField.resignFirstResponder()
+        lastNameTextField.resignFirstResponder()
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        confirmPasswordTextField.resignFirstResponder()
+
+        if !validateTextFields() {
+            invalidRegisterAnimation()
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            return
+        }
+
         delegate?.registerationButtonTapped()
     }
 
     // MARK: - Private Methods
+
+    private func validateTextFields() -> Bool {
+        [firstNameTextField, lastNameTextField].forEach {
+            if !($0.text?.isValidName ?? false) {
+                repaintBorder(for: $0, borderWidth: 1, color: .red.withAlphaComponent(0.6))
+            } else {
+                repaintBorder(for: $0, borderWidth: 0, color: .clear)
+            }
+        }
+
+        if !(emailTextField.text?.isValidEmailAddress ?? false) {
+            repaintBorder(for: emailTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
+        } else {
+            repaintBorder(for: emailTextField, borderWidth: 0, color: .clear)
+        }
+
+        if let password = passwordTextField.text,
+           let repeatePassword = confirmPasswordTextField.text,
+           !password.isValidPassword,
+           !repeatePassword.isValidPassword {
+            repaintBorder(for: passwordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
+            repaintBorder(for: confirmPasswordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
+            invalidRegisterAnimation()
+            return false
+        } else {
+            repaintBorder(for: passwordTextField, borderWidth: 0, color: .clear)
+            repaintBorder(for: confirmPasswordTextField, borderWidth: 0, color: .clear)
+        }
+
+        if passwordTextField.text != confirmPasswordTextField.text {
+            repaintBorder(for: passwordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
+            repaintBorder(for: confirmPasswordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
+            invalidRegisterAnimation()
+            return false
+        } else {
+            repaintBorder(for: passwordTextField, borderWidth: 0, color: .clear)
+            repaintBorder(for: confirmPasswordTextField, borderWidth: 0, color: .clear)
+        }
+
+        guard let firstName = firstNameTextField.text,
+              firstName.isValidName,
+              let secondName = lastNameTextField.text,
+              secondName.isValidName,
+              let email = emailTextField.text,
+              email.isValidEmailAddress,
+              let password = passwordTextField.text,
+              let repeatepassword = confirmPasswordTextField.text,
+              !password.isEmpty,
+              password == repeatepassword
+        else {
+            invalidRegisterAnimation()
+            return false
+        }
+
+        return true
+    }
+
+    private func repaintBorder(for view: UIView, borderWidth: CGFloat, color: UIColor) {
+        view.layer.borderWidth = borderWidth
+        view.layer.borderColor = color.cgColor
+    }
+
+    private func invalidRegisterAnimation() {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.06
+        animation.repeatCount = 2
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: registerButton.center.x - 10, y: registerButton.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: registerButton.center.x + 10, y: registerButton.center.y))
+        registerButton.layer.add(animation, forKey: "position")
+    }
 
     private func setupUI() {
         NotificationCenter.default.addObserver(
