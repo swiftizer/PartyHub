@@ -61,16 +61,17 @@ extension TabBarCoordinator: UITabBarControllerDelegate {
     ) -> Bool {
         guard let item = tabBarController.tabBar.selectedItem else { return false }
 
+        // TODO: - вынести логику
         switch item.tag {
         case 2:
             if Auth.auth().currentUser != nil {
-                break
+                return true
             } else {
                 let authCoordinator = AuthRegCoordinator()
                 authCoordinator.result = { [weak self] res in
                     switch res {
                     case .success():
-                        print("Suck My Cock")
+                        self?.router.popModule(animated: true)
                     default :
                         break
                     }

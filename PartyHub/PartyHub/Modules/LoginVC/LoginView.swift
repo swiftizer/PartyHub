@@ -67,17 +67,17 @@ final class LoginView: UIView {
             setupSecondLayout()
             isFirstTouch = false
         } else {
-//            guard let email = emailTextField.text, let password = passwordTextField.text else {
-//                return
-//            }
-//            FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-//                guard let result = authResult, error == nil else {
-//                    debugPrint(error?.localizedDescription ?? "Error")
-//                    return
-//                }
-//
-//                debugPrint(result.user)
-//            }
+            guard let email = emailTextField.text, let password = passwordTextField.text else {
+                return
+            }
+            FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                guard let result = authResult, error == nil else {
+                    debugPrint(error?.localizedDescription ?? "Error")
+                    return
+                }
+
+                debugPrint(result.user)
+            }
             delegate?.loginingButtonTapped()
         }
     }

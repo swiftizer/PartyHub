@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ProfileVC: UIViewController {
 
@@ -14,5 +15,25 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let exitNavigationItem = UIBarButtonItem(
+            image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
+            style: .plain,
+            target: self,
+            action: #selector(exitButtonTapped)
+        )
+
+        exitNavigationItem.tintColor = .label
+        navigationItem.rightBarButtonItem = exitNavigationItem
+    }
+
+    @objc
+    private func exitButtonTapped() {
+        Auth.auth().currentUser?.delete(completion: { error in
+            if error != nil {
+                // An error happened.
+            } else {
+                // Account deleted.
+            }
+        })
     }
 }

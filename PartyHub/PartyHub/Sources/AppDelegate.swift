@@ -40,26 +40,9 @@ extension AppDelegate {
     // MARK: - Private Methods
 
     private func startApp() {
-
         let menuCordinator = MenuCoordinator()
         let mapCordinator = MapCoordinator()
         let profileCoordinator = ProfileCoordinator()
-//        profileCoordinator.result = { [weak self] res in
-//            switch res {
-//            case .success():
-//
-//            default :
-//                break
-//            }
-//        }
-
-//        Auth.auth().currentUser?.delete(completion: { error in
-//            if let error = error {
-//                // An error happened.
-//            } else {
-//                // Account deleted.
-//            }
-//        })
 
         appCoordinator = TabBarCoordinator(with: [
             .init(module: menuCordinator, icon: UIImage(systemName: "list.bullet")!, title: "Menu", tag: 0),

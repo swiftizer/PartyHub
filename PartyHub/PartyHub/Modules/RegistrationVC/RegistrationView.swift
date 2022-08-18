@@ -89,14 +89,14 @@ final class RegistrationView: UIView {
             return
         }
 
-//        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] _, error in
-//            guard error == nil else {
-//                debugPrint(error?.localizedDescription ?? "Error")
-//                return
-//            }
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] _, error in
+            guard error == nil else {
+                debugPrint(error?.localizedDescription ?? "Error")
+                return
+            }
 
-            self.delegate?.registerationButtonTapped()
-//        }
+            self?.delegate?.registerationButtonTapped()
+        }
     }
 
     // MARK: - Private Methods

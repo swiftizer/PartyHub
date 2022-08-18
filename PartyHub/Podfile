@@ -11,7 +11,6 @@ target 'PartyHub' do
   pod 'SwiftLint'
   pod 'FirebaseAuth'
   pod 'FirebaseCore'
-  pod 'FirebaseAuth'
-  pod 'FirebaseDatabase'
+  pod 'FirebaseFirestore'
 
 end
