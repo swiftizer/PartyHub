@@ -21,11 +21,13 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
     private let addCellHeight: CGFloat = 80
     private let menuCellHeight: CGFloat = 150
     private let menuTableView: UITableView
+    private let currentVC: UIViewController
 
     // MARK: - Initialization
 
-    init(tableView: UITableView) {
+    init(tableView: UITableView, viewController: UIViewController) {
         self.menuTableView = tableView
+        currentVC = viewController
         super.init()
         setUpTableView()
     }
@@ -62,6 +64,14 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
         }
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            // TODO: - Open AddEventVC (делает Сережа)
+        } else {
+            openEvent()
+        }
+    }
+
     // MARK: - Private methods
 
     private func setUpTableView() {
@@ -71,6 +81,11 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
         menuTableView.register(AddTableViewCell.self, forCellReuseIdentifier: Cells.addCell)
         menuTableView.delegate = self
         menuTableView.dataSource = self
+    }
+
+    private func openEvent() {
+        let eventVC = EventVC()
+        currentVC.navigationController?.pushViewController(eventVC, animated: true)
     }
 
 }

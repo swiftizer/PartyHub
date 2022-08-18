@@ -30,6 +30,7 @@
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
 		E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60328A8F829001DFB51 /* TabBarVC.swift */; };
 		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
+		E9FA5A5D28AE746E00101AA9 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA5A5C28AE746E00101AA9 /* EventVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E921D60328A8F829001DFB51 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		E9FA5A5C28AE746E00101AA9 /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 		2CCB627128AD5BE6005586AF /* MenuVC */ = {
 			isa = PBXGroup;
 			children = (
+				E9FA5A5B28AE745B00101AA9 /* EventVC */,
 				2CCB627328AD5BE6005586AF /* MenuTableViewCell.swift */,
 				2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */,
 				2CCB627528AD5BE6005586AF /* MenuVC.swift */,
@@ -217,6 +220,14 @@
 				B330663828A2578900528BCE /* Info.plist */,
 			);
 			path = PartyHub;
+			sourceTree = "<group>";
+		};
+		E9FA5A5B28AE745B00101AA9 /* EventVC */ = {
+			isa = PBXGroup;
+			children = (
+				E9FA5A5C28AE746E00101AA9 /* EventVC.swift */,
+			);
+			path = EventVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -380,6 +391,7 @@
 				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
 				2CCB627928AD5BE6005586AF /* MenuVC.swift in Sources */,
+				E9FA5A5D28AE746E00101AA9 /* EventVC.swift in Sources */,
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
 				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
 				2CCB627828AD5BE6005586AF /* AddTableViewCell.swift in Sources */,

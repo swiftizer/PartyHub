@@ -20,7 +20,7 @@ class MenuVC: UIViewController {
         super.viewDidLoad()
 
         view.addSubview(menuTableView)
-        self.adapter = MenuTableViewAdapter(tableView: self.menuTableView)
+        self.adapter = MenuTableViewAdapter(tableView: self.menuTableView, viewController: self)
 
     }
 
