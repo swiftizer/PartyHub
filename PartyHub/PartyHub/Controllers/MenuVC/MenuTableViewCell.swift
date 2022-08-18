@@ -85,7 +85,7 @@ extension MenuTableViewCell {
             .top(12)
             .left(12)
             .bottom(12)
-            .width(eventImageView.frame.height)
+            .width(cellContainerView.frame.height - 24)
 
         titleLabel.pin
             .top(frame.height/4)
