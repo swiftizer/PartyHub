@@ -158,13 +158,14 @@ final class RegistrationView: UIView {
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.06
         animation.repeatCount = 2
-        animation.autoreverses = true
         animation.fromValue = NSValue(cgPoint: CGPoint(x: registerButton.center.x - 10, y: registerButton.center.y))
         animation.toValue = NSValue(cgPoint: CGPoint(x: registerButton.center.x + 10, y: registerButton.center.y))
         registerButton.layer.add(animation, forKey: "position")
     }
 
     private func setupUI() {
+        backgroundColor = .systemBackground
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide),
@@ -173,8 +174,11 @@ final class RegistrationView: UIView {
         )
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        swipeGesture.direction = .down
         addGestureRecognizer(tapGesture)
-        backgroundColor = .systemBackground
+        addGestureRecognizer(swipeGesture)
+
         addSubview(firstNameTextField)
         addSubview(lastNameTextField)
         addSubview(emailTextField)
