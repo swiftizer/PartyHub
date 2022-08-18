@@ -64,7 +64,6 @@ final class MenuTableViewCell: UITableViewCell {
             cellContainerView.backgroundColor = .systemBackground
         }
     }
-
 }
 
 extension MenuTableViewCell {

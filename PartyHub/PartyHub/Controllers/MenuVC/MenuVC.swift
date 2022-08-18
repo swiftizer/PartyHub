@@ -21,7 +21,6 @@ class MenuVC: UIViewController {
 
         view.addSubview(menuTableView)
         self.adapter = MenuTableViewAdapter(tableView: self.menuTableView)
-
     }
 
     override func viewDidLayoutSubviews() {
@@ -29,7 +28,5 @@ class MenuVC: UIViewController {
 
         menuTableView.pin
             .all()
-
     }
-
 }

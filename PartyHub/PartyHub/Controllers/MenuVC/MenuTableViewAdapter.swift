@@ -9,7 +9,7 @@ import UIKit
 
 final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDelegate {
 
-    // MARK: - Private properties
+    // MARK: - Private Properties
 
     private struct Cells {
         static let addCell = "AddTableViewCell"
