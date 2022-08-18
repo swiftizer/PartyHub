@@ -11,7 +11,7 @@ import UIKit
 final class TabBarRouter: Presentable {
     private var modules: [Presentable] = []
     private(set) var tabs: [Presentable]
-    private let container = TabBarVC()
+    let container = TabBarVC()
 
     init(with items: [Presentable]) {
         self.tabs = items

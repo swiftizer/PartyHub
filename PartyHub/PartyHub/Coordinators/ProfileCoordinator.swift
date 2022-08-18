@@ -18,13 +18,14 @@ final class ProfileCoordinator: Presentable {
 
     func start() {
         let module = LoginVC()
-        module.title = "Login"
         module.navigation = { [weak self] navType in
+            guard let self = self else { return }
             switch navType {
             case .login:
-                self?.presentLogin()
+                break
+//                self.presentLogin()
             case .register:
-                self?.presentRegistration()
+                self.presentRegistration()
             }
         }
         router.setRootModule(module)
@@ -36,9 +37,11 @@ final class ProfileCoordinator: Presentable {
         let nav = UINavigationController(rootViewController: module)
         nav.modalPresentationStyle = .overFullScreen
         module.navigation = { [weak self] typeNav in
+            guard let self = self else { return }
+
             switch typeNav {
             case .back:
-                self?.router.popModule(animated: true)
+                self.router.popModule(animated: true)
             case .registration:
                 break
 //                self?.result?(.success(Void()))
@@ -49,7 +52,7 @@ final class ProfileCoordinator: Presentable {
     }
 
     func presentLogin() {
-        print("login")
+        debugPrint("Login")
     }
 
     func toPresent() -> UIViewController {

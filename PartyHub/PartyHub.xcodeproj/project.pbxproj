@@ -12,6 +12,8 @@
 		2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DB28AB04A60007938C /* TabBarRouter.swift */; };
 		2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DE28AB04D20007938C /* DefaultRouter.swift */; };
 		2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */; };
+		2C81638728AE0F3300D9D564 /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81638628AE0F3300D9D564 /* FeedbackGenerator.swift */; };
+		2C81638A28AE123A00D9D564 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81638928AE123A00D9D564 /* CustomTextField.swift */; };
 		2CA580F528AB96950070F943 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F428AB96950070F943 /* LoginVC.swift */; };
 		2CA580F728AB980D0070F943 /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F628AB980D0070F943 /* UIColor+HexString.swift */; };
 		2CA580F928AB984F0070F943 /* UIVIew+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA580F828AB984F0070F943 /* UIVIew+Frame.swift */; };
@@ -40,6 +42,8 @@
 		2C52F2DB28AB04A60007938C /* TabBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarRouter.swift; sourceTree = "<group>"; };
 		2C52F2DE28AB04D20007938C /* DefaultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRouter.swift; sourceTree = "<group>"; };
 		2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
+		2C81638628AE0F3300D9D564 /* FeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
+		2C81638928AE123A00D9D564 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		2CA580F428AB96950070F943 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		2CA580F628AB980D0070F943 /* UIColor+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
 		2CA580F828AB984F0070F943 /* UIVIew+Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+Frame.swift"; sourceTree = "<group>"; };
@@ -100,11 +104,20 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		2C81638828AE11CE00D9D564 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2C81638628AE0F3300D9D564 /* FeedbackGenerator.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		2CB7D0AC28AC348E00AB7C74 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				2CB7D0AF28AC3E0100AB7C74 /* LoginView.swift */,
 				2CB7D0AD28AC34B100AB7C74 /* RegistrationView.swift */,
+				2C81638928AE123A00D9D564 /* CustomTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -217,6 +230,7 @@
 		B330662928A2578800528BCE /* PartyHub */ = {
 			isa = PBXGroup;
 			children = (
+				2C81638828AE11CE00D9D564 /* Managers */,
 				2CCA56DD28A42C6500934F99 /* Coordinators */,
 				2CCA56C128A2DF2400934F99 /* Controllers */,
 				2CB7D0AC28AC348E00AB7C74 /* Views */,
@@ -392,6 +406,7 @@
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
 				2CB7D0B028AC3E0100AB7C74 /* LoginView.swift in Sources */,
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
+				2C81638728AE0F3300D9D564 /* FeedbackGenerator.swift in Sources */,
 				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
 				E921D60628A8F873001DFB51 /* MapVC.swift in Sources */,
 				2CA580FC28ABBBED0070F943 /* UIView+DropShadow.swift in Sources */,
@@ -401,6 +416,7 @@
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,
 				2CA580F728AB980D0070F943 /* UIColor+HexString.swift in Sources */,
 				2CA580F928AB984F0070F943 /* UIVIew+Frame.swift in Sources */,
+				2C81638A28AE123A00D9D564 /* CustomTextField.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
 				2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */,

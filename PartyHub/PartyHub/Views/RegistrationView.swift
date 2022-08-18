@@ -19,59 +19,18 @@ final class RegistrationView: UIView {
 
     // MARK: - Private Properties
 
-    private let firstNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "First Name",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
-        )
-        return textField
-    }()
+    private let firstNameTextField = CustomTextField(type: .firstNameTextField)
+    private let lastNameTextField = CustomTextField(type: .lastNameTextField)
+    private let emailTextField = CustomTextField(type: .emailTextField)
+    private let passwordTextField = CustomTextField(type: .passwordTextField)
+    private let confirmPasswordTextField = CustomTextField(type: .confirmPasswordTextField)
 
-    private let secondNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Second Name",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
-        )
-        return textField
-    }()
-
-    private let emailTextField: UITextField = {
-        let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Email",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
-        )
-        return textField
-    }()
-
-    private let passwordTextField: UITextField = {
-        let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Password",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
-        )
-        textField.isSecureTextEntry = true
-        textField.textContentType = .oneTimeCode
-        return textField
-    }()
-
-    private let repeatePsswordTextField: UITextField = {
-        let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Repeat password",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
-        )
-        textField.isSecureTextEntry = true
-        textField.textContentType = .oneTimeCode
-        return textField
-    }()
+    // MARK: - Computed Properties
 
     private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Regiter", for: .normal)
-        button.backgroundColor = .systemGray6.withAlphaComponent(0.6)
+        button.backgroundColor = .systemGray5
         button.layer.cornerRadius = 15
         button.tintColor = .label
         button.dropShadow()
@@ -101,10 +60,10 @@ final class RegistrationView: UIView {
     @objc
     private func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         firstNameTextField.resignFirstResponder()
-        secondNameTextField.resignFirstResponder()
+        lastNameTextField.resignFirstResponder()
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
-        repeatePsswordTextField.resignFirstResponder()
+        confirmPasswordTextField.resignFirstResponder()
     }
 
     @objc
@@ -122,21 +81,6 @@ final class RegistrationView: UIView {
     // MARK: - Private Methods
 
     private func setupUI() {
-        [firstNameTextField, secondNameTextField, emailTextField, passwordTextField, repeatePsswordTextField].forEach {
-            $0.font = UIFont.boldSystemFont(ofSize: 16)
-            $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
-            $0.layer.cornerRadius = 15
-            $0.autocorrectionType = .no
-            $0.leftViewMode = .always
-            $0.keyboardType = .default
-            $0.returnKeyType = .default
-            $0.clearButtonMode = .whileEditing
-            $0.backgroundColor = .systemGray6
-            $0.textColor = .label
-            $0.tintColor = .label
-            $0.dropShadow()
-        }
-
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide),
@@ -148,11 +92,11 @@ final class RegistrationView: UIView {
         addGestureRecognizer(tapGesture)
         backgroundColor = .systemBackground
         addSubview(firstNameTextField)
-        addSubview(secondNameTextField)
+        addSubview(lastNameTextField)
         addSubview(emailTextField)
         addSubview(passwordTextField)
         addSubview(registerButton)
-        addSubview(repeatePsswordTextField)
+        addSubview(confirmPasswordTextField)
     }
 
     private func setupLayout() {
@@ -162,16 +106,16 @@ final class RegistrationView: UIView {
             .right(pin.safeArea.right + 20)
             .height(50)
 
-        secondNameTextField.pin
+        lastNameTextField.pin
             .below(of: firstNameTextField, aligned: .left)
             .marginTop(12)
             .width(of: firstNameTextField)
             .height(50)
 
         emailTextField.pin
-            .below(of: secondNameTextField, aligned: .left)
+            .below(of: lastNameTextField, aligned: .left)
             .marginTop(12)
-            .width(of: secondNameTextField)
+            .width(of: lastNameTextField)
             .height(50)
 
         passwordTextField.pin
@@ -180,16 +124,16 @@ final class RegistrationView: UIView {
             .width(of: emailTextField)
             .height(50)
 
-        repeatePsswordTextField.pin
+        confirmPasswordTextField.pin
             .below(of: passwordTextField, aligned: .left)
             .marginTop(12)
             .width(of: passwordTextField)
             .height(50)
 
         registerButton.pin
-            .below(of: repeatePsswordTextField, aligned: .left)
-            .marginTop(12)
-            .width(of: repeatePsswordTextField)
+            .below(of: confirmPasswordTextField, aligned: .left)
+            .marginTop(28)
+            .width(of: confirmPasswordTextField)
             .height(50)
     }
 

@@ -25,7 +25,6 @@ final class TabBarCoordinator: NSObject, Coordinator {
     func toPresent() -> UIViewController {
         return self.router.toPresent()
     }
-
 }
 
 extension TabBarCoordinator {

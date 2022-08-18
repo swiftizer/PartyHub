@@ -18,7 +18,6 @@ final class RegistrationVC: UIViewController {
     // MARK: - Private Properties
 
     private let mainView = RegistrationView()
-    private let generator = UIImpactFeedbackGenerator(style: .medium)
 
     // MARK: - Life Cycle
 
@@ -28,7 +27,6 @@ final class RegistrationVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        generator.prepare()
         setupUI()
     }
 
@@ -36,7 +34,7 @@ final class RegistrationVC: UIViewController {
 
     @objc
     private func backAction() {
-        generator.impactOccurred(intensity: 0.6)
+        FeedbackGenerator.shared.feedbackGeneration(.medium)
         self.navigation?(.back)
     }
 
@@ -60,7 +58,7 @@ final class RegistrationVC: UIViewController {
 
 extension RegistrationVC: RegistrationViewDelegate {
     func registerationButtonTapped() {
-        generator.impactOccurred(intensity: 0.6)
+        FeedbackGenerator.shared.feedbackGeneration(.medium)
         self.navigation?(.registration)
     }
 }

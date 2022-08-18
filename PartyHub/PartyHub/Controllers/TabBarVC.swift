@@ -18,15 +18,10 @@ final class TabBarVC: UITabBarController {
         return bounceAnimation
     }()
 
-    // MARK: - Private Methods
-
-    private let generator = UIImpactFeedbackGenerator(style: .light)
-
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        generator.prepare()
     }
 }
 
@@ -34,6 +29,6 @@ extension TabBarVC {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         guard let imageView = item.value(forKey: "view") as? UIView else { return }
         imageView.layer.add(bounceAnimation, forKey: nil)
-        generator.impactOccurred(intensity: 0.6)
+        FeedbackGenerator.shared.feedbackGeneration(.light)
     }
 }

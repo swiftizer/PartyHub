@@ -21,25 +21,10 @@ final class LoginView: UIView {
     // MARK: - Private Properties
 
     private var isFirstTouch: Bool = true
+    private let emailTextField = CustomTextField(type: .emailTextField)
+    private let passwordTextField = CustomTextField(type: .passwordTextField)
 
-    private let emailTextField: UITextField = {
-        let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Email",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
-        )
-        return textField
-    }()
-
-    private let passwordTextField: UITextField = {
-        let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Password",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
-        )
-        textField.isSecureTextEntry = true
-        return textField
-    }()
+    // MARK: - Computed Properties
 
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
@@ -93,7 +78,7 @@ final class LoginView: UIView {
             UIView.animate(withDuration: 0.3) {
                 self.loginButton.pin
                     .below(of: self.passwordTextField, aligned: .left)
-                    .marginTop(12)
+                    .marginTop(28)
                     .width(of: self.passwordTextField)
                     .height(50)
 
@@ -130,23 +115,8 @@ final class LoginView: UIView {
     // MARK: - Private Properties
 
     private func setupUI() {
-        [emailTextField, passwordTextField].forEach {
-            $0.backgroundColor = .systemGray6
-            $0.tintColor = .label
-            $0.textColor = .label
-            $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 50))
-            $0.layer.cornerRadius = 15
-            $0.autocorrectionType = .no
-            $0.leftViewMode = .always
-            $0.keyboardType = .default
-            $0.returnKeyType = .default
-            $0.clearButtonMode = .whileEditing
-            $0.dropShadow()
-            $0.font = UIFont.boldSystemFont(ofSize: 16)
-        }
-
         [loginButton, registerButton].forEach {
-            $0.backgroundColor = .systemGray6
+            $0.backgroundColor = .systemGray5
             $0.layer.cornerRadius = 15
             $0.tintColor = .label
             $0.dropShadow()
