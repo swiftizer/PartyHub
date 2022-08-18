@@ -19,6 +19,7 @@ final class EventVC: UIViewController {
     private let addressLabel = UILabel()
     private let priceLabel = UILabel()
     private let descriptionLabel = UILabel()
+    private let moreButton = UIButton()
 
     private let dateImageName = "clock"
     private let addressImageName = "mappin.and.ellipse"
@@ -43,8 +44,13 @@ final class EventVC: UIViewController {
             setUpIconWithLabel(icon: image, label: priceLabel,
                                text: "FREE")
         }
+        setUpDescriptionLabel()
+        setUpMoreButton()
 
-        // make navbar background invisible
+        // make navbar background invisible and it's elements gray
+        self.navigationController?.navigationBar.isTranslucent = true
+//        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
     }
 
     override func viewDidLayoutSubviews() {
@@ -86,9 +92,28 @@ final class EventVC: UIViewController {
         scrollView.addSubview(label)
     }
 
+    private func setUpDescriptionLabel() {
+        scrollView.addSubview(descriptionLabel)
+        descriptionLabel.text = "Самая вайбовая вечериночка лета, наполненная инди-музыкой и самыми приятными людьми! Для вашей безопасности на входе действует фейс контроль. "
+        descriptionLabel.font = .systemFont(ofSize: 17, weight: .regular)
+        descriptionLabel.textColor = .label
+        descriptionLabel.textAlignment = .left
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.lineBreakMode = .byWordWrapping
+    }
+
+    private func setUpMoreButton() {
+        scrollView.addSubview(moreButton)
+        moreButton.backgroundColor = .systemGray6
+        moreButton.setTitle("Read more", for: .normal)
+        moreButton.layer.cornerRadius = 15
+        moreButton.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
+        // change color while highlighted
+    }
+
     private func setUpLayout() {
 
-        let labelWidth: CGFloat = view.frame.width * 0.8
+        let labelWidth: CGFloat = view.frame.width * 0.85
         let labelHeight: CGFloat = 24
 
         eventImageView.pin
@@ -99,6 +124,7 @@ final class EventVC: UIViewController {
 
         scrollView.pin
             .all()
+        // scrollView не работает?
 
         eventNameLabel.pin
             .top(eventImageView.frame.maxY - 36)
@@ -124,6 +150,22 @@ final class EventVC: UIViewController {
             .width(labelWidth)
             .height(labelHeight)
 
+        descriptionLabel.pin
+            .top(priceLabel.frame.maxY - 12)
+            .hCenter()
+            .width(labelWidth)
+            .height(150) // resize
+
+        moreButton.pin
+            .top(descriptionLabel.frame.maxY + 12)
+            .hCenter()
+            .width(labelWidth)
+            .height(50)
+
+    }
+
+    @objc private func didTapMoreButton() {
+        // open some url
     }
 
 }
