@@ -28,13 +28,13 @@ final class CustomTextField: UITextField {
                 string: "First name",
                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
             )
-            textContentType = .name
+            textContentType = .username
         case .lastNameTextField:
             attributedPlaceholder = NSAttributedString(
                 string: "Last name",
                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
             )
-            textContentType = .name
+            textContentType = .username
         case .emailTextField:
             attributedPlaceholder = NSAttributedString(
                 string: "Email",
@@ -74,6 +74,7 @@ final class CustomTextField: UITextField {
         backgroundColor = .systemGray6
         textColor = .label
         tintColor = .label
+        autocapitalizationType = .none
         dropShadow()
     }
 }

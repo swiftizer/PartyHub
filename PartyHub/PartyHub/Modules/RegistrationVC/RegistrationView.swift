@@ -95,7 +95,7 @@ final class RegistrationView: UIView {
 //                return
 //            }
 
-            self?.delegate?.registerationButtonTapped()
+            self.delegate?.registerationButtonTapped()
 //        }
     }
 
@@ -201,10 +201,7 @@ final class RegistrationView: UIView {
         )
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
-        swipeGesture.direction = .down
         addGestureRecognizer(tapGesture)
-        addGestureRecognizer(swipeGesture)
 
         addSubview(firstNameTextField)
         addSubview(lastNameTextField)

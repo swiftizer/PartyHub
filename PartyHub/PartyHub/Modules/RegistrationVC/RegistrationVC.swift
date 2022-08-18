@@ -44,13 +44,14 @@ final class RegistrationVC: UIViewController {
         mainView.delegate = self
 
         let backNavigationItem = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.backward"),
+            image: UIImage(systemName: "xmark.circle"),
             style: .plain,
             target: self,
             action: #selector(backAction)
         )
+
         backNavigationItem.tintColor = .label
-        navigationItem.leftBarButtonItem = backNavigationItem
+        navigationItem.rightBarButtonItem = backNavigationItem
     }
 }
 

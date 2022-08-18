@@ -34,7 +34,6 @@ final class AuthRegCoordinator: Coordinator {
         let module = RegistrationVC()
         module.title = "Registration"
         let nav = UINavigationController(rootViewController: module)
-        nav.modalPresentationStyle = .overFullScreen
         module.navigation = { [weak self] typeNav in
             switch typeNav {
             case .back:

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Rswift
 
 final class TabBarCoordinator: NSObject, Coordinator {
     var result: ((FlowResult<Void>) -> Void)?
@@ -14,6 +16,7 @@ final class TabBarCoordinator: NSObject, Coordinator {
     init(with items: [TabBarControllerItem]) {
         self.router = .init(with: items.map { $0.module })
         super.init()
+        router.container.delegate = self
         items.forEach { (item) in
             item.module.toPresent().tabBarItem = .init(title: item.title, image: item.icon, tag: item.tag)
         }
@@ -38,15 +41,46 @@ extension TabBarCoordinator {
 }
 
 extension TabBarCoordinator: UITabBarControllerDelegate {
+    func bounceAnimation(for item: UITabBarItem) {
+        guard let imageView = item.value(forKey: "view") as? UIView else { return }
+        let bounceAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+        bounceAnimation.values = [1.0, 1.1, 0.9, 1.02, 1.0]
+        bounceAnimation.duration = TimeInterval(0.3)
+        imageView.layer.add(bounceAnimation, forKey: nil)
+        FeedbackGenerator.shared.feedbackGeneration(.light)
+    }
+
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        let item = tabBarController.tabBar.selectedItem
-        
-        switch item?.tag {
+        guard let item = tabBarController.tabBar.selectedItem else { return }
+        bounceAnimation(for: item)
+    }
+
+    func tabBarController(
+        _ tabBarController: UITabBarController,
+        shouldSelect viewController: UIViewController
+    ) -> Bool {
+        guard let item = tabBarController.tabBar.selectedItem else { return false }
+
+        switch item.tag {
         case 2:
-            break
+            if Auth.auth().currentUser != nil {
+                break
+            } else {
+                let authCoordinator = AuthRegCoordinator()
+                authCoordinator.result = { [weak self] res in
+                    switch res {
+                    case .success():
+                        print("Suck My Cock")
+                    default :
+                        break
+                    }
+                }
+                router.present(authCoordinator, animated: true, completion: nil)
+            }
         default:
-            break
+            return true
         }
+
+        return false
     }
 }
-

@@ -42,11 +42,8 @@ extension AppDelegate {
     private func startApp() {
 
         let menuCordinator = MenuCoordinator()
-        menuCordinator.start()
         let mapCordinator = MapCoordinator()
-        mapCordinator.start()
-        var profileCoordinator: Coordinator = Auth.auth().currentUser?.uid != nil ? ProfileCoordinator() : AuthRegCoordinator()
-        profileCoordinator.start()
+        let profileCoordinator = ProfileCoordinator()
 //        profileCoordinator.result = { [weak self] res in
 //            switch res {
 //            case .success():
@@ -56,13 +53,13 @@ extension AppDelegate {
 //            }
 //        }
 
-        Auth.auth().currentUser?.delete(completion: { error in
-            if let error = error {
-                // An error happened.
-            } else {
-                // Account deleted.
-            }
-        })
+//        Auth.auth().currentUser?.delete(completion: { error in
+//            if let error = error {
+//                // An error happened.
+//            } else {
+//                // Account deleted.
+//            }
+//        })
 
         appCoordinator = TabBarCoordinator(with: [
             .init(module: menuCordinator, icon: UIImage(systemName: "list.bullet")!, title: "Menu", tag: 0),

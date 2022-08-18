@@ -17,6 +17,7 @@
 		2C6E102D28AE8E43006FDE82 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E102C28AE8E43006FDE82 /* LoginVC.swift */; };
 		2C6E102F28AE8F63006FDE82 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C6E102E28AE8F63006FDE82 /* GoogleService-Info.plist */; };
 		2C6E103128AE98BA006FDE82 /* UIView+InvalidAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E103028AE98BA006FDE82 /* UIView+InvalidAnimation.swift */; };
+		2C6E103428AEF4A8006FDE82 /* UIView+AddBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E103328AEF4A8006FDE82 /* UIView+AddBlur.swift */; };
 		2C81638F28AE77EA00D9D564 /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81638E28AE77EA00D9D564 /* FeedbackGenerator.swift */; };
 		2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81639528AE796800D9D564 /* RegistrationView.swift */; };
 		2C81639928AE796800D9D564 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81639628AE796800D9D564 /* LoginView.swift */; };
@@ -40,7 +41,6 @@
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
-		E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60328A8F829001DFB51 /* TabBarVC.swift */; };
 		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +54,7 @@
 		2C6E102C28AE8E43006FDE82 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		2C6E102E28AE8F63006FDE82 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C6E103028AE98BA006FDE82 /* UIView+InvalidAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+InvalidAnimation.swift"; sourceTree = "<group>"; };
+		2C6E103328AEF4A8006FDE82 /* UIView+AddBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AddBlur.swift"; sourceTree = "<group>"; };
 		2C81638E28AE77EA00D9D564 /* FeedbackGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
 		2C81639528AE796800D9D564 /* RegistrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		2C81639628AE796800D9D564 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -82,7 +83,6 @@
 		B330663328A2578900528BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E921D60328A8F829001DFB51 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,6 +116,7 @@
 				2C52F2E028AB8DF20007938C /* UIApplication+TopViewController.swift */,
 				2C6E102728AE8B3A006FDE82 /* String+Validation.swift */,
 				2C6E103028AE98BA006FDE82 /* UIView+InvalidAnimation.swift */,
+				2C6E103328AEF4A8006FDE82 /* UIView+AddBlur.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -154,7 +155,6 @@
 				2C81639B28AE7EC900D9D564 /* RegistrationVC */,
 				2C6E102928AE8B7A006FDE82 /* LoginVC */,
 				2CCB627C28AD5CA4005586AF /* MapVC.swift */,
-				E921D60328A8F829001DFB51 /* TabBarVC.swift */,
 				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
 			);
 			path = Modules;
@@ -435,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */,
+				2C6E103428AEF4A8006FDE82 /* UIView+AddBlur.swift in Sources */,
 				2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */,
 				2C81638F28AE77EA00D9D564 /* FeedbackGenerator.swift in Sources */,
 				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
@@ -455,7 +456,6 @@
 				2CCB627828AD5BE6005586AF /* AddTableViewCell.swift in Sources */,
 				2CCB627628AD5BE6005586AF /* MenuTableViewAdapter.swift in Sources */,
 				2CCB627D28AD5CA4005586AF /* MapVC.swift in Sources */,
-				E921D60428A8F829001DFB51 /* TabBarVC.swift in Sources */,
 				2CCB627728AD5BE6005586AF /* MenuTableViewCell.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
 				2CCA56EE28A5482100934F99 /* R.generated.swift in Sources */,

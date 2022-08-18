@@ -118,13 +118,11 @@ final class LoginView: UIView {
         )
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
-        swipeGesture.direction = .down
 
         addGestureRecognizer(tapGesture)
-        addGestureRecognizer(swipeGesture)
 
-        backgroundColor = .systemBackground
+        addBlur(style: .regular, alpha: 0.86)
+        backgroundColor = .clear
         addSubview(emailTextField)
         addSubview(passwordTextField)
         addSubview(loginButton)
