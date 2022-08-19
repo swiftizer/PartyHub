@@ -36,7 +36,7 @@ final class LoginVC: UIViewController {
 
     @objc
     private func backAction() {
-        FeedbackGenerator.shared.feedbackGeneration(.medium)
+        FeedbackGenerator.shared.customFeedbackGeneration(.medium)
         self.navigation?(.back)
     }
 
@@ -61,12 +61,12 @@ final class LoginVC: UIViewController {
 
 extension LoginVC: LoginViewDelegate {
     func loginingButtonTapped() {
-        FeedbackGenerator.shared.feedbackGeneration(.medium)
+        FeedbackGenerator.shared.customFeedbackGeneration(.medium)
         navigation?(.enter)
     }
 
     func registrationButtonTapped() {
-        FeedbackGenerator.shared.feedbackGeneration(.medium)
+        FeedbackGenerator.shared.customFeedbackGeneration(.medium)
         navigation?(.register)
     }
 }

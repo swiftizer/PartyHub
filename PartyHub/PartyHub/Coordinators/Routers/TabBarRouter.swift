@@ -28,6 +28,7 @@ final class TabBarRouter: Presentable {
             container.tabBar.backgroundColor = .systemGray6
         }
         container.tabBar.tintColor = .label
+        container.selectedIndex = 1
     }
 
     func toPresent() -> UIViewController {

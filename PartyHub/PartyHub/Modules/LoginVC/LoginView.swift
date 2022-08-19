@@ -70,15 +70,20 @@ final class LoginView: UIView {
             guard let email = emailTextField.text, let password = passwordTextField.text else {
                 return
             }
-            FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-                guard let _ = authResult, error == nil else {
-                    debugPrint(error?.localizedDescription ?? "Error")
-                    self?.invalidAnimation(for: self?.loginButton ?? UIView())
-                    self?.repaintBorder(for: self?.emailTextField ?? UIView(), borderWidth: 1, color: .red.withAlphaComponent(0.6))
-                    self?.repaintBorder(for: self?.passwordTextField ?? UIView(), borderWidth: 1, color: .red.withAlphaComponent(0.6))
-                    return
+            AuthManager.shared.signIn(email: email, password: password) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    self.delegate?.loginingButtonTapped()
+                case .failure:
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self.invalidAnimation(for: self.loginButton)
+                    self.repaintBorder(
+                        for: [self.emailTextField, self.passwordTextField],
+                        borderWidth: 1,
+                        color: .red.withAlphaComponent(0.6)
+                    )
                 }
-                self?.delegate?.loginingButtonTapped()
             }
         }
     }

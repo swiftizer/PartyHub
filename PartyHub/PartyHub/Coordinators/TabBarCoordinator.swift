@@ -47,7 +47,7 @@ extension TabBarCoordinator: UITabBarControllerDelegate {
         bounceAnimation.values = [1.0, 1.1, 0.9, 1.02, 1.0]
         bounceAnimation.duration = TimeInterval(0.3)
         imageView.layer.add(bounceAnimation, forKey: nil)
-        FeedbackGenerator.shared.feedbackGeneration(.light)
+        FeedbackGenerator.shared.customFeedbackGeneration(.light)
     }
 
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
@@ -60,27 +60,29 @@ extension TabBarCoordinator: UITabBarControllerDelegate {
         shouldSelect viewController: UIViewController
     ) -> Bool {
         guard let item = tabBarController.tabBar.selectedItem else { return false }
-        // TODO: - вынести логику
         switch item.tag {
         case 2:
-            if Auth.auth().currentUser != nil {
-                return true
-            } else {
-                let authCoordinator = AuthRegCoordinator()
-                authCoordinator.result = { [weak self] res in
-                    switch res {
-                    case .success(_), .canceled:
-                        self?.router.popModule(animated: true)
-                    default :
-                        break
-                    }
-                }
-                router.present(authCoordinator, animated: true, completion: nil)
-            }
+            return userIsLogged()
         default:
             return true
         }
+    }
 
+    private func userIsLogged() -> Bool {
+        if AuthManager.shared.currentUser() != nil {
+            return true
+        }
+        let authCoordinator = AuthRegCoordinator()
+        authCoordinator.result = { [weak self] res in
+            switch res {
+            case .success, .canceled:
+                self?.router.popModule(animated: true)
+            default :
+                break
+            }
+        }
+
+        router.present(authCoordinator, animated: true, completion: nil)
         return false
     }
 }

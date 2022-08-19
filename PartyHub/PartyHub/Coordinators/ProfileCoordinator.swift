@@ -19,7 +19,7 @@ final class ProfileCoordinator: Coordinator {
     func start() {
         let module = ProfileVC()
         module.title = "Profile"
-        module.navigation = { [weak self] navType in
+        module.navigation = {  navType in
             switch navType {
             case .exit:
                 break

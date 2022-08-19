@@ -11,7 +11,6 @@ import FirebaseAuth
 
 protocol RegistrationViewDelegate: AnyObject {
     func registerationButtonTapped()
-    func showAlert()
 }
 
 /// Кастомная view регистрации
@@ -78,7 +77,7 @@ final class RegistrationView: UIView {
 
         if !validateTextFields() {
             invalidAnimation(for: registerButton)
-            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            FeedbackGenerator.shared.errorFeedbackGenerator()
             return
         }
 
@@ -86,19 +85,15 @@ final class RegistrationView: UIView {
             return
         }
 
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] _, error in
-            guard error == nil else {
-                debugPrint(error?.localizedDescription ?? "Error")
-                return
+        AuthManager.shared.registration(email: email, password: password) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.delegate?.registerationButtonTapped()
+            case .failure(let error):
+                debugPrint(error.localizedDescription)
             }
-
-            self?.delegate?.registerationButtonTapped()
         }
-    }
-
-    @objc
-    private func showAlert() {
-        self.delegate?.showAlert()
     }
 
     // MARK: - Private Methods
@@ -113,34 +108,44 @@ final class RegistrationView: UIView {
         // TODO: - это пиздец, надо фиксить
 
         if !(emailTextField.text?.isValidEmailAddress ?? false) {
-            repaintBorder(for: emailTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
+            repaintBorder(for: [emailTextField], borderWidth: 1, color: .red.withAlphaComponent(0.6))
         } else {
-            repaintBorder(for: emailTextField, borderWidth: 0, color: .clear)
+            repaintBorder(for: [emailTextField], borderWidth: 0, color: .clear)
         }
 
         if let password = passwordTextField.text,
            let repeatePassword = confirmPasswordTextField.text,
            !password.isValidPassword,
            !repeatePassword.isValidPassword {
-            repaintBorder(for: passwordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
-            repaintBorder(for: confirmPasswordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
+            repaintBorder(
+                for: [passwordTextField, confirmPasswordTextField],
+                borderWidth: 1,
+                color: .red.withAlphaComponent(0.6)
+            )
             invalidAnimation(for: registerButton)
-            showAlert()
             return false
         } else {
-            repaintBorder(for: passwordTextField, borderWidth: 0, color: .clear)
-            repaintBorder(for: confirmPasswordTextField, borderWidth: 0, color: .clear)
+            repaintBorder(
+                for: [passwordTextField, confirmPasswordTextField],
+                borderWidth: 0,
+                color: .clear
+            )
         }
 
         if passwordTextField.text != confirmPasswordTextField.text {
-            repaintBorder(for: passwordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
-            repaintBorder(for: confirmPasswordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
+            repaintBorder(
+                for: [passwordTextField, confirmPasswordTextField],
+                borderWidth: 1,
+                color: .red.withAlphaComponent(0.6)
+            )
             invalidAnimation(for: registerButton)
-            showAlert()
             return false
         } else {
-            repaintBorder(for: passwordTextField, borderWidth: 0, color: .clear)
-            repaintBorder(for: confirmPasswordTextField, borderWidth: 0, color: .clear)
+            repaintBorder(
+                for: [passwordTextField, confirmPasswordTextField],
+                borderWidth: 0,
+                color: .clear
+            )
         }
 
         guard let email = emailTextField.text,
@@ -151,7 +156,6 @@ final class RegistrationView: UIView {
               password == repeatepassword
         else {
             invalidAnimation(for: registerButton)
-            showAlert()
             return false
         }
 

@@ -17,8 +17,10 @@ extension UIView {
         view.layer.add(animation, forKey: "position")
     }
 
-    func repaintBorder(for view: UIView, borderWidth: CGFloat, color: UIColor) {
-        view.layer.borderWidth = borderWidth
-        view.layer.borderColor = color.cgColor
+    func repaintBorder(for views: [UIView], borderWidth: CGFloat, color: UIColor) {
+        views.forEach({
+            $0.layer.borderWidth = borderWidth
+            $0.layer.borderColor = color.cgColor
+        })
     }
 }

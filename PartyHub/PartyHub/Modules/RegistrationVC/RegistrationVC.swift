@@ -35,7 +35,7 @@ final class RegistrationVC: UIViewController {
 
     @objc
     private func backAction() {
-        FeedbackGenerator.shared.feedbackGeneration(.medium)
+        FeedbackGenerator.shared.customFeedbackGeneration(.medium)
         self.navigation?(.back)
     }
 
@@ -64,7 +64,7 @@ extension RegistrationVC: RegistrationViewDelegate {
     }
 
     func registerationButtonTapped() {
-        FeedbackGenerator.shared.feedbackGeneration(.medium)
+        FeedbackGenerator.shared.customFeedbackGeneration(.medium)
         self.navigation?(.enter)
     }
 }

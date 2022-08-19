@@ -23,16 +23,18 @@ class ProfileVC: UIViewController {
     }
 
     // MARK: - Actions
-    
+
     @objc
     private func exitButtonTapped() {
-        do {
-            try Auth.auth().signOut()
-        } catch (let error) {
-            print(error.localizedDescription)
+        AuthManager.shared.signOut { [weak self] result in
+            switch result {
+            case .success:
+                FeedbackGenerator.shared.customFeedbackGeneration(.medium)
+                self?.navigation?(.exit)
+            case .failure(let error):
+                debugPrint(error.localizedDescription)
+            }
         }
-        FeedbackGenerator.shared.feedbackGeneration(.medium)
-        navigation?(.exit)
     }
 
     // MARK: - Private Methods
