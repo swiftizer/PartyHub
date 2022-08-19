@@ -19,6 +19,7 @@ final class EventVC: UIViewController {
     var eventPrice: Int = 0
     var participants: Int = 0
     var eventImage = UIImage()
+    var isFavorite: Bool = false
 
     // MARK: - Private properties
 
@@ -36,6 +37,8 @@ final class EventVC: UIViewController {
     private let addressImageName = "mappin.and.ellipse"
     private let priceImageName = "dollarsign.circle"
     private let participantsImageName = "person.2"
+    private let favoriteImageName = "heart.fill"
+    private let notFavoriteImageName = "heart"
 
     // MARK: - Life cycle
 
@@ -59,16 +62,7 @@ final class EventVC: UIViewController {
 
         setUpDescriptionLabel()
         setUpMapButton()
-
-        if #available(iOS 15, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.backgroundColor = .clear
-            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-        } else {
-            navigationController?.navigationBar.backgroundColor = .clear
-        }
-        navigationController?.navigationBar.tintColor = .label
-        tabBarController?.tabBar.isHidden = true
+        setUpNavigationBar()
     }
 
     override func viewDidLayoutSubviews() {
@@ -82,6 +76,16 @@ final class EventVC: UIViewController {
         // open maps
     }
 
+    @objc private func didTapFavoriteButton() {
+        if isFavorite {
+            isFavorite = false
+        } else {
+            isFavorite = true
+        }
+        setUpFavoriteButton()
+        // make event favorite
+    }
+
     private func setUpBackground() {
         view.addSubview(eventImageView)
         eventImageView.backgroundColor = .systemIndigo
@@ -89,6 +93,28 @@ final class EventVC: UIViewController {
                          secondColor: .systemBackground)
         view.addSubview(scrollView)
         scrollView.showsVerticalScrollIndicator = false
+    }
+
+    private func setUpNavigationBar() {
+        if #available(iOS 15, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.backgroundColor = .clear
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            navigationController?.navigationBar.backgroundColor = .clear
+        }
+        navigationController?.navigationBar.tintColor = .label
+        tabBarController?.tabBar.isHidden = true
+        setUpFavoriteButton()
+    }
+
+    private func setUpFavoriteButton() {
+        let favoriteButton = UIBarButtonItem(image:
+                                                UIImage(systemName: isFavorite ? favoriteImageName : notFavoriteImageName),
+                                                     style: .plain,
+                                                     target: self,
+                                                     action: #selector(didTapFavoriteButton))
+        navigationItem.rightBarButtonItem = favoriteButton
     }
 
     private func setUpEventNameLabel() {
