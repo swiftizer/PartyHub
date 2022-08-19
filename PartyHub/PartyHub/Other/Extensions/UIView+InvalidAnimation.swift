@@ -16,4 +16,9 @@ extension UIView {
         animation.toValue = NSValue(cgPoint: CGPoint(x: view.center.x + 10, y: view.center.y))
         view.layer.add(animation, forKey: "position")
     }
+
+    func repaintBorder(for view: UIView, borderWidth: CGFloat, color: UIColor) {
+        view.layer.borderWidth = borderWidth
+        view.layer.borderColor = color.cgColor
+    }
 }

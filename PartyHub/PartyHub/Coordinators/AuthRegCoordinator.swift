@@ -25,6 +25,8 @@ final class AuthRegCoordinator: Coordinator {
                 self?.result?(.success(Void()))
             case .register:
                 self?.presentRegistration()
+            case .back:
+                self?.result?(.canceled)
             }
         }
         router.setRootModule(module)
@@ -39,9 +41,11 @@ final class AuthRegCoordinator: Coordinator {
             case .back:
                 self?.router.popModule(animated: true)
             case .enter:
+                self?.router.popModule(animated: false)
                 self?.result?(.success(Void()))
+            case .alert:
+                break
             }
-
         }
         router.present(nav, animated: true, completion: nil)
     }

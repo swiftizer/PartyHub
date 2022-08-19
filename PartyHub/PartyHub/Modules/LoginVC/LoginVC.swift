@@ -9,10 +9,10 @@ import UIKit
 import FirebaseAuth
 
 final class LoginVC: UIViewController {
-
     enum Navigation {
         case register
         case enter
+        case back
     }
 
     var navigation: ((Navigation) -> Void)?
@@ -20,7 +20,6 @@ final class LoginVC: UIViewController {
     // MARK: - Private Properties
 
     private let mainView = LoginView()
-    private let generator = UIImpactFeedbackGenerator(style: .medium)
 
     // MARK: - Life Cycle
 
@@ -30,8 +29,31 @@ final class LoginVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        generator.prepare()
+        setupUI()
+    }
+
+    // MARK: - Actions
+
+    @objc
+    private func backAction() {
+        FeedbackGenerator.shared.feedbackGeneration(.medium)
+        self.navigation?(.back)
+    }
+
+    // MARK: - Private Methods
+
+    private func setupUI() {
         mainView.delegate = self
+
+        let backNavigationItem = UIBarButtonItem(
+            image: UIImage(systemName: "xmark.circle"),
+            style: .plain,
+            target: self,
+            action: #selector(backAction)
+        )
+
+        backNavigationItem.tintColor = .label
+        navigationItem.rightBarButtonItem = backNavigationItem
     }
 }
 
@@ -39,12 +61,12 @@ final class LoginVC: UIViewController {
 
 extension LoginVC: LoginViewDelegate {
     func loginingButtonTapped() {
-        generator.impactOccurred(intensity: 0.6)
+        FeedbackGenerator.shared.feedbackGeneration(.medium)
         navigation?(.enter)
     }
 
     func registrationButtonTapped() {
-        generator.impactOccurred(intensity: 0.6)
+        FeedbackGenerator.shared.feedbackGeneration(.medium)
         navigation?(.register)
     }
 }

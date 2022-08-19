@@ -10,8 +10,6 @@ import UIKit
 final class CustomTextField: UITextField {
 
     enum TypeField {
-        case firstNameTextField
-        case lastNameTextField
         case emailTextField
         case passwordTextField
         case confirmPasswordTextField
@@ -23,18 +21,6 @@ final class CustomTextField: UITextField {
         super.init(frame: .zero)
         configureUI()
         switch type {
-        case .firstNameTextField:
-            attributedPlaceholder = NSAttributedString(
-                string: "First name",
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
-            )
-            textContentType = .username
-        case .lastNameTextField:
-            attributedPlaceholder = NSAttributedString(
-                string: "Last name",
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
-            )
-            textContentType = .username
         case .emailTextField:
             attributedPlaceholder = NSAttributedString(
                 string: "Email",
@@ -71,7 +57,7 @@ final class CustomTextField: UITextField {
         keyboardType = .default
         returnKeyType = .default
         clearButtonMode = .whileEditing
-        backgroundColor = .systemGray6
+        backgroundColor = .systemGray4
         textColor = .label
         tintColor = .label
         autocapitalizationType = .none

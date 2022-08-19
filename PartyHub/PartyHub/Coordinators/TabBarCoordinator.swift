@@ -60,7 +60,6 @@ extension TabBarCoordinator: UITabBarControllerDelegate {
         shouldSelect viewController: UIViewController
     ) -> Bool {
         guard let item = tabBarController.tabBar.selectedItem else { return false }
-
         // TODO: - вынести логику
         switch item.tag {
         case 2:
@@ -70,7 +69,7 @@ extension TabBarCoordinator: UITabBarControllerDelegate {
                 let authCoordinator = AuthRegCoordinator()
                 authCoordinator.result = { [weak self] res in
                     switch res {
-                    case .success():
+                    case .success(_), .canceled:
                         self?.router.popModule(animated: true)
                     default :
                         break

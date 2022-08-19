@@ -11,6 +11,7 @@ import FirebaseAuth
 
 protocol RegistrationViewDelegate: AnyObject {
     func registerationButtonTapped()
+    func showAlert()
 }
 
 /// Кастомная view регистрации
@@ -20,8 +21,6 @@ final class RegistrationView: UIView {
 
     // MARK: - Private Properties
 
-    private let firstNameTextField = CustomTextField(type: .firstNameTextField)
-    private let lastNameTextField = CustomTextField(type: .lastNameTextField)
     private let emailTextField = CustomTextField(type: .emailTextField)
     private let passwordTextField = CustomTextField(type: .passwordTextField)
     private let confirmPasswordTextField = CustomTextField(type: .confirmPasswordTextField)
@@ -61,8 +60,6 @@ final class RegistrationView: UIView {
 
     @objc
     private func dismissKeyboard (_ sender: UITapGestureRecognizer) {
-        firstNameTextField.resignFirstResponder()
-        lastNameTextField.resignFirstResponder()
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         confirmPasswordTextField.resignFirstResponder()
@@ -99,11 +96,14 @@ final class RegistrationView: UIView {
         }
     }
 
+    @objc
+    private func showAlert() {
+        self.delegate?.showAlert()
+    }
+
     // MARK: - Private Methods
 
     private func resignFirstResponders() {
-        firstNameTextField.resignFirstResponder()
-        lastNameTextField.resignFirstResponder()
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         confirmPasswordTextField.resignFirstResponder()
@@ -111,13 +111,6 @@ final class RegistrationView: UIView {
 
     private func validateTextFields() -> Bool {
         // TODO: - это пиздец, надо фиксить
-        [firstNameTextField, lastNameTextField].forEach {
-            if !($0.text?.isValidName ?? false) {
-                repaintBorder(for: $0, borderWidth: 1, color: .red.withAlphaComponent(0.6))
-            } else {
-                repaintBorder(for: $0, borderWidth: 0, color: .clear)
-            }
-        }
 
         if !(emailTextField.text?.isValidEmailAddress ?? false) {
             repaintBorder(for: emailTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
@@ -132,7 +125,7 @@ final class RegistrationView: UIView {
             repaintBorder(for: passwordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
             repaintBorder(for: confirmPasswordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
             invalidAnimation(for: registerButton)
-            showAlertUserRegiestrationError()
+            showAlert()
             return false
         } else {
             repaintBorder(for: passwordTextField, borderWidth: 0, color: .clear)
@@ -143,18 +136,14 @@ final class RegistrationView: UIView {
             repaintBorder(for: passwordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
             repaintBorder(for: confirmPasswordTextField, borderWidth: 1, color: .red.withAlphaComponent(0.6))
             invalidAnimation(for: registerButton)
-            showAlertUserRegiestrationError()
+            showAlert()
             return false
         } else {
             repaintBorder(for: passwordTextField, borderWidth: 0, color: .clear)
             repaintBorder(for: confirmPasswordTextField, borderWidth: 0, color: .clear)
         }
 
-        guard let firstName = firstNameTextField.text,
-              firstName.isValidName,
-              let secondName = lastNameTextField.text,
-              secondName.isValidName,
-              let email = emailTextField.text,
+        guard let email = emailTextField.text,
               email.isValidEmailAddress,
               let password = passwordTextField.text,
               let repeatepassword = confirmPasswordTextField.text,
@@ -162,32 +151,11 @@ final class RegistrationView: UIView {
               password == repeatepassword
         else {
             invalidAnimation(for: registerButton)
-            showAlertUserRegiestrationError()
+            showAlert()
             return false
         }
 
         return true
-    }
-
-    private func showAlertUserRegiestrationError() {
-        let alert = UIAlertController(
-            title: "Woops",
-            message: "Please enter all information to create a new account.",
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-
-        let keyWindow = UIApplication.shared.connectedScenes
-                .filter({$0.activationState == .foregroundActive})
-                .compactMap({$0 as? UIWindowScene})
-                .first?.windows
-                .filter({$0.isKeyWindow})
-                .first
-        keyWindow?.rootViewController?.presentedViewController?.present(
-            alert,
-            animated: true,
-            completion: nil
-        )
     }
 
     private func setupUI() {
@@ -203,8 +171,6 @@ final class RegistrationView: UIView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
         addGestureRecognizer(tapGesture)
 
-        addSubview(firstNameTextField)
-        addSubview(lastNameTextField)
         addSubview(emailTextField)
         addSubview(passwordTextField)
         addSubview(registerButton)
@@ -212,22 +178,10 @@ final class RegistrationView: UIView {
     }
 
     private func setupLayout() {
-        firstNameTextField.pin
+        emailTextField.pin
             .top(pin.safeArea.top + 24)
             .left(pin.safeArea.left + 20)
             .right(pin.safeArea.right + 20)
-            .height(50)
-
-        lastNameTextField.pin
-            .below(of: firstNameTextField, aligned: .left)
-            .marginTop(12)
-            .width(of: firstNameTextField)
-            .height(50)
-
-        emailTextField.pin
-            .below(of: lastNameTextField, aligned: .left)
-            .marginTop(12)
-            .width(of: lastNameTextField)
             .height(50)
 
         passwordTextField.pin
@@ -249,14 +203,4 @@ final class RegistrationView: UIView {
             .height(50)
     }
 
-}
-
-extension RegistrationView {
-
-    // MARK: - Animation
-
-    private func repaintBorder(for view: UIView, borderWidth: CGFloat, color: UIColor) {
-        view.layer.borderWidth = borderWidth
-        view.layer.borderColor = color.cgColor
-    }
 }

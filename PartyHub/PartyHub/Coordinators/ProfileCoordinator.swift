@@ -19,7 +19,12 @@ final class ProfileCoordinator: Coordinator {
     func start() {
         let module = ProfileVC()
         module.title = "Profile"
-        // добавить навигацию
+        module.navigation = { [weak self] navType in
+            switch navType {
+            case .exit:
+                break
+            }
+        }
         router.setRootModule(module)
     }
 
