@@ -60,10 +60,14 @@ final class EventVC: UIViewController {
         setUpDescriptionLabel()
         setUpMapButton()
 
-        // make navbar background invisible
-        self.navigationController?.navigationBar.tintColor = .label
-        self.navigationController?.navigationBar.isTranslucent = true
-//        navigationController?.navigationBar.isHidden = true
+        if #available(iOS 15, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.backgroundColor = .clear
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            navigationController?.navigationBar.backgroundColor = .clear
+        }
+        navigationController?.navigationBar.tintColor = .label
         tabBarController?.tabBar.isHidden = true
     }
 
@@ -147,7 +151,7 @@ final class EventVC: UIViewController {
             .all()
 
         eventNameLabel.pin
-            .top(eventImageView.frame.height - 36)
+            .top(eventImageView.frame.height - 72)
             .hCenter()
             .width(labelWidth)
             .height(labelHeight)
@@ -178,7 +182,7 @@ final class EventVC: UIViewController {
             .height(50)
 
         scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width,
-                                        height: UIScreen.main.bounds.height + descriptionLabel.frame.height - 300)
+                                        height: UIScreen.main.bounds.height + descriptionLabel.frame.height - 250)
 
     }
 

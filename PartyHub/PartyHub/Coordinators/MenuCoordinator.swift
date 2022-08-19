@@ -12,7 +12,7 @@ final class MenuCoordinator: Presentable {
     let router = DefaultRouter(with: nil)
 
     init() {
-        (router.toPresent() as? UINavigationController)?.setNavigationBarHidden(false, animated: false)
+        (router.toPresent() as? UINavigationController)?.setNavigationBarHidden(false, animated: true)
         start()
     }
 
