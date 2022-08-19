@@ -703,6 +703,7 @@ PODS:
     - Libuv-gRPC (= 0.0.10)
   - gRPC-Core/Interface (1.44.0)
   - GTMSessionFetcher/Core (1.7.2)
+  - Kingfisher (7.3.2)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
     - Libuv-gRPC/Implementation (= 0.0.10)
@@ -715,20 +716,27 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
+  - NVActivityIndicatorView (4.8.0):
+    - NVActivityIndicatorView/Presenter (= 4.8.0)
+  - NVActivityIndicatorView/Presenter (4.8.0)
   - PinLayout (1.10.3)
   - PromisesObjC (2.1.0)
   - R.swift (6.1.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
   - SwiftLint (0.47.1)
+  - YandexMapsMobile (4.1.0-lite)
 
 DEPENDENCIES:
   - FirebaseAuth
   - FirebaseCore
   - FirebaseFirestore
+  - Kingfisher
+  - NVActivityIndicatorView (~> 4.8.0)
   - PinLayout
   - R.swift
   - SwiftLint
+  - YandexMapsMobile (= 4.1.0-lite)
 
 SPEC REPOS:
   trunk:
@@ -744,14 +752,17 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - Kingfisher
     - leveldb-library
     - Libuv-gRPC
     - nanopb
+    - NVActivityIndicatorView
     - PinLayout
     - PromisesObjC
     - R.swift
     - R.swift.Library
     - SwiftLint
+    - YandexMapsMobile
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
@@ -766,15 +777,18 @@ SPEC CHECKSUMS:
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
+  Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   PinLayout: 0090ccbf29ae69af6ae5a15eaeaf27ed7b2c4d83
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
+  YandexMapsMobile: 549f83d16cb7d1ea73031163722852f408b85841
 
-PODFILE CHECKSUM: 9440f7fa34b7e83282cc11482c0b43c7da374a0e
+PODFILE CHECKSUM: 933f9ce8478075bac6227c39e5cdbb85a90a461e
 
 COCOAPODS: 1.11.2
