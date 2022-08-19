@@ -16,6 +16,7 @@
 		2C69BD8028B0223400370C2B /* UIImage+ResizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69BD7F28B0223400370C2B /* UIImage+ResizeImage.swift */; };
 		2C69BD8328B0241A00370C2B /* MapToChooseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69BD8228B0241A00370C2B /* MapToChooseVC.swift */; };
 		2C69BD8528B024BD00370C2B /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69BD8428B024BD00370C2B /* CLLocation.swift */; };
+		2C69BD8728B051D300370C2B /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69BD8628B051D300370C2B /* MapModel.swift */; };
 		2C6E102828AE8B3A006FDE82 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E102728AE8B3A006FDE82 /* String+Validation.swift */; };
 		2C6E102B28AE8D98006FDE82 /* AuthRegCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E102A28AE8D98006FDE82 /* AuthRegCoordinator.swift */; };
 		2C6E102D28AE8E43006FDE82 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E102C28AE8E43006FDE82 /* LoginVC.swift */; };
@@ -62,6 +63,7 @@
 		2C69BD7F28B0223400370C2B /* UIImage+ResizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ResizeImage.swift"; sourceTree = "<group>"; };
 		2C69BD8228B0241A00370C2B /* MapToChooseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapToChooseVC.swift; sourceTree = "<group>"; };
 		2C69BD8428B024BD00370C2B /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
+		2C69BD8628B051D300370C2B /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
 		2C6E102728AE8B3A006FDE82 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
 		2C6E102A28AE8D98006FDE82 /* AuthRegCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRegCoordinator.swift; sourceTree = "<group>"; };
 		2C6E102C28AE8E43006FDE82 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				2CCB627C28AD5CA4005586AF /* MapVC.swift */,
+				2C69BD8628B051D300370C2B /* MapModel.swift */,
 			);
 			path = MapVC;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				2C6E103B28AFB4D5006FDE82 /* AuthManager.swift in Sources */,
 				2CCB627928AD5BE6005586AF /* MenuVC.swift in Sources */,
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
+				2C69BD8728B051D300370C2B /* MapModel.swift in Sources */,
 				2C81639D28AE7EF100D9D564 /* RegistrationVC.swift in Sources */,
 				2C6E104828B01F28006FDE82 /* ImageManager.swift in Sources */,
 				2C6E104028B01CDF006FDE82 /* AddEventVC.swift in Sources */,
