@@ -68,6 +68,7 @@ final class EventVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setUpLayout()
+        setUpBackground()
     }
 
     // MARK: - Private methods
@@ -155,11 +156,13 @@ final class EventVC: UIViewController {
 
     private func setUpMapButton() {
         scrollView.addSubview(mapButton)
-        mapButton.backgroundColor = .systemGray5
+        mapButton.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
         mapButton.setTitle("Show on map", for: .normal)
         mapButton.layer.cornerRadius = 15
         mapButton.addTarget(self, action: #selector(didTapMapButton), for: .touchUpInside)
-        mapButton.tintColor = .label
+//        mapButton.tintColor = .white
+        mapButton.setTitleColor(.white, for: .normal)
+        mapButton.setTitleColor(.systemGray6, for: .highlighted)
     }
 
     private func setUpLayout() {
