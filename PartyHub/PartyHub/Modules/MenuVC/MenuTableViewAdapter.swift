@@ -9,6 +9,13 @@ import UIKit
 
 final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDelegate {
 
+    enum Navigation {
+        case addEvent
+        case description
+    }
+
+    var navigation: ((Navigation) -> Void)?
+
     // MARK: - Private Properties
 
     private struct Cells {
@@ -31,6 +38,16 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
     }
 
     // MARK: - TableView functions
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        switch indexPath.section {
+        case 0:
+            navigation?(.addEvent)
+        default:
+            navigation?(.description)
+        }
+    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
        return 2

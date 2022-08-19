@@ -31,7 +31,6 @@ final class AddTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .label
         label.font = .boldSystemFont(ofSize: 15)
-
         label.text = "Add new event"
         label.textAlignment = .left
         return label

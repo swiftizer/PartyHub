@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Доступ к геопозиции необходим для отображения и сортировки ближайших мероприятий</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Доступ к геопозиции необходим для отображения и сортировки ближайших мероприятий</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Доступ к геопозиции необходим для отображения и сортировки ближайших мероприятий</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app wants to take pictures.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app wants to use your photos.</string>
+</dict>
 </plist>

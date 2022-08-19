@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import Rswift
 
 final class TabBarCoordinator: NSObject, Coordinator {
     var result: ((FlowResult<Void>) -> Void)?

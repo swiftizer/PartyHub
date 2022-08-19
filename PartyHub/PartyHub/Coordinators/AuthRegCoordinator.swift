@@ -47,7 +47,7 @@ final class AuthRegCoordinator: Coordinator {
                 break
             }
         }
-        router.present(nav, animated: true, completion: nil)
+        router.present(nav, animated: true, isModalInPresentation: false, completion: nil)
     }
 
     func toPresent() -> UIViewController {
