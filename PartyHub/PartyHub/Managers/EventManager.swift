@@ -38,27 +38,8 @@ final class EventManager: EventManagerDescription {
         database.collection("events").getDocuments { [weak self] snapshot, error in
             if let _ = error {
                 completion(.failure(NetworkError.emptyData))
-            } else if var events = self?.events(from: snapshot) {
-
-                let group: DispatchGroup = DispatchGroup()
-
-                for index in 0..<events.count {
-                    group.enter()
-                    self?.imageManager.downloadImage(with: events[index].imageName) { result in
-                        switch result {
-                        case .success(let downloadedImage):
-                            events[index].image = downloadedImage
-                            group.leave()
-                        case .failure:
-                            completion(.failure(NetworkError.badAttempt))
-                            group.leave()
-                        }
-                    }
-                }
-
-                group.notify(queue: DispatchQueue.main) {
-                    completion(.success(events))
-                }
+            } else if let events = self?.events(from: snapshot) {
+                completion(.success(events))
             } else {
                 fatalError()
             }
@@ -85,8 +66,7 @@ final class EventManager: EventManagerDescription {
                         return
                     }
 
-                    if let error = error {
-                        debugPrint(error)
+                    if let _ = error {
                         completion(.failure(NetworkError.badAttempt))
                     } else {
                         if let event = self.event(from: data) {
@@ -96,7 +76,9 @@ final class EventManager: EventManagerDescription {
                         }
                     }
                 }
-            case .failure:
+                break
+
+            case .failure(_):
                 completion(.failure(NetworkError.badAttempt))
                 break
             }

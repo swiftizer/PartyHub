@@ -13,7 +13,7 @@ final class MenuTableViewCell: UITableViewCell {
     // MARK: - Internal properties
 
     var eventName: String = "Event Name"
-    var distance: Float = 0.0
+    var distance: Double = 0.0
     var participants: Int = 0
     var eventImage = UIImage()
 
@@ -32,17 +32,6 @@ final class MenuTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        setUpCell()
-        setUpCellContainerView()
-        setUpEventImageView()
-        setUp(label: titleLabel, of: 17, weight: .medium, text: eventName)
-        setUp(icon: chevronImageView, color: .systemGray)
-        setUp(icon: distanceImageView)
-        setUp(label: distanceLabel, text: "\(distance)" + " km away")
-        setUp(icon: participantsImageView)
-        setUp(label: participantsLabel, text: "\(participants)")
-
     }
 
     required init?(coder: NSCoder) {
@@ -81,14 +70,14 @@ extension MenuTableViewCell {
             .bottom(12)
 
         eventImageView.pin
-            .top(12)
-            .left(12)
-            .bottom(12)
-            .width(cellContainerView.frame.height - 24)
+            .top(16)
+            .left(16)
+            .bottom(16)
+            .width(cellContainerView.frame.height - 32)
 
         titleLabel.pin
             .top(frame.height/4)
-            .left(eventImageView.frame.maxX + 12)
+            .left(eventImageView.frame.maxX + 24)
             .width(frame.width*0.6)
             .height(25)
 
@@ -98,7 +87,7 @@ extension MenuTableViewCell {
             .vCenter()
 
         distanceImageView.pin
-            .top(titleLabel.frame.maxY + 12)
+            .top(titleLabel.frame.maxY + 24)
             .left(titleLabel.frame.minX)
             .height(descriptionHeight)
 
@@ -121,9 +110,33 @@ extension MenuTableViewCell {
 
     }
 
-    private func setUpCell() {
+    func setUpCell(with event: Event, distance: Double) {
         backgroundColor = .clear
         selectionStyle = .none
+
+        ImageManager.shared.downloadImage(with: event.imageName) { result in
+            switch result {
+            case .success(let downloadedImage):
+                self.eventImageView.image = downloadedImage
+                break
+
+            case .failure:
+                break
+            }
+        }
+
+        eventName = event.title
+        self.distance = distance
+        participants = event.countOfParticipants
+
+        setUpCellContainerView()
+        setUpEventImageView()
+        setUp(label: titleLabel, of: 17, weight: .medium, text: eventName)
+        setUp(icon: chevronImageView, color: .systemGray)
+        setUp(icon: distanceImageView)
+        setUp(label: distanceLabel, text: "\(round(100 * distance) / 100)" + " km away")
+        setUp(icon: participantsImageView)
+        setUp(label: participantsLabel, text: "\(participants)")
     }
 
     private func setUpCellContainerView() {
@@ -138,7 +151,6 @@ extension MenuTableViewCell {
         eventImageView.backgroundColor = .systemGray6
         eventImageView.layer.cornerRadius = 15
         eventImageView.layer.masksToBounds = true
-        eventImageView.image = eventImage
     }
 
     private func setUp(icon: UIImageView, color: UIColor = .label) {
@@ -153,5 +165,4 @@ extension MenuTableViewCell {
         label.textColor = .label
         label.textAlignment = .left
     }
-
 }
