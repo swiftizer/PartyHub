@@ -83,6 +83,8 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
         menuTableView.dataSource = self
     }
 
+    // TODO: - Вынести во ViewModel
+    
     private func openEvent() {
         let eventVC = EventVC()
         currentVC.navigationController?.pushViewController(eventVC, animated: true)

@@ -19,6 +19,14 @@ final class MenuTableViewCell: UITableViewCell {
 
     // MARK: - Private properties
 
+    private struct Constants {
+
+        static let descriptionHeight: CGFloat = 20
+        static let basicPadding: CGFloat = 12
+        static let rightPadding: CGFloat = 20
+
+    }
+
     private let cellContainerView = UIView()
     private let eventImageView = UIImageView()
     private let titleLabel = UILabel()
@@ -73,51 +81,49 @@ extension MenuTableViewCell {
 
     private func setUpLayout() {
 
-        let descriptionHeight: CGFloat = 20
-
         cellContainerView.pin
-            .top(12)
-            .left(12)
-            .right(12)
-            .bottom(12)
+            .top(Constants.basicPadding)
+            .left(Constants.basicPadding)
+            .right(Constants.basicPadding)
+            .bottom(Constants.basicPadding)
 
         eventImageView.pin
-            .top(12)
-            .left(12)
-            .bottom(12)
+            .top(Constants.basicPadding)
+            .left(Constants.basicPadding)
+            .bottom(Constants.basicPadding)
             .width(cellContainerView.frame.height - 24)
 
         titleLabel.pin
             .top(frame.height/4)
             .left(eventImageView.frame.maxX + 12)
-            .right(32)
+            .right(Constants.rightPadding + Constants.basicPadding)
             .height(25)
 
         chevronImageView.pin
-            .right(20)
-            .height(descriptionHeight)
+            .right(Constants.rightPadding)
+            .height(Constants.descriptionHeight)
             .vCenter()
 
         distanceImageView.pin
-            .top(titleLabel.frame.maxY + 12)
+            .top(titleLabel.frame.maxY + Constants.basicPadding)
             .left(titleLabel.frame.minX)
-            .height(descriptionHeight)
+            .height(Constants.descriptionHeight)
 
         distanceLabel.pin
             .top(distanceImageView.frame.minY)
             .left(distanceImageView.frame.maxX + 6)
-            .height(descriptionHeight)
+            .height(Constants.descriptionHeight)
             .width(frame.width*0.25)
 
         participantsImageView.pin
             .top(distanceLabel.frame.minY)
             .left(distanceLabel.frame.maxX + 6)
-            .height(descriptionHeight)
+            .height(Constants.descriptionHeight)
 
         participantsLabel.pin
             .top(participantsImageView.frame.minY)
             .left(participantsImageView.frame.maxX + 6)
-            .height(descriptionHeight)
+            .height(Constants.descriptionHeight)
             .width(frame.width*0.15)
 
     }

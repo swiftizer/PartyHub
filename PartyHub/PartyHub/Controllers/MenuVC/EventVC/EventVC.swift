@@ -73,24 +73,11 @@ final class EventVC: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        setUpBackground()
         setUpLayout()
     }
 
     // MARK: - Private methods
-
-    @objc private func didTapMapButton() {
-        // open maps
-    }
-
-    @objc private func didTapFavoriteButton() {
-        if isFavorite {
-            isFavorite = false
-        } else {
-            isFavorite = true
-        }
-        setUpFavoriteButton()
-        // make event favorite
-    }
 
     private func setUpBackground() {
         view.addSubview(eventImageView)
@@ -130,7 +117,7 @@ final class EventVC: UIViewController {
         eventNameLabel.textColor = .label
         eventNameLabel.textAlignment = .left
     }
-
+    
     private func setUpIconWithLabel(label: UILabel, iconName: String, text: String) {
         if let icon = UIImage(systemName: iconName) {
             let labelText = NSMutableAttributedString()
@@ -161,11 +148,11 @@ final class EventVC: UIViewController {
 
     private func setUpMapButton() {
         scrollView.addSubview(mapButton)
-        mapButton.backgroundColor = .systemGray5
+        mapButton.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
         mapButton.setTitle("Show on map", for: .normal)
         mapButton.layer.cornerRadius = 15
         mapButton.addTarget(self, action: #selector(didTapMapButton), for: .touchUpInside)
-        mapButton.tintColor = .label
+        mapButton.tintColor = .white
     }
 
     private func setUpLayout() {
@@ -213,6 +200,20 @@ final class EventVC: UIViewController {
         scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width,
                                         height: UIScreen.main.bounds.height + descriptionLabel.frame.height - 250)
 
+    }
+
+    @objc private func didTapMapButton() {
+        // open maps
+    }
+
+    @objc private func didTapFavoriteButton() {
+        if isFavorite {
+            isFavorite = false
+        } else {
+            isFavorite = true
+        }
+        setUpFavoriteButton()
+        // make event favorite
     }
 
 }
