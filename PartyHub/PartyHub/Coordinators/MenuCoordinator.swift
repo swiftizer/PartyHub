@@ -45,6 +45,8 @@ final class MenuCoordinator: Coordinator {
                 self?.router.popModule(animated: true)
             case .registration:
                 self?.router.popModule(animated: true)
+            case .choosePlace:
+                self?.presentChoosePlace()
             }
         }
         router.present(nav, animated: true, completion: nil)
@@ -61,6 +63,15 @@ final class MenuCoordinator: Coordinator {
             }
         }
         router.present(authCoordinator, animated: true, completion: nil)
+    }
+
+    func presentChoosePlace() {
+        let module = MapToChooseVC()
+        module.title = "Map"
+//        module.navigation = {
+//
+//        }
+        router.push(module, animated: true)
     }
 
     func toPresent() -> UIViewController {

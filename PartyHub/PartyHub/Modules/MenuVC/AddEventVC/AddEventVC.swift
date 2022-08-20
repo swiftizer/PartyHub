@@ -8,17 +8,12 @@
 import UIKit
 import NVActivityIndicatorView
 
-// MARK: - EventImageView
-final class EventImageView: UIImageView {
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        return bounds.insetBy(dx: -150, dy: -50).contains(point)
-    }
-}
 
 final class AddNewEventVC: UIViewController {
     enum Navigation {
         case back
         case registration
+        case choosePlace
     }
 
     var navigation: ((Navigation) -> Void)?
@@ -387,8 +382,6 @@ private extension AddNewEventVC {
             case .success(let events):
                 print(events)
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
-                break
-
             case .failure(let error):
                 let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .cancel)
@@ -397,7 +390,6 @@ private extension AddNewEventVC {
                 print("ГГ")
                 print("Error! \(error.localizedDescription)")
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                break
             }
         }
     }
@@ -491,6 +483,7 @@ private extension AddNewEventVC {
         }
         navigationController?.navigationBar.tintColor = .label
         navigationController?.pushViewController(mapVC, animated: true)
+//        navigation?(.choosePlace)
     }
 
     @objc

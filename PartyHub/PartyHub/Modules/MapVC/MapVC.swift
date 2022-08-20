@@ -238,9 +238,11 @@ extension MapVC: YMKMapObjectTapListener {
     func onMapObjectTap(with mapObject: YMKMapObject, point: YMKPoint) -> Bool {
         if let placemark = mapObject as? YMKPlacemarkMapObject {
             if let point = model.dictionaryPoints[placemark] {
-                let viewController = EventViewController(point: point)
+                // TODO: - вынести это
+                let viewController = EventVC()
                 viewController.title = point.name
                 let navigationController = UINavigationController(rootViewController: viewController)
+                navigationController.modalPresentationStyle = .fullScreen
                 present(navigationController, animated: true, completion: nil)
             }
         }
