@@ -23,6 +23,12 @@ final class EventVC: UIViewController {
 
     // MARK: - Private properties
 
+    private struct Constants {
+        static let labelWidthMultiplier: CGFloat = 0.85
+        static let labelHeight: CGFloat = 24
+        static let buttonHeight: CGFloat = 50
+    }
+
     private let eventImageView = UIImageView()
     private let scrollView = UIScrollView()
     private let eventNameLabel = UILabel()
@@ -164,9 +170,6 @@ final class EventVC: UIViewController {
 
     private func setUpLayout() {
 
-        let labelWidth: CGFloat = view.frame.width * 0.85
-        let labelHeight: CGFloat = 24
-
         eventImageView.pin
             .top()
             .left()
@@ -179,8 +182,8 @@ final class EventVC: UIViewController {
         eventNameLabel.pin
             .top(eventImageView.frame.height - 72)
             .hCenter()
-            .width(labelWidth)
-            .height(labelHeight)
+            .width(view.frame.width * Constants.labelWidthMultiplier)
+            .height(Constants.labelHeight)
 
         let labelsWithImages = [dateLabel, addressLabel, priceLabel, participantsLabel]
         var labelTop = eventNameLabel.frame.maxY + 12
@@ -188,9 +191,9 @@ final class EventVC: UIViewController {
             label.pin
                 .top(labelTop)
                 .hCenter()
-                .width(labelWidth)
-                .height(labelHeight)
-            labelTop += labelHeight
+                .width(view.frame.width * Constants.labelWidthMultiplier)
+                .height(Constants.labelHeight)
+            labelTop += Constants.labelHeight
             labelTop += 8
         }
 
@@ -204,8 +207,8 @@ final class EventVC: UIViewController {
         mapButton.pin
             .top(descriptionLabel.frame.maxY + 12)
             .hCenter()
-            .width(labelWidth)
-            .height(50)
+            .width(view.frame.width * Constants.labelWidthMultiplier)
+            .height(Constants.buttonHeight)
 
         scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width,
                                         height: UIScreen.main.bounds.height + descriptionLabel.frame.height - 250)
