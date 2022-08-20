@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class ProfileCoordinator: Presentable {
-
+final class ProfileCoordinator: Coordinator {
+    var result: ((FlowResult<Void>) -> Void)?
     let router = DefaultRouter(with: nil)
 
     init() {
@@ -19,6 +19,12 @@ final class ProfileCoordinator: Presentable {
     func start() {
         let module = ProfileVC()
         module.title = "Profile"
+        module.navigation = {  navType in
+            switch navType {
+            case .exit:
+                break
+            }
+        }
         router.setRootModule(module)
     }
 

@@ -9,5 +9,11 @@ target 'PartyHub' do
   pod 'PinLayout'
   pod 'R.swift'
   pod 'SwiftLint'
+  pod 'FirebaseAuth'
+  pod 'FirebaseCore'
+  pod 'FirebaseFirestore'
+  pod 'Kingfisher'
+  pod 'NVActivityIndicatorView', '~> 4.8.0'
+  pod 'YandexMapsMobile', '4.1.0-lite'
 
 end

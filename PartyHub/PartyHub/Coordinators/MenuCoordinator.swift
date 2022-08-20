@@ -7,7 +7,8 @@
 
 import UIKit
 
-final class MenuCoordinator: Presentable {
+final class MenuCoordinator: Coordinator {
+    var result: ((FlowResult<Void>) -> Void)?
 
     let router = DefaultRouter(with: nil)
 
