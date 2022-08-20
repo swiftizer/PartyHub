@@ -90,7 +90,7 @@ extension MenuTableViewCell {
         titleLabel.pin
             .top(frame.height/4)
             .left(eventImageView.frame.maxX + 12)
-            .width(frame.width*0.6)
+            .right(32)
             .height(25)
 
         chevronImageView.pin
