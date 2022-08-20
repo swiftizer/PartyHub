@@ -105,18 +105,22 @@ final class RegistrationView: UIView {
     }
 
     private func validateTextFields() -> Bool {
-        // TODO: - это пиздец, надо фиксить
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text,
+              let confirmPassword = confirmPasswordTextField.text
+        else {
+            invalidAnimation(for: registerButton)
+            return false
+        }
 
-        if !(emailTextField.text?.isValidEmailAddress ?? false) {
+        if !email.isValidEmailAddress {
             repaintBorder(for: [emailTextField], borderWidth: 1, color: .red.withAlphaComponent(0.6))
+            invalidAnimation(for: registerButton)
         } else {
             repaintBorder(for: [emailTextField], borderWidth: 0, color: .clear)
         }
 
-        if let password = passwordTextField.text,
-           let repeatePassword = confirmPasswordTextField.text,
-           !password.isValidPassword,
-           !repeatePassword.isValidPassword {
+        if !password.isValidPassword || !confirmPassword.isValidPassword || password != confirmPassword {
             repaintBorder(
                 for: [passwordTextField, confirmPasswordTextField],
                 borderWidth: 1,
@@ -125,38 +129,7 @@ final class RegistrationView: UIView {
             invalidAnimation(for: registerButton)
             return false
         } else {
-            repaintBorder(
-                for: [passwordTextField, confirmPasswordTextField],
-                borderWidth: 0,
-                color: .clear
-            )
-        }
-
-        if passwordTextField.text != confirmPasswordTextField.text {
-            repaintBorder(
-                for: [passwordTextField, confirmPasswordTextField],
-                borderWidth: 1,
-                color: .red.withAlphaComponent(0.6)
-            )
-            invalidAnimation(for: registerButton)
-            return false
-        } else {
-            repaintBorder(
-                for: [passwordTextField, confirmPasswordTextField],
-                borderWidth: 0,
-                color: .clear
-            )
-        }
-
-        guard let email = emailTextField.text,
-              email.isValidEmailAddress,
-              let password = passwordTextField.text,
-              let repeatepassword = confirmPasswordTextField.text,
-              !password.isEmpty,
-              password == repeatepassword
-        else {
-            invalidAnimation(for: registerButton)
-            return false
+            repaintBorder(for: [passwordTextField, confirmPasswordTextField], borderWidth: 0, color: .clear)
         }
 
         return true

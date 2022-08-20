@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C30710328B1502200BB6C60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C30710228B1502200BB6C60 /* GoogleService-Info.plist */; };
 		2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2D928AB047E0007938C /* PresentableProtocol.swift */; };
 		2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DB28AB04A60007938C /* TabBarRouter.swift */; };
 		2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DE28AB04D20007938C /* DefaultRouter.swift */; };
@@ -17,7 +18,6 @@
 		2C6E103128AE98BA006FDE82 /* UIView+InvalidAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E103028AE98BA006FDE82 /* UIView+InvalidAnimation.swift */; };
 		2C6E103428AEF4A8006FDE82 /* UIView+AddBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E103328AEF4A8006FDE82 /* UIView+AddBlur.swift */; };
 		2C6E103B28AFB4D5006FDE82 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E103A28AFB4D5006FDE82 /* AuthManager.swift */; };
-		2C6E103E28B00E9E006FDE82 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C6E103D28B00E9E006FDE82 /* GoogleService-Info.plist */; };
 		2C81638F28AE77EA00D9D564 /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81638E28AE77EA00D9D564 /* FeedbackGenerator.swift */; };
 		2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81639528AE796800D9D564 /* RegistrationView.swift */; };
 		2C81639928AE796800D9D564 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81639628AE796800D9D564 /* LoginView.swift */; };
@@ -45,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C30710228B1502200BB6C60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C52F2D928AB047E0007938C /* PresentableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableProtocol.swift; sourceTree = "<group>"; };
 		2C52F2DB28AB04A60007938C /* TabBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarRouter.swift; sourceTree = "<group>"; };
 		2C52F2DE28AB04D20007938C /* DefaultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRouter.swift; sourceTree = "<group>"; };
@@ -55,7 +56,6 @@
 		2C6E103028AE98BA006FDE82 /* UIView+InvalidAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+InvalidAnimation.swift"; sourceTree = "<group>"; };
 		2C6E103328AEF4A8006FDE82 /* UIView+AddBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AddBlur.swift"; sourceTree = "<group>"; };
 		2C6E103A28AFB4D5006FDE82 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-		2C6E103D28B00E9E006FDE82 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C81638E28AE77EA00D9D564 /* FeedbackGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
 		2C81639528AE796800D9D564 /* RegistrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		2C81639628AE796800D9D564 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -277,7 +277,7 @@
 				2CCA56C228A2DF5800934F99 /* Sources */,
 				2CCA56D528A3937A00934F99 /* SupportinFiles */,
 				B330663828A2578900528BCE /* Info.plist */,
-				2C6E103D28B00E9E006FDE82 /* GoogleService-Info.plist */,
+				2C30710228B1502200BB6C60 /* GoogleService-Info.plist */,
 			);
 			path = PartyHub;
 			sourceTree = "<group>";
@@ -344,8 +344,8 @@
 			files = (
 				B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */,
 				2CCA56D428A3935100934F99 /* Localizable.strings in Resources */,
+				2C30710328B1502200BB6C60 /* GoogleService-Info.plist in Resources */,
 				B330663428A2578900528BCE /* Assets.xcassets in Resources */,
-				2C6E103E28B00E9E006FDE82 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
