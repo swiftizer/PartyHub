@@ -82,6 +82,11 @@ final class DefaultRouter: Presentable {
         }
     }
 
+    func popToRootModule(animated: Bool) {
+        container.popToRootViewController(animated: animated)
+        modules = [modules[0]]
+    }
+
     func insert(module: Presentable, at index: Int) {
         var viewControllers = self.container.viewControllers
         viewControllers.insert(module.toPresent(), at: index)

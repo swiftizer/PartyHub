@@ -9,6 +9,14 @@ import UIKit
 
 // MARK: - Coordinator
 
+enum FlowResult<Void> {
+    case success(Void)
+    case failure(Error)
+    case canceled
+}
+
 protocol Coordinator: Presentable {
+    var result: ((FlowResult<Void>) -> Void)? { get set }
+
     func start()
 }
