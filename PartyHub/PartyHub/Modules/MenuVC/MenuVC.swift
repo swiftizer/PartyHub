@@ -9,10 +9,22 @@ import UIKit
 
 class MenuVC: UIViewController {
 
+    var adapter: MenuTableViewAdapter
+
     // MARK: - Private properties
 
-    private var adapter: MenuTableViewAdapter!
     private let menuTableView = UITableView()
+
+    // MARK: - Initialization
+
+    init() {
+        self.adapter = MenuTableViewAdapter(tableView: menuTableView)
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Life cycle
 
@@ -20,7 +32,6 @@ class MenuVC: UIViewController {
         super.viewDidLoad()
 
         view.addSubview(menuTableView)
-        self.adapter = MenuTableViewAdapter(tableView: self.menuTableView)
     }
 
     override func viewDidLayoutSubviews() {
