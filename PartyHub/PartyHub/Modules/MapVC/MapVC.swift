@@ -11,13 +11,13 @@ import CoreLocation
 import MapKit
 import YandexMapsMobile
 
-final class CurLocationButton: UIButton {
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        return bounds.insetBy(dx: -44, dy: -44).contains(point)
-    }
-}
-
 final class MapVC: UIViewController {
+
+    enum Navigation {
+        case description
+    }
+
+    var navigation: ((Navigation) -> Void)?
 
     // MARK: - Private Properties
 
@@ -219,7 +219,6 @@ extension MapVC: UISearchResultsUpdating, UISearchBarDelegate {
                     let okAction = UIAlertAction(title: "OK", style: .cancel)
                     alertController.addAction(okAction)
                     self?.present(alertController, animated: true, completion: nil)
-                    print("ГГ\nError! \(error.localizedDescription)")
                 }
             }
         }
@@ -243,11 +242,9 @@ extension MapVC: UISearchControllerDelegate {
 extension MapVC: YMKMapObjectTapListener {
     func onMapObjectTap(with mapObject: YMKMapObject, point: YMKPoint) -> Bool {
         if let placemark = mapObject as? YMKPlacemarkMapObject {
+            // TODO: - что-то с этим сделать
             if let point = model.dictionaryPoints[placemark] {
-                let viewController = EventViewController(point: point)
-                viewController.title = point.name
-                let navigationController = UINavigationController(rootViewController: viewController)
-                present(navigationController, animated: true, completion: nil)
+                navigation?(.description)
             }
         }
         return true
@@ -294,47 +291,5 @@ extension MapVC: CLLocationManagerDelegate {
 
             clickedCurrentLocationButton()
         }
-    }
-}
-
-// MARK: - EventViewController
-
-final class EventViewController: UIViewController {
-
-    // TODO: - убрать позже
-
-    private let coordLabel = UILabel()
-    private let point: GeoPoint
-
-    init(point: GeoPoint) {
-        self.point = point
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-    }
-
-    private func setup() {
-        title = point.name
-        coordLabel.text = "\(point.latitude!), \(point.longtitude!)"
-        coordLabel.font = .systemFont(ofSize: 25, weight: .bold)
-        coordLabel.numberOfLines = 0
-        view.backgroundColor = .systemBackground
-        view.addSubview(coordLabel)
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        coordLabel.pin
-            .center()
-            .maxWidth(UIScreen.main.bounds.width)
-            .sizeToFit()
     }
 }

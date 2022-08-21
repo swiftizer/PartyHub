@@ -44,7 +44,7 @@ struct GeoData: Codable {
 }
 
 struct GeoPoint {
-    let name: String
+    let name: String?
     let latitude: Double?
     let longtitude: Double?
 }
@@ -53,6 +53,7 @@ enum NetworkError: String, Error {
     case findError
     case invalidUrl
     case emptyData
+    case badAttempt
 }
 
 final class NetworkManager {
@@ -69,7 +70,7 @@ final class NetworkManager {
         completion: @escaping (Result<GeoPoint, NetworkError>) -> Void
     ) {
         let urlString = "https://geocode-maps.yandex.ru/1.x/?apikey=\(token)&format=json&geocode=\(adress)&lang=en_RU".encodeUrl
-        print(urlString)
+
         guard let url = URL(string: urlString) else {
             completion(.failure(NetworkError.invalidUrl))
             return
@@ -89,7 +90,9 @@ final class NetworkManager {
             do {
                 let geoData = try JSONDecoder().decode(GeoData.self, from: data)
 
-                guard let coordsStr = geoData.response.geoObjectCollection.featureMember.first?.geoObject.point.pos else { completion(.failure(NetworkError.findError))
+                guard let coordsStr = geoData.response.geoObjectCollection.featureMember.first?.geoObject.point.pos
+                else {
+                    completion(.failure(NetworkError.findError))
                     return
                 }
 
@@ -99,7 +102,7 @@ final class NetworkManager {
                 completion(.success(res))
 
             } catch let error {
-                print(error)
+                debugPrint(error)
                 completion(.failure(NetworkError.emptyData))
             }
         }.resume()

@@ -1,8 +1,8 @@
 //
-//  String+encodeUrl.swift
+//  String+EncodeURL+Strip.swift
 //  PartyHub
 //
-//  Created by Сергей Николаев on 16.08.2022.
+//  Created by Dinar Garaev on 19.08.2022.
 //
 
 import Foundation

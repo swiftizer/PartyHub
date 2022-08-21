@@ -11,7 +11,7 @@ import UIKit
 final class TabBarRouter: Presentable {
     private var modules: [Presentable] = []
     private(set) var tabs: [Presentable]
-    let container = TabBarVC()
+    let container = UITabBarController()
 
     init(with items: [Presentable]) {
         self.tabs = items
@@ -28,6 +28,7 @@ final class TabBarRouter: Presentable {
             container.tabBar.backgroundColor = .systemGray6
         }
         container.tabBar.tintColor = .label
+        container.selectedIndex = 1
     }
 
     func toPresent() -> UIViewController {
