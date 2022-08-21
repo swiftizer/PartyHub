@@ -11,6 +11,12 @@
 		2C30710C28B2145A00BB6C60 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710B28B2145A00BB6C60 /* EventVC.swift */; };
 		2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710D28B2185B00BB6C60 /* LoginView.swift */; };
 		2C30711028B2185B00BB6C60 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710E28B2185B00BB6C60 /* LoginVC.swift */; };
+		2C30712528B22B9400BB6C60 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712428B22B9300BB6C60 /* NetworkManager.swift */; };
+		2C30712728B22BE600BB6C60 /* String+EncodeURL+Strip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712628B22BE600BB6C60 /* String+EncodeURL+Strip.swift */; };
+		2C30712928B22C0500BB6C60 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712828B22C0500BB6C60 /* CLLocation.swift */; };
+		2C30712B28B22D2D00BB6C60 /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712A28B22D2D00BB6C60 /* MapModel.swift */; };
+		2C30712D28B22D5900BB6C60 /* UIImage+resizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712C28B22D5900BB6C60 /* UIImage+resizeImage.swift */; };
+		2C30712F28B22EBB00BB6C60 /* CurLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712E28B22EBB00BB6C60 /* CurLocationButton.swift */; };
 		2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2D928AB047E0007938C /* PresentableProtocol.swift */; };
 		2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DB28AB04A60007938C /* TabBarRouter.swift */; };
 		2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2DE28AB04D20007938C /* DefaultRouter.swift */; };
@@ -49,6 +55,12 @@
 		2C30710B28B2145A00BB6C60 /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		2C30710D28B2185B00BB6C60 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		2C30710E28B2185B00BB6C60 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		2C30712428B22B9300BB6C60 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		2C30712628B22BE600BB6C60 /* String+EncodeURL+Strip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EncodeURL+Strip.swift"; sourceTree = "<group>"; };
+		2C30712828B22C0500BB6C60 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
+		2C30712A28B22D2D00BB6C60 /* MapModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
+		2C30712C28B22D5900BB6C60 /* UIImage+resizeImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+resizeImage.swift"; sourceTree = "<group>"; };
+		2C30712E28B22EBB00BB6C60 /* CurLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurLocationButton.swift; sourceTree = "<group>"; };
 		2C52F2D928AB047E0007938C /* PresentableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableProtocol.swift; sourceTree = "<group>"; };
 		2C52F2DB28AB04A60007938C /* TabBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarRouter.swift; sourceTree = "<group>"; };
 		2C52F2DE28AB04D20007938C /* DefaultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRouter.swift; sourceTree = "<group>"; };
@@ -124,6 +136,7 @@
 		2C52F2E228AB8E700007938C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2C30712C28B22D5900BB6C60 /* UIImage+resizeImage.swift */,
 				2C81639E28AE8A3800D9D564 /* UIColor+HexString.swift */,
 				2C81639F28AE8A3800D9D564 /* UIView+DropShadow.swift */,
 				2C8163A028AE8A3800D9D564 /* UIVIew+Frame.swift */,
@@ -131,6 +144,8 @@
 				2C6E102728AE8B3A006FDE82 /* String+Validation.swift */,
 				2C6E103028AE98BA006FDE82 /* UIView+InvalidAnimation.swift */,
 				2C6E103328AEF4A8006FDE82 /* UIView+AddBlur.swift */,
+				2C30712628B22BE600BB6C60 /* String+EncodeURL+Strip.swift */,
+				2C30712828B22C0500BB6C60 /* CLLocation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -146,7 +161,9 @@
 		2C6E103C28AFFEA7006FDE82 /* MapVC */ = {
 			isa = PBXGroup;
 			children = (
+				2C30712A28B22D2D00BB6C60 /* MapModel.swift */,
 				2CCB627C28AD5CA4005586AF /* MapVC.swift */,
+				2C30712E28B22EBB00BB6C60 /* CurLocationButton.swift */,
 			);
 			path = MapVC;
 			sourceTree = "<group>";
@@ -154,6 +171,7 @@
 		2C81638D28AE77EA00D9D564 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				2C30712428B22B9300BB6C60 /* NetworkManager.swift */,
 				2C81638E28AE77EA00D9D564 /* FeedbackGenerator.swift */,
 				2C6E103A28AFB4D5006FDE82 /* AuthManager.swift */,
 			);
@@ -381,12 +399,17 @@
 				2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */,
 				2C81638F28AE77EA00D9D564 /* FeedbackGenerator.swift in Sources */,
 				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
+				2C30712D28B22D5900BB6C60 /* UIImage+resizeImage.swift in Sources */,
+				2C30712F28B22EBB00BB6C60 /* CurLocationButton.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
 				2C6E102B28AE8D98006FDE82 /* AuthRegCoordinator.swift in Sources */,
 				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
 				2C81639A28AE796800D9D564 /* CustomTextField.swift in Sources */,
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
 				2C6E103B28AFB4D5006FDE82 /* AuthManager.swift in Sources */,
+				2C30712B28B22D2D00BB6C60 /* MapModel.swift in Sources */,
+				2C30712928B22C0500BB6C60 /* CLLocation.swift in Sources */,
+				2C30712728B22BE600BB6C60 /* String+EncodeURL+Strip.swift in Sources */,
 				2CCB627928AD5BE6005586AF /* MenuVC.swift in Sources */,
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
 				2C81639D28AE7EF100D9D564 /* RegistrationVC.swift in Sources */,
@@ -396,6 +419,7 @@
 				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
 				2CCB627828AD5BE6005586AF /* AddTableViewCell.swift in Sources */,
 				2CCB627628AD5BE6005586AF /* MenuTableViewAdapter.swift in Sources */,
+				2C30712528B22B9400BB6C60 /* NetworkManager.swift in Sources */,
 				2CCB627D28AD5CA4005586AF /* MapVC.swift in Sources */,
 				2CCB627728AD5BE6005586AF /* MenuTableViewCell.swift in Sources */,
 				2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */,

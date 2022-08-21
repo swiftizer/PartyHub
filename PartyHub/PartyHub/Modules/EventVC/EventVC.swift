@@ -113,24 +113,12 @@ final class EventVC: UIViewController {
     }
 
     private func setUpNavigationBar() {
-        // TODO: - вынести это
-        if #available(iOS 15, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.backgroundColor = .clear
-            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-        } else {
-            navigationController?.navigationBar.backgroundColor = .clear
-        }
-        navigationController?.navigationBar.tintColor = .label
-
         let backNavigationItem = UIBarButtonItem(
             image: UIImage(systemName: "xmark.circle"),
             style: .plain,
             target: self,
             action: #selector(backAction)
         )
-
-        backNavigationItem.tintColor = .label
         navigationItem.leftBarButtonItem = backNavigationItem
         setUpFavoriteButton()
     }
