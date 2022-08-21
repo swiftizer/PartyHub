@@ -24,7 +24,7 @@ final class MenuCoordinator: Coordinator {
             switch navType {
             case .addEvent:
                 if AuthManager.shared.currentUser() != nil {
-                    print("present add event vc")
+                    self?.presentAddEvent()
                 } else {
                     self?.presentLogin()
                 }
@@ -33,6 +33,42 @@ final class MenuCoordinator: Coordinator {
             }
         }
         router.setRootModule(module)
+    }
+
+    func presentAddEvent() {
+        let module = AddNewEventVC()
+        module.title = "Создать мероприятие"
+        module.navigation = { [weak self] result in
+            switch result {
+            case .registration, .back:
+                self?.router.popModule(animated: true)
+            case .choosePlace:
+                // TODO: - Динар разбирается
+                self?.presentChoosePlace()
+            }
+        }
+
+        let nav = UINavigationController(rootViewController: module)
+        if #available(iOS 15, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.backgroundColor = .systemGray6
+            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            nav.navigationBar.backgroundColor = .systemGray6
+        }
+        nav.navigationBar.tintColor = .label
+        nav.modalPresentationStyle = .overFullScreen
+
+        self.router.present(nav, animated: true, completion: nil)
+    }
+
+    func presentChoosePlace() {
+        let module = MapToChooseVC()
+        module.title = "Карта"
+//        module.navigation = {
+//
+//        }
+        router.push(module, animated: true)
     }
 
     func presentLogin() {

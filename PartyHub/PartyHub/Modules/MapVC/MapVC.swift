@@ -117,7 +117,7 @@ final class MapVC: UIViewController {
             if let latitude = point.latitude, let longtitude = point.longtitude {
                 let mapObjects = mapView.mapWindow.map.mapObjects
                 let placemark = mapObjects.addPlacemark(with: YMKPoint(latitude: latitude, longitude: longtitude))
-                let image = UIImage(named: "eventTag")?.resizeImage(targetSize: CGSize(width: 200, height: 200))
+                let image = UIImage(named: "eventTag")?.resizeImage(targetSize: CGSize(width: 250 * UIScreen.main.bounds.height/926, height: 250 * UIScreen.main.bounds.height/926))
                 placemark.setIconWith(
                     image?.withTintColor(UIColor(
                         red: 0.205,
