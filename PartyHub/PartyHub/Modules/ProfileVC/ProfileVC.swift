@@ -24,7 +24,6 @@ class ProfileVC: UIViewController {
 
     private let iconImageView = UIImageView()
     private let nameLabel = UILabel()
-    private let editButton = UIButton(type: .system)
     private let toggleView = ProfileToggleView()
     private let favoriteEventsVC = FavoriteEventsVC()
     private let createdEventsVC = CreatedEventsVC()
@@ -48,11 +47,6 @@ class ProfileVC: UIViewController {
     }
 
     // MARK: - Actions
-
-    @objc
-    private func editButtonTapped() {
-        print(#function)
-    }
 
     @objc
     private func exitButtonTapped() {
@@ -87,13 +81,6 @@ class ProfileVC: UIViewController {
         nameLabel.textColor = .label
         nameLabel.textAlignment = .center
 
-        view.addSubview(editButton)
-        editButton.backgroundColor = .systemGray6
-        editButton.setTitle("Редактировать", for: .normal)
-        editButton.layer.cornerRadius = 15
-        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        editButton.tintColor = .label
-
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
@@ -118,21 +105,15 @@ class ProfileVC: UIViewController {
             .width(view.frame.width*0.8)
             .height(24)
 
-        editButton.pin
-            .top(nameLabel.frame.maxY + basicPadding)
-            .hCenter(to: nameLabel.edge.hCenter)
-            .width(view.frame.width * 0.85)
-            .height(50)
-
         scrollView.pin
-            .top(editButton.frame.maxY + basicPadding*2)
+            .top(nameLabel.frame.maxY + basicPadding*2)
             .right()
             .left()
             .bottom()
         scrollView.contentSize = CGSize(width: view.width * 2, height: scrollView.height)
 
         toggleView.pin
-            .top(editButton.frame.maxY + basicPadding)
+            .top(nameLabel.frame.maxY + basicPadding)
             .width(view.frame.width)
             .height(55)
 
