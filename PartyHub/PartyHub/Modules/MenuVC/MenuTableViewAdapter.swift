@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import CoreLocation
 
 final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDelegate {
+
     enum Navigation {
         case addEvent
         case description
@@ -22,7 +24,12 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
         static let menuCell = "MenuTableViewCell"
     }
 
-    private var menuCellCount = 5 // count events
+    private var events = [Event]()
+    private var dictForSort = [String: Int]()
+    private var distanses = [Double]()
+    private var currentLocation: CLLocation?
+
+    private var menuCellCount = 0 // count events
     private let addCellCount = 1
     private let addCellHeight: CGFloat = 80
     private let menuCellHeight: CGFloat = 150
@@ -34,6 +41,14 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
         self.menuTableView = tableView
         super.init()
         setUpTableView()
+    }
+
+    func relodeCells(events: [Event], location: CLLocation?, distances: [Double]) {
+        self.events = events
+        self.currentLocation = location
+        self.distanses = distances
+
+        menuTableView.reloadData()
     }
 
     // MARK: - TableView functions
@@ -64,7 +79,7 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
         if section == 0 {
             return addCellCount
         } else {
-            return menuCellCount
+            return events.count
         }
     }
 
@@ -73,8 +88,11 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
             return tableView.dequeueReusableCell(withIdentifier: Cells.addCell,
                                                  for: indexPath) as? AddTableViewCell ?? .init()
         } else {
-            return tableView.dequeueReusableCell(withIdentifier: Cells.menuCell,
-                                                 for: indexPath) as? MenuTableViewCell ?? .init()
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cells.menuCell,
+                                                     for: indexPath) as? MenuTableViewCell
+
+            cell?.setUpCell(with: events[indexPath.row], distance: distanses[indexPath.row])
+            return cell ?? .init()
         }
     }
 

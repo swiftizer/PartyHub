@@ -76,7 +76,7 @@ final class RegistrationView: UIView {
         resignFirstResponders()
 
         if !validateTextFields() {
-            invalidAnimation(for: registerButton)
+            registerButton.invalidAnimation()
             FeedbackGenerator.shared.errorFeedbackGenerator()
             return
         }
@@ -109,27 +109,25 @@ final class RegistrationView: UIView {
               let password = passwordTextField.text,
               let confirmPassword = confirmPasswordTextField.text
         else {
-            invalidAnimation(for: registerButton)
+            registerButton.invalidAnimation()
             return false
         }
 
         if !email.isValidEmailAddress {
-            repaintBorder(for: [emailTextField], borderWidth: 1, color: .red.withAlphaComponent(0.6))
-            invalidAnimation(for: registerButton)
+            emailTextField.repaintBorder()
+            registerButton.invalidAnimation()
         } else {
-            repaintBorder(for: [emailTextField], borderWidth: 0, color: .clear)
+            emailTextField.repaintBorder(borderWidth: 0, color: .clear)
         }
 
         if !password.isValidPassword || !confirmPassword.isValidPassword || password != confirmPassword {
-            repaintBorder(
-                for: [passwordTextField, confirmPasswordTextField],
-                borderWidth: 1,
-                color: .red.withAlphaComponent(0.6)
-            )
-            invalidAnimation(for: registerButton)
+            passwordTextField.repaintBorder()
+            confirmPasswordTextField.repaintBorder()
+            registerButton.invalidAnimation()
             return false
         } else {
-            repaintBorder(for: [passwordTextField, confirmPasswordTextField], borderWidth: 0, color: .clear)
+            passwordTextField.repaintBorder(borderWidth: 0, color: .clear)
+            confirmPasswordTextField.repaintBorder(borderWidth: 0, color: .clear)
         }
 
         return true

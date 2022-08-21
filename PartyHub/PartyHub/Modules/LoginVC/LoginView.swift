@@ -77,12 +77,9 @@ final class LoginView: UIView {
                     self.delegate?.loginingButtonTapped()
                 case .failure:
                     FeedbackGenerator.shared.errorFeedbackGenerator()
-                    self.invalidAnimation(for: self.loginButton)
-                    self.repaintBorder(
-                        for: [self.emailTextField, self.passwordTextField],
-                        borderWidth: 1,
-                        color: .red.withAlphaComponent(0.6)
-                    )
+                    self.loginButton.invalidAnimation()
+                    self.emailTextField.repaintBorder()
+                    self.passwordTextField.repaintBorder()
                 }
             }
         }
