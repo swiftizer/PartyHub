@@ -54,6 +54,10 @@
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
 		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
+		E9FA5A6528B27DD400101AA9 /* ProfileTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA5A6428B27DD300101AA9 /* ProfileTableViewAdapter.swift */; };
+		E9FA5A6728B29DAE00101AA9 /* FavoriteEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA5A6628B29DAE00101AA9 /* FavoriteEventsVC.swift */; };
+		E9FA5A6928B29DD400101AA9 /* CreatedEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA5A6828B29DD400101AA9 /* CreatedEventsVC.swift */; };
+		E9FA5A6B28B2A29400101AA9 /* ProfileToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA5A6A28B2A29400101AA9 /* ProfileToggleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +110,10 @@
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		E9FA5A6428B27DD300101AA9 /* ProfileTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewAdapter.swift; sourceTree = "<group>"; };
+		E9FA5A6628B29DAE00101AA9 /* FavoriteEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEventsVC.swift; sourceTree = "<group>"; };
+		E9FA5A6828B29DD400101AA9 /* CreatedEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedEventsVC.swift; sourceTree = "<group>"; };
+		E9FA5A6A28B2A29400101AA9 /* ProfileToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToggleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +174,10 @@
 			isa = PBXGroup;
 			children = (
 				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
+				E9FA5A6428B27DD300101AA9 /* ProfileTableViewAdapter.swift */,
+				E9FA5A6A28B2A29400101AA9 /* ProfileToggleView.swift */,
+				E9FA5A6628B29DAE00101AA9 /* FavoriteEventsVC.swift */,
+				E9FA5A6828B29DD400101AA9 /* CreatedEventsVC.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -413,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */,
+				E9FA5A6B28B2A29400101AA9 /* ProfileToggleView.swift in Sources */,
 				2C6E103428AEF4A8006FDE82 /* UIView+AddBlur.swift in Sources */,
 				B3178CE628B2577700D72091 /* MapToChooseVC.swift in Sources */,
 				2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */,
@@ -420,6 +433,7 @@
 				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
 				2C30712D28B22D5900BB6C60 /* UIImage+resizeImage.swift in Sources */,
 				2C30712F28B22EBB00BB6C60 /* CurLocationButton.swift in Sources */,
+				E9FA5A6528B27DD400101AA9 /* ProfileTableViewAdapter.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
 				2C6E102B28AE8D98006FDE82 /* AuthRegCoordinator.swift in Sources */,
 				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
@@ -438,6 +452,7 @@
 				2C6E103128AE98BA006FDE82 /* UIView+InvalidAnimation.swift in Sources */,
 				2C8163A128AE8A3800D9D564 /* UIColor+HexString.swift in Sources */,
 				2C8163A228AE8A3800D9D564 /* UIView+DropShadow.swift in Sources */,
+				E9FA5A6728B29DAE00101AA9 /* FavoriteEventsVC.swift in Sources */,
 				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
 				2CCB627828AD5BE6005586AF /* AddTableViewCell.swift in Sources */,
 				B3178CE428B2574E00D72091 /* EventImageView.swift in Sources */,
@@ -450,6 +465,7 @@
 				2C8163A328AE8A3800D9D564 /* UIVIew+Frame.swift in Sources */,
 				2C30711028B2185B00BB6C60 /* LoginVC.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
+				E9FA5A6928B29DD400101AA9 /* CreatedEventsVC.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
 				2C30710C28B2145A00BB6C60 /* EventVC.swift in Sources */,
 				B3178CE028B256FE00D72091 /* ImagePicker.swift in Sources */,
@@ -593,7 +609,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 69S65245DU;
+				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -622,7 +638,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 69S65245DU;
+				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
