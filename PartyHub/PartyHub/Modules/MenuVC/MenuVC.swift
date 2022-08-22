@@ -26,6 +26,7 @@ final class MenuVC: UIViewController {
     // MARK: - Initialization
 
     init() {
+
         self.adapter = MenuTableViewAdapter(tableView: menuTableView)
         super.init(nibName: nil, bundle: nil)
         adapter.relodeCells(events: [], location: nil, distances: [])
@@ -50,24 +51,9 @@ final class MenuVC: UIViewController {
         }
 
         loadData()
+
         view.addSubview(menuTableView)
     }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        menuTableView.pin
-            .all()
-    }
-
-    // MARK: - Actions
-
-    @objc
-    private func didPullToRefresh() {
-        loadData()
-    }
-
-    // MARK: - Methods
 
     func loadData() {
         let refreshControl = UIRefreshControl()
@@ -83,14 +69,14 @@ final class MenuVC: UIViewController {
                 self.events = events
                 self.group.leave()
 
-                FeedbackGenerator.shared.succesFeedbackGenerator()
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
 
             case .failure(let error):
                 let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .cancel)
                 alertController.addAction(okAction)
                 self.present(alertController, animated: true, completion: nil)
-                FeedbackGenerator.shared.errorFeedbackGenerator()
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
             }
         }
 
@@ -100,10 +86,16 @@ final class MenuVC: UIViewController {
             self.events = self.sortEventsByDistance(events: self.events)
             self.getDistances()
             self.adapter.relodeCells(events: self.events, location: self.currentLocation!, distances: self.distanses)
+//            self.adapter.rootVC = self
         }
     }
 
-    // MARK: - Private Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        menuTableView.pin
+            .all()
+    }
 
     private func sortEventsByDistance(events: [Event]) -> [Event] {
         let sevents = events.sorted {
@@ -130,9 +122,12 @@ final class MenuVC: UIViewController {
             distanses.append(distance)
         }
     }
-}
 
-// MARK: - CLLocationManagerDelegate
+    @objc
+    private func didPullToRefresh() {
+        loadData()
+    }
+}
 
 extension MenuVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -9,6 +9,6 @@ import UIKit
 
 final class CurLocationButton: UIButton {
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        return bounds.insetBy(dx: -44, dy: -44).contains(point)
+        return bounds.insetBy(dx: -4, dy: -4).contains(point)
     }
 }

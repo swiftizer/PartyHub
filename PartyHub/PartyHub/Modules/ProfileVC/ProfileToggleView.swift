@@ -16,7 +16,7 @@ protocol ProfileToggleViewDelegate: AnyObject {
 final class ProfileToggleView: UIView {
 
     // MARK: - Internal properties
-    
+
     weak var delegate: ProfileToggleViewDelegate?
 
     enum State {
@@ -24,7 +24,7 @@ final class ProfileToggleView: UIView {
         case created
     }
 
-    var state: State = .favorites
+    var state: State = .created
 
     // MARK: - Private properties
 
@@ -39,7 +39,7 @@ final class ProfileToggleView: UIView {
     private lazy var favoritesButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
-        button.setTitle("Я пойду", for: .normal)
+        button.setTitle("Мои мероприятия", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.addTarget(self, action: #selector(favoritesButtonTapped), for: .touchUpInside)
         return button
@@ -48,7 +48,7 @@ final class ProfileToggleView: UIView {
     private lazy var createdButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
-        button.setTitle("Мои мероприятия", for: .normal)
+        button.setTitle("Иду", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.addTarget(self, action: #selector(createdButtonTapped), for: .touchUpInside)
         return button
@@ -94,12 +94,16 @@ final class ProfileToggleView: UIView {
         delegate?.profileToggleViewDidTapCreated(self)
     }
 
+    // MARK: - Methods
+
     func update(for state: State) {
         self.state = state
         UIView.animate(withDuration: 0.3) {
             self.layoutIndicator()
         }
     }
+
+    // MARK: - Private Merhods
 
     private func setupFrames() {
         favoritesButton.pin
@@ -117,13 +121,13 @@ final class ProfileToggleView: UIView {
 
     private func layoutIndicator() {
         switch state {
-        case .favorites:
+        case .created:
             indicatorView.pin
                 .top(favoritesButton.bottom)
                 .width(frame.width/2)
                 .left()
                 .height(3)
-        case .created:
+        case .favorites:
             indicatorView.pin
                 .top(createdButton.bottom)
                 .width(frame.width/2)
@@ -131,5 +135,4 @@ final class ProfileToggleView: UIView {
                 .height(3)
         }
     }
-
 }

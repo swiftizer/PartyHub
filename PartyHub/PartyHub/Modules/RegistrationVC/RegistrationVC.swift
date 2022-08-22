@@ -65,6 +65,7 @@ extension RegistrationVC: RegistrationViewDelegate {
 
     func registerationButtonTapped() {
         FeedbackGenerator.shared.customFeedbackGeneration(.medium)
+        
         self.navigation?(.enter)
     }
 }

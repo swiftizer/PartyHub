@@ -43,6 +43,14 @@ final class AuthRegCoordinator: Coordinator {
             case .enter:
                 self?.router.popModule(animated: false)
                 self?.result?(.success(Void()))
+                EventManager.shared.initUserStructure { res in
+                    switch res {
+                    case .success:
+                        break
+                    case .failure:
+                        fatalError()
+                    }
+                }
             case .alert:
                 break
             }

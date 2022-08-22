@@ -22,13 +22,21 @@ struct Event {
     let docName: String
 }
 
+struct DocIDs {
+    var created: [String]
+    let followed: [String]
+}
+
 protocol EventManagerDescription {
     func downloadEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
+    func downloadFollowedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
+    func downloadCreatedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
     func goToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
     func cancelGoToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
     func uploadEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
     func deleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
     func adminDeleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
+    func initUserStructure(completion: @escaping (Result<String, NetworkError>) -> Void)
 }
 
 final class EventManager: EventManagerDescription {
@@ -48,6 +56,111 @@ final class EventManager: EventManagerDescription {
                 completion(.success(events))
             } else {
                 fatalError()
+            }
+        }
+    }
+
+    private func downloadEventIDsForUser(completion: @escaping (Result<DocIDs, NetworkError>) -> Void) {
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        database.collection("\(userID)").document("userData").getDocument { document, error in
+            if let _ = error {
+                completion(.failure(NetworkError.emptyData))
+            } else if let docs = self.getDocIDs(from: (document?.data())!) {
+                completion(.success(docs))
+            } else {
+                fatalError()
+            }
+        }
+    }
+
+    func downloadFollowedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void) {
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        downloadEventIDsForUser { [weak self] result in
+            switch result {
+            case .success(let docs):
+                if docs.followed.count == 0 {
+                    completion(.success([]))
+                    return
+                }
+                var events = [Event]()
+
+                let group = DispatchGroup()
+                for doc in docs.followed {
+                    group.enter()
+                    self?.database.collection("events").document(doc).getDocument { document, error in
+                        guard let data = document?.data() else {
+                            group.leave()
+                            return
+                        }
+                        if let _ = error {
+                            completion(.failure(NetworkError.emptyData))
+                        } else if let event = self?.event(from: (document?.data())!) {
+                            events.append(event)
+                            group.leave()
+                        } else {
+                            fatalError()
+                        }
+                    }
+                }
+
+                group.notify(queue: DispatchQueue.main) {
+                    completion(.success(events))
+                }
+
+            case .failure:
+                completion(.failure(NetworkError.badAttempt))
+            }
+        }
+    }
+
+    func downloadCreatedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void) {
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        downloadEventIDsForUser { [weak self] result in
+            switch result {
+            case .success(let docs):
+                if docs.created.count == 0 {
+                    completion(.success([]))
+                    return
+                }
+                var events = [Event]()
+
+                let group = DispatchGroup()
+                for doc in docs.created {
+                    group.enter()
+                    self?.database.collection("events").document(doc).getDocument { document, error in
+                        guard let data = document?.data() else {
+                            group.leave()
+                            return
+                        }
+                        if let _ = error {
+                            completion(.failure(NetworkError.emptyData))
+                        } else if let event = self?.event(from: data) {
+                            events.append(event)
+                            group.leave()
+                        } else {
+                            fatalError()
+                        }
+                    }
+                }
+
+                group.notify(queue: DispatchQueue.main) {
+                    completion(.success(events))
+                }
+
+            case .failure:
+                completion(.failure(NetworkError.badAttempt))
             }
         }
     }
@@ -77,6 +190,7 @@ final class EventManager: EventManagerDescription {
     }
 
     func cancelGoToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
+
         guard let userID = AuthManager.shared.currentUser()?.uid else {
             completion(.failure(NetworkError.invalidUrl))
             return
@@ -93,11 +207,13 @@ final class EventManager: EventManagerDescription {
     }
 
     func uploadEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
+
+        let group = DispatchGroup()
+
         guard let userID = AuthManager.shared.currentUser()?.uid else {
             completion(.failure(NetworkError.invalidUrl))
             return
         }
-        let group = DispatchGroup()
 
         group.enter()
         imageManager.uploadImage(image: event.image) { [weak self] result in
@@ -161,6 +277,22 @@ final class EventManager: EventManagerDescription {
         }
     }
 
+    func initUserStructure(completion: @escaping (Result<String, NetworkError>) -> Void) {
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        database.collection("\(userID)").document("userData").setData(["created": [], "followed": []]) { error in
+
+            if let _ = error {
+                completion(.failure(NetworkError.badAttempt))
+            } else {
+                completion(.success(userID))
+            }
+        }
+    }
+
     func deleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
 
         guard let userID = AuthManager.shared.currentUser()?.uid else {
@@ -211,6 +343,7 @@ final class EventManager: EventManagerDescription {
                     switch result {
                     case .success(let uploadedImageName):
                         completion(.success(event))
+
                     case .failure:
                         completion(.failure(NetworkError.badAttempt))
                     }
@@ -265,5 +398,21 @@ private extension EventManager {
         case contacts
         case countOfParticipants
         case docName
+    }
+
+    func getDocIDs(from data: [String: Any]) -> DocIDs? {
+        guard
+            let created = data[Keys2.created.rawValue] as? [String],
+            let followed = data[Keys2.followed.rawValue] as? [String]
+        else {
+            return nil
+        }
+
+        return DocIDs(created: created, followed: followed)
+    }
+
+    enum Keys2: String {
+        case created
+        case followed
     }
 }

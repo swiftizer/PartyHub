@@ -80,7 +80,7 @@ final class MapVC: UIViewController {
         currentLocationButton.setImage(UIImage(systemName: "location"), for: .normal)
         currentLocationButton.backgroundColor = .systemGray6
         currentLocationButton.tintColor = .label
-        currentLocationButton.layer.cornerRadius = 18
+        currentLocationButton.layer.cornerRadius = 20
         currentLocationButton.addTarget(self, action: #selector(clickedCurrentLocationButton), for: .touchUpInside)
     }
 
@@ -148,8 +148,8 @@ final class MapVC: UIViewController {
 
         currentLocationButton.pin
             .bottomRight(to: mapView.anchor.bottomRight)
-            .height(35)
-            .width(35)
+            .height(40)
+            .width(40)
             .marginRight(15)
             .marginBottom(30)
     }

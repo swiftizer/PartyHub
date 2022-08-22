@@ -8,7 +8,6 @@
 import UIKit
 import NVActivityIndicatorView
 
-// TODO: - вынести логику, слишком большой файл
 final class AddNewEventVC: UIViewController {
     enum Navigation {
         case back
@@ -23,7 +22,6 @@ final class AddNewEventVC: UIViewController {
     private let scrollView = UIScrollView()
     private let eventDescriptionTextView = UITextView()
     private var placeholderLabel = UILabel()
-    private var mapVC = MapToChooseVC()
     private let separatorLabel = UILabel()
     private let eventImageView = EventImageView()
     private var didPhotoTakenFlag = false
@@ -33,12 +31,7 @@ final class AddNewEventVC: UIViewController {
     private var currentEditingDateTextField = UITextField()
     private var imagePicker: ImagePicker?
     private let datePicker = UIDatePicker()
-    private let activityIndicator = NVActivityIndicatorView(
-        frame: CGRect(x: 0, y: 0, width: 67, height: 67),
-        type: .ballClipRotateMultiple,
-        color: UIColor.label,
-        padding: 0
-    )
+    private let activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 67, height: 67), type: .ballClipRotateMultiple, color: UIColor.label, padding: 0)
 
     private let eventTitleTextField: UITextField = {
         let textField = UITextField()
@@ -120,7 +113,6 @@ final class AddNewEventVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        definesPresentationContext = true
         setupUI()
     }
 
@@ -229,10 +221,7 @@ final class AddNewEventVC: UIViewController {
         scrollView.backgroundColor = .systemBackground
         scrollView.isUserInteractionEnabled = true
         scrollView.isScrollEnabled = true
-        scrollView.contentSize = CGSize(
-            width: UIScreen.main.bounds.width,
-            height: UIScreen.main.bounds.height + 100 * 926 / UIScreen.main.bounds.height
-        )
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100 * 926 / UIScreen.main.bounds.height)
 
         scrollView.addSubview(eventImageView)
         scrollView.addSubview(eventTitleTextField)
@@ -428,6 +417,7 @@ private extension AddNewEventVC {
 
     @objc
     func didTapEventImageView(_ sender: UIButton) {
+//        test(UIButton())
         dismissKeyboard(UITapGestureRecognizer())
         self.imagePicker?.present(from: sender)
     }
@@ -459,6 +449,7 @@ private extension AddNewEventVC {
               let contacts = contactsTextField.text,
               let cost = Int(costStr) else {
 
+            
             addButton.invalidAnimation()
             if eventTitleTextField.text == "" {
                 eventTitleTextField.repaintBorder()
@@ -476,6 +467,7 @@ private extension AddNewEventVC {
         }
 
         let image: UIImage? = didPhotoTakenFlag ? eventImageView.image : nil
+
         let docName = "\(title)-\(UUID().uuidString)"
 
         let event = Event(image: image, imageName: "", title: title, description: description, begin: begin, end: end, place: "\(place)|\(latitude)|\(longtitude)", cost: cost, contacts: contacts, countOfParticipants: 0, docName: docName)
@@ -496,10 +488,8 @@ private extension AddNewEventVC {
                 self.view.isUserInteractionEnabled = true
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//                    self.dismiss(animated: true)
                     self.navigation?(.registration)
                 }
-
             case .failure(let error):
                 let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .cancel)
@@ -517,14 +507,17 @@ private extension AddNewEventVC {
 
     @objc
     func choosePlace() {
-//        mapVC.addNewEventVC = self
-//        navigationController?.pushViewController(mapVC, animated: true)
-        self.navigation?(.choosePlace)
+        navigation?(.choosePlace)
     }
 
     @objc
     private func backAction() {
-        self.navigation?(.back)
+        navigation?(.back)
+    }
+
+    @objc
+    private func registerButtonTapped() {
+        navigation?(.registration)
     }
 
     @objc

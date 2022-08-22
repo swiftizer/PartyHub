@@ -19,6 +19,7 @@ final class ImageManager: ImageManagerDescription {
     static let shared: ImageManagerDescription = ImageManager()
 
     private let storageRef = Storage.storage().reference()
+
     private let cache = ImageCache.default
 
     private init() {}

@@ -31,5 +31,4 @@ final class ProfileCoordinator: Coordinator {
     func toPresent() -> UIViewController {
         return router.toPresent()
     }
-
 }

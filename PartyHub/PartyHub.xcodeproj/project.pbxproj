@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C19D2A128B302FC00F799B7 /* AddNewEventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19D2A028B302FC00F799B7 /* AddNewEventCoordinator.swift */; };
+		2C19D2A328B31A8C00F799B7 /* AddNewEventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19D2A228B31A8C00F799B7 /* AddNewEventCoordinator.swift */; };
 		2C30710328B1502200BB6C60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C30710228B1502200BB6C60 /* GoogleService-Info.plist */; };
 		2C30710C28B2145A00BB6C60 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710B28B2145A00BB6C60 /* EventVC.swift */; };
 		2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710D28B2185B00BB6C60 /* LoginView.swift */; };
@@ -53,15 +53,15 @@
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
+		B3F62C1B28B2D8320081E0FC /* ProfileTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */; };
+		B3F62C1D28B2D83C0081E0FC /* ProfileToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */; };
+		B3F62C1F28B2D8450081E0FC /* FavoriteEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */; };
+		B3F62C2128B2D84E0081E0FC /* CreatedEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C2028B2D84E0081E0FC /* CreatedEventsVC.swift */; };
 		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
-		E9FA5A6528B27DD400101AA9 /* ProfileTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA5A6428B27DD300101AA9 /* ProfileTableViewAdapter.swift */; };
-		E9FA5A6728B29DAE00101AA9 /* FavoriteEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA5A6628B29DAE00101AA9 /* FavoriteEventsVC.swift */; };
-		E9FA5A6928B29DD400101AA9 /* CreatedEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA5A6828B29DD400101AA9 /* CreatedEventsVC.swift */; };
-		E9FA5A6B28B2A29400101AA9 /* ProfileToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FA5A6A28B2A29400101AA9 /* ProfileToggleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2C19D2A028B302FC00F799B7 /* AddNewEventCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewEventCoordinator.swift; sourceTree = "<group>"; };
+		2C19D2A228B31A8C00F799B7 /* AddNewEventCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewEventCoordinator.swift; sourceTree = "<group>"; };
 		2C30710228B1502200BB6C60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C30710B28B2145A00BB6C60 /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		2C30710D28B2185B00BB6C60 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -109,11 +109,11 @@
 		B330663328A2578900528BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewAdapter.swift; sourceTree = "<group>"; };
+		B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToggleView.swift; sourceTree = "<group>"; };
+		B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEventsVC.swift; sourceTree = "<group>"; };
+		B3F62C2028B2D84E0081E0FC /* CreatedEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedEventsVC.swift; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		E9FA5A6428B27DD300101AA9 /* ProfileTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewAdapter.swift; sourceTree = "<group>"; };
-		E9FA5A6628B29DAE00101AA9 /* FavoriteEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEventsVC.swift; sourceTree = "<group>"; };
-		E9FA5A6828B29DD400101AA9 /* CreatedEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedEventsVC.swift; sourceTree = "<group>"; };
-		E9FA5A6A28B2A29400101AA9 /* ProfileToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToggleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,10 +174,10 @@
 			isa = PBXGroup;
 			children = (
 				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
-				E9FA5A6428B27DD300101AA9 /* ProfileTableViewAdapter.swift */,
-				E9FA5A6A28B2A29400101AA9 /* ProfileToggleView.swift */,
-				E9FA5A6628B29DAE00101AA9 /* FavoriteEventsVC.swift */,
-				E9FA5A6828B29DD400101AA9 /* CreatedEventsVC.swift */,
+				B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */,
+				B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */,
+				B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */,
+				B3F62C2028B2D84E0081E0FC /* CreatedEventsVC.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -262,7 +262,7 @@
 				2CCA56F228A588BA00934F99 /* MapCoordinator.swift */,
 				2CCA56F428A588CA00934F99 /* ProfileCoordinator.swift */,
 				2C6E102A28AE8D98006FDE82 /* AuthRegCoordinator.swift */,
-				2C19D2A028B302FC00F799B7 /* AddNewEventCoordinator.swift */,
+				2C19D2A228B31A8C00F799B7 /* AddNewEventCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -279,14 +279,14 @@
 		2CCB627128AD5BE6005586AF /* MenuVC */ = {
 			isa = PBXGroup;
 			children = (
-				2CCB627528AD5BE6005586AF /* MenuVC.swift */,
-				B3178CE128B2571500D72091 /* AddEventVC.swift */,
-				B3178CE528B2577700D72091 /* MapToChooseVC.swift */,
-				B3178CDF28B256FE00D72091 /* ImagePicker.swift */,
 				2CCB627328AD5BE6005586AF /* MenuTableViewCell.swift */,
 				2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */,
+				2CCB627528AD5BE6005586AF /* MenuVC.swift */,
 				2CCB627228AD5BE6005586AF /* MenuTableViewAdapter.swift */,
+				B3178CDF28B256FE00D72091 /* ImagePicker.swift */,
+				B3178CE128B2571500D72091 /* AddEventVC.swift */,
 				B3178CE328B2574E00D72091 /* EventImageView.swift */,
+				B3178CE528B2577700D72091 /* MapToChooseVC.swift */,
 			);
 			path = MenuVC;
 			sourceTree = "<group>";
@@ -425,16 +425,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */,
-				E9FA5A6B28B2A29400101AA9 /* ProfileToggleView.swift in Sources */,
 				2C6E103428AEF4A8006FDE82 /* UIView+AddBlur.swift in Sources */,
+				B3F62C1D28B2D83C0081E0FC /* ProfileToggleView.swift in Sources */,
 				B3178CE628B2577700D72091 /* MapToChooseVC.swift in Sources */,
 				2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */,
 				2C81638F28AE77EA00D9D564 /* FeedbackGenerator.swift in Sources */,
+				B3F62C1B28B2D8320081E0FC /* ProfileTableViewAdapter.swift in Sources */,
 				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
 				2C30712D28B22D5900BB6C60 /* UIImage+resizeImage.swift in Sources */,
 				2C30712F28B22EBB00BB6C60 /* CurLocationButton.swift in Sources */,
-				E9FA5A6528B27DD400101AA9 /* ProfileTableViewAdapter.swift in Sources */,
 				2CCA56F528A588CA00934F99 /* ProfileCoordinator.swift in Sources */,
+				2C19D2A328B31A8C00F799B7 /* AddNewEventCoordinator.swift in Sources */,
 				2C6E102B28AE8D98006FDE82 /* AuthRegCoordinator.swift in Sources */,
 				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
 				2C81639A28AE796800D9D564 /* CustomTextField.swift in Sources */,
@@ -448,11 +449,9 @@
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
 				B3178CE228B2571500D72091 /* AddEventVC.swift in Sources */,
 				2C81639D28AE7EF100D9D564 /* RegistrationVC.swift in Sources */,
-				2C19D2A128B302FC00F799B7 /* AddNewEventCoordinator.swift in Sources */,
 				2C6E103128AE98BA006FDE82 /* UIView+InvalidAnimation.swift in Sources */,
 				2C8163A128AE8A3800D9D564 /* UIColor+HexString.swift in Sources */,
 				2C8163A228AE8A3800D9D564 /* UIView+DropShadow.swift in Sources */,
-				E9FA5A6728B29DAE00101AA9 /* FavoriteEventsVC.swift in Sources */,
 				2C52F2DC28AB04A60007938C /* TabBarRouter.swift in Sources */,
 				2CCB627828AD5BE6005586AF /* AddTableViewCell.swift in Sources */,
 				B3178CE428B2574E00D72091 /* EventImageView.swift in Sources */,
@@ -462,15 +461,16 @@
 				2CCB627728AD5BE6005586AF /* MenuTableViewCell.swift in Sources */,
 				2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
+				B3F62C2128B2D84E0081E0FC /* CreatedEventsVC.swift in Sources */,
 				2C8163A328AE8A3800D9D564 /* UIVIew+Frame.swift in Sources */,
 				2C30711028B2185B00BB6C60 /* LoginVC.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
-				E9FA5A6928B29DD400101AA9 /* CreatedEventsVC.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
 				2C30710C28B2145A00BB6C60 /* EventVC.swift in Sources */,
 				B3178CE028B256FE00D72091 /* ImagePicker.swift in Sources */,
 				2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */,
 				2C6E102828AE8B3A006FDE82 /* String+Validation.swift in Sources */,
+				B3F62C1F28B2D8450081E0FC /* FavoriteEventsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

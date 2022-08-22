@@ -71,15 +71,15 @@ open class ImagePicker: NSObject {
 
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        if let action = self.action(for: .camera, title: "Camera") {
+        if let action = self.action(for: .camera, title: "Камера") {
             alertController.addAction(action)
         }
 
-        if let action = self.action(for: .photoLibrary, title: "Photo library") {
+        if let action = self.action(for: .photoLibrary, title: "Галерея") {
             alertController.addAction(action)
         }
 
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: nil))
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             alertController.popoverPresentationController?.sourceView = sourceView

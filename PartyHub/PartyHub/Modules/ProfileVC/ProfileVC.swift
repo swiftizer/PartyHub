@@ -16,11 +16,10 @@ class ProfileVC: UIViewController {
     enum Navigation {
         case exit
     }
+
     var navigation: ((Navigation) -> Void)?
 
     // MARK: - Private properties
-
-    var email: String = ""
 
     private let iconImageView = UIImageView()
     private let nameLabel = UILabel()
@@ -34,9 +33,6 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        view.backgroundColor = .systemBackground
-        view.addSubview(scrollView)
-        view.addSubview(toggleView)
         setupDelegates()
         addChildren()
     }
@@ -59,11 +55,13 @@ class ProfileVC: UIViewController {
                 debugPrint(error.localizedDescription)
             }
         }
+        tabBarController?.selectedIndex = 0
     }
 
     // MARK: - Private Methods
 
     private func setupUI() {
+        guard let email = AuthManager.shared.currentUser()?.email else { return }
         let exitNavigationItem = UIBarButtonItem(
             image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
             style: .plain,
@@ -76,7 +74,7 @@ class ProfileVC: UIViewController {
         iconImageView.layer.cornerRadius = 15
 
         view.addSubview(nameLabel)
-        nameLabel.text = (email == "") ? "useremail@mail.ru" : email
+        nameLabel.text = email
         nameLabel.font = .systemFont(ofSize: 17, weight: .semibold)
         nameLabel.textColor = .label
         nameLabel.textAlignment = .center
@@ -86,10 +84,13 @@ class ProfileVC: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         exitNavigationItem.tintColor = .label
         navigationItem.rightBarButtonItem = exitNavigationItem
+
+        view.backgroundColor = .systemBackground
+        view.addSubview(scrollView)
+        view.addSubview(toggleView)
     }
 
     private func setUpLayout() {
-
         let basicPadding: CGFloat = 12
         let imageViewWidth: CGFloat = view.frame.width / 4
 
@@ -116,7 +117,6 @@ class ProfileVC: UIViewController {
             .top(nameLabel.frame.maxY + basicPadding)
             .width(view.frame.width)
             .height(55)
-
     }
 
     private func setupDelegates() {
@@ -125,25 +125,25 @@ class ProfileVC: UIViewController {
     }
 
     private func addChildren() {
-        addChild(favoriteEventsVC)
-        scrollView.addSubview(favoriteEventsVC.view)
-        favoriteEventsVC.view.frame = CGRect(
+        addChild(createdEventsVC)
+        scrollView.addSubview(createdEventsVC.view)
+        createdEventsVC.view.frame = CGRect(
             x: 0,
             y: 0,
             width: scrollView.width,
             height: scrollView.height
         )
-        favoriteEventsVC.didMove(toParent: self)
+        createdEventsVC.didMove(toParent: self)
 
-        addChild(createdEventsVC)
-        scrollView.addSubview(createdEventsVC.view)
-        createdEventsVC.view.frame = CGRect(
+        addChild(favoriteEventsVC)
+        scrollView.addSubview(favoriteEventsVC.view)
+        favoriteEventsVC.view.frame = CGRect(
             x: view.width,
             y: 0,
             width: scrollView.width,
             height: scrollView.height
         )
-        createdEventsVC.didMove(toParent: self)
+        favoriteEventsVC.didMove(toParent: self)
     }
 
 }
@@ -153,9 +153,9 @@ class ProfileVC: UIViewController {
 extension ProfileVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.x >= (view.width - 100) {
-            toggleView.update(for: .created)
-        } else {
             toggleView.update(for: .favorites)
+        } else {
+            toggleView.update(for: .created)
         }
     }
 }
