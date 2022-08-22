@@ -18,7 +18,7 @@ final class MenuCoordinator: Coordinator {
     }
 
     func start() {
-        rootModule.title = "Menu"
+        rootModule.title = "Меню"
         rootModule.adapter.navigation = { [weak self] navType in
             switch navType {
             case .addEvent:
@@ -46,7 +46,10 @@ final class MenuCoordinator: Coordinator {
             case .back:
                 self?.router.popModule(animated: true)
             case .go:
-                print("press GO in Menu Coordinator")
+                if AuthManager.shared.currentUser() == nil {
+                    self?.router.popModule(animated: true)
+                    self?.presentLogin()
+                }
             }
         }
         router.present(nav, animated: true, completion: nil)
@@ -72,7 +75,10 @@ final class MenuCoordinator: Coordinator {
         let authCoordinator = AuthRegCoordinator()
         authCoordinator.result = { [weak self] res in
             switch res {
-            case .success, .canceled:
+            case .success:
+                self?.rootModule.loadData()
+                self?.router.popModule(animated: true)
+            case .canceled:
                 self?.router.popModule(animated: true)
             default :
                 break

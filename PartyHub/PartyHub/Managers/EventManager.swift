@@ -11,6 +11,8 @@ import FirebaseFirestore
 protocol EventManagerDescription {
     func downloadEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
     func downloadFollowedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
+    func isEventFollowedByUser(event: Event, completion: @escaping (Result<Bool, NetworkError>) -> Void)
+    func updateParticipantsCount(for event: Event, to value: Int, completion: @escaping (Result<Int, NetworkError>) -> Void)
     func downloadCreatedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
     func goToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
     func cancelGoToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
@@ -21,7 +23,6 @@ protocol EventManagerDescription {
 }
 
 final class EventManager: EventManagerDescription {
-
     private let database = Firestore.firestore()
     private let imageManager = ImageManager.shared
 
@@ -37,6 +38,37 @@ final class EventManager: EventManagerDescription {
                 completion(.success(events))
             } else {
                 fatalError()
+            }
+        }
+    }
+
+    func updateParticipantsCount(for event: Event, to value: Int, completion: @escaping (Result<Int, NetworkError>) -> Void) {
+        database.collection("events").document(event.docName).updateData(["countOfParticipants": value]) { err in
+            if let err = err {
+                completion(.failure(NetworkError.badAttempt))
+            } else {
+                completion(.success(value))
+            }
+        }
+    }
+
+    func isEventFollowedByUser(event: Event, completion: @escaping (Result<Bool, NetworkError>) -> Void) {
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.success(false))
+            return
+        }
+
+        downloadEventIDsForUser { [weak self] result in
+            switch result {
+            case .success(let docs):
+                if docs.followed.contains(event.docName) {
+                    completion(.success(true))
+                } else {
+                    completion(.success(false))
+                }
+
+            case .failure:
+                completion(.failure(NetworkError.badAttempt))
             }
         }
     }
@@ -291,12 +323,16 @@ final class EventManager: EventManagerDescription {
             if  error != nil {
                 completion(.failure(NetworkError.badAttempt))
             } else {
-                self.imageManager.deleteImage(imageName: event.imageName) { result in
-                    switch result {
-                    case .success:
-                        group.leave()
-                    case .failure:
-                        completion(.failure(NetworkError.badAttempt))
+                if event.imageName == "default.jpeg" {
+                    group.leave()
+                } else {
+                    self.imageManager.deleteImage(imageName: event.imageName) { result in
+                        switch result {
+                        case .success:
+                            group.leave()
+                        case .failure:
+                            completion(.failure(NetworkError.badAttempt))
+                        }
                     }
                 }
             }
@@ -312,13 +348,17 @@ final class EventManager: EventManagerDescription {
             if err != nil {
                 completion(.failure(NetworkError.badAttempt))
             } else {
-                self.imageManager.deleteImage(imageName: event.imageName) { result in
-                    switch result {
-                    case .success:
-                        completion(.success(event))
+                if event.imageName == "default.jpeg" {
+                    completion(.success(event))
+                } else {
+                    self.imageManager.deleteImage(imageName: event.imageName) { result in
+                        switch result {
+                        case .success:
+                            completion(.success(event))
 
-                    case .failure:
-                        completion(.failure(NetworkError.badAttempt))
+                        case .failure:
+                            completion(.failure(NetworkError.badAttempt))
+                        }
                     }
                 }
             }

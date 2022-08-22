@@ -8,6 +8,8 @@
 import UIKit
 import CoreLocation
 
+// TODO: - отнаследовать от другого класса
+
 final class CreatedEventsVC: UIViewController {
 
     var adapter: MenuTableViewAdapter
@@ -26,7 +28,7 @@ final class CreatedEventsVC: UIViewController {
     // MARK: - Initialization
 
     init() {
-        self.adapter = MenuTableViewAdapter(tableView: menuTableView, needAddSection: false)
+        self.adapter = MenuTableViewAdapter(tableView: menuTableView, needAddSection: false, isCreatedTV: true)
         super.init(nibName: nil, bundle: nil)
         adapter.relodeCells(events: [], location: nil, distances: [])
     }
@@ -42,6 +44,11 @@ final class CreatedEventsVC: UIViewController {
 
         locationManager.requestAlwaysAuthorization()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("ProfileToggleView.Update.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("ProfileCoordinator.PresentDescrption.Back.Sirius.PartyHub"), object: nil)
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             group.enter()
@@ -78,7 +85,6 @@ final class CreatedEventsVC: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         menuTableView.refreshControl = refreshControl
-
         menuTableView.refreshControl?.beginRefreshing()
 
         group.enter()
@@ -88,7 +94,7 @@ final class CreatedEventsVC: UIViewController {
                 self.events = events
                 self.group.leave()
 
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
+//                UINotificationFeedbackGenerator().notificationOccurred(.success)
 
             case .failure(let error):
                 let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)

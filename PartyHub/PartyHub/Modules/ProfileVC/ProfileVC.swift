@@ -18,14 +18,14 @@ class ProfileVC: UIViewController {
     }
 
     var navigation: ((Navigation) -> Void)?
-
+    let favoriteEventsVC = FavoriteEventsVC()
+    let createdEventsVC = CreatedEventsVC()
+    
     // MARK: - Private properties
 
     private let iconImageView = UIImageView()
     private let nameLabel = UILabel()
     private let toggleView = ProfileToggleView()
-    private let favoriteEventsVC = FavoriteEventsVC()
-    private let createdEventsVC = CreatedEventsVC()
     private let scrollView = UIScrollView()
 
     // MARK: - Life Cycle
@@ -33,8 +33,14 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupEmail()
         setupDelegates()
         addChildren()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupEmail()
     }
 
     override func viewDidLayoutSubviews() {
@@ -50,6 +56,7 @@ class ProfileVC: UIViewController {
             switch result {
             case .success:
                 FeedbackGenerator.shared.customFeedbackGeneration(.medium)
+                NotificationCenter.default.post(name: NSNotification.Name("AuthManager.SignOut.Sirius.PartyHub"), object: nil)
                 self?.navigation?(.exit)
             case .failure(let error):
                 debugPrint(error.localizedDescription)
@@ -60,8 +67,12 @@ class ProfileVC: UIViewController {
 
     // MARK: - Private Methods
 
-    private func setupUI() {
+    private func setupEmail() {
         guard let email = AuthManager.shared.currentUser()?.email else { return }
+        nameLabel.text = email
+    }
+
+    private func setupUI() {
         let exitNavigationItem = UIBarButtonItem(
             image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
             style: .plain,
@@ -70,11 +81,15 @@ class ProfileVC: UIViewController {
         )
 
         view.addSubview(iconImageView)
-        iconImageView.backgroundColor = .systemIndigo
-        iconImageView.layer.cornerRadius = 15
+//        iconImageView.backgroundColor = .systemIndigo
+//        iconImageView.layer.cornerRadius = 15
+
+        iconImageView.layer.masksToBounds = true
+        iconImageView.image = UIImage(systemName: "person.crop.circle")
+        iconImageView.tintColor = .systemIndigo
+        iconImageView.contentMode = .scaleToFill
 
         view.addSubview(nameLabel)
-        nameLabel.text = email
         nameLabel.font = .systemFont(ofSize: 17, weight: .semibold)
         nameLabel.textColor = .label
         nameLabel.textAlignment = .center
@@ -145,7 +160,6 @@ class ProfileVC: UIViewController {
         )
         createdEventsVC.didMove(toParent: self)
     }
-
 }
 
 // MARK: - UIScrollViewDelegate

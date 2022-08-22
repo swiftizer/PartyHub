@@ -35,7 +35,10 @@ final class MapCoordinator: Coordinator {
             case .back:
                 self?.router.popModule(animated: true)
             case .go:
-                print("press GO in Map Coordinator")
+                if AuthManager.shared.currentUser() == nil {
+                    self?.router.popModule(animated: true)
+                    self?.presentLogin()
+                }
             }
         }
         let nav = UINavigationController(rootViewController: module)
@@ -44,6 +47,21 @@ final class MapCoordinator: Coordinator {
         nav.navigationBar.tintColor = .label
         nav.modalPresentationStyle = .overFullScreen
         router.present(nav, animated: true, completion: nil)
+    }
+
+    func presentLogin() {
+        let authCoordinator = AuthRegCoordinator()
+        authCoordinator.result = { [weak self] res in
+            switch res {
+            case .success:
+                self?.router.popModule(animated: true)
+            case .canceled:
+                self?.router.popModule(animated: true)
+            default :
+                break
+            }
+        }
+        router.present(authCoordinator, animated: true, completion: nil)
     }
 
     func toPresent() -> UIViewController {

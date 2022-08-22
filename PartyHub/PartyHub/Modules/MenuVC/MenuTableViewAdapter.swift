@@ -16,7 +16,9 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
     }
 
     var navigation: ((Navigation) -> Void)?
-//    weak var rootVC: MenuVC?
+
+    var needAddSection: Bool = true
+    var isCreatedTV: Bool = false
 
     // MARK: - Private Properties
 
@@ -29,7 +31,6 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
     private var dictForSort = [String: Int]()
     private var distanses = [Double]()
     private var currentLocation: CLLocation?
-    private var needAddSection: Bool = true
 
     private var menuCellCount = 0 // count events
     private let addCellCount = 1
@@ -39,9 +40,10 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
 
     // MARK: - Initialization
 
-    init(tableView: UITableView, needAddSection: Bool = true) {
+    init(tableView: UITableView, needAddSection: Bool = true, isCreatedTV: Bool = false) {
         self.menuTableView = tableView
         self.needAddSection = needAddSection
+        self.isCreatedTV = isCreatedTV
         super.init()
         setUpTableView()
     }
@@ -50,7 +52,6 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
         self.events = events
         self.currentLocation = location
         self.distanses = distances
-
         menuTableView.reloadData()
     }
 
@@ -99,7 +100,7 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
                                                      for: indexPath) as? MenuTableViewCell
 
             cell?.setUpCell(with: events[indexPath.row], distance: distanses[indexPath.row])
-//            cell?.adapter = self
+            cell?.adapter = self
             return cell ?? .init()
         }
     }

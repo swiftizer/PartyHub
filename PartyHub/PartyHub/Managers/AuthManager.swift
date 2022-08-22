@@ -15,7 +15,6 @@ protocol AuthManagerDescription {
 }
 
 final class AuthManager: AuthManagerDescription {
-
     static let shared: AuthManagerDescription = AuthManager()
 
     private init() {}

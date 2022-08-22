@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-    <key>NSCameraUsageDescription</key>
-    <string>Требуется доступ к камере</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Разрешите доступ к камере в настройках</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Доступ к геопозиции необходим для отображения и сортировки ближайших мероприятий</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Доступ к геопозиции необходим для отображения и сортировки ближайших мероприятий</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Доступ к геопозиции необходим для отображения и сортировки ближайших мероприятий</string>
-</dict>
+<dict/>
 </plist>

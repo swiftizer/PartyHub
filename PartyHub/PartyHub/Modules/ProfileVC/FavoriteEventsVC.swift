@@ -26,7 +26,6 @@ final class FavoriteEventsVC: UIViewController {
     // MARK: - Initialization
 
     init() {
-
         self.adapter = MenuTableViewAdapter(tableView: menuTableView, needAddSection: false)
         super.init(nibName: nil, bundle: nil)
         adapter.relodeCells(events: [], location: nil, distances: [])
@@ -42,6 +41,10 @@ final class FavoriteEventsVC: UIViewController {
         super.viewDidLoad()
 
         locationManager.requestAlwaysAuthorization()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("ProfileCoordinator.PresentDescrption.Back.Sirius.PartyHub"), object: nil)
 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
@@ -79,7 +82,6 @@ final class FavoriteEventsVC: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         menuTableView.refreshControl = refreshControl
-
         menuTableView.refreshControl?.beginRefreshing()
 
         group.enter()

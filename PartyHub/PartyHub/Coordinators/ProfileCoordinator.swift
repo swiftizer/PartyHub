@@ -18,14 +18,44 @@ final class ProfileCoordinator: Coordinator {
 
     func start() {
         let module = ProfileVC()
-        module.title = "Profile"
-        module.navigation = { navType in
-            switch navType {
-            case .exit:
+        module.title = "Профиль"
+        // MARK: - Приплыли...
+        module.createdEventsVC.adapter.navigation = { [weak self] result in
+            switch result {
+            case .description(event: let event):
+                self?.presentDescrption(event: event)
+            default:
+                break
+            }
+        }
+        module.favoriteEventsVC.adapter.navigation = { [weak self] result in
+            switch result {
+            case .description(event: let event):
+                self?.presentDescrption(event: event)
+            default:
                 break
             }
         }
         router.setRootModule(module)
+    }
+
+    func presentDescrption(event: Event) {
+        let module = EventVC(event: event)
+        module.navigation = { [weak self] result in
+            switch result {
+            case .back:
+                NotificationCenter.default.post(name: NSNotification.Name("ProfileCoordinator.PresentDescrption.Back.Sirius.PartyHub"), object: nil)
+                self?.router.popModule(animated: true)
+            case .go:
+                break
+            }
+        }
+        let nav = UINavigationController(rootViewController: module)
+        nav.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        nav.navigationBar.shadowImage = UIImage()
+        nav.navigationBar.tintColor = .label
+        nav.modalPresentationStyle = .overFullScreen
+        router.present(nav, animated: true, completion: nil)
     }
 
     func toPresent() -> UIViewController {

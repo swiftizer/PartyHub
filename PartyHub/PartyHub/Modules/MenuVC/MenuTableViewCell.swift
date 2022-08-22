@@ -78,10 +78,11 @@ extension MenuTableViewCell {
             .width(cellContainerView.frame.height - 32)
 
         titleLabel.pin
-            .top(frame.height/4)
+            .vCenter(-20)
             .left(eventImageView.frame.maxX + 24)
-            .width(frame.width*0.6)
-            .height(25)
+            .maxWidth(frame.width*0.5)
+            .maxHeight(50)
+            .sizeToFit(.width)
 
         chevronImageView.pin
             .right(20)
@@ -89,12 +90,12 @@ extension MenuTableViewCell {
             .vCenter()
 
         distanceImageView.pin
-            .top(titleLabel.frame.maxY + 24)
+            .bottom(30)
             .left(titleLabel.frame.minX)
             .height(descriptionHeight)
 
         distanceLabel.pin
-            .top(distanceImageView.frame.minY)
+            .bottom(30)
             .left(distanceImageView.frame.maxX + 6)
             .height(descriptionHeight)
             .width(frame.width*0.25)
@@ -111,8 +112,8 @@ extension MenuTableViewCell {
             .width(frame.width*0.15)
 
         deleteButton.pin
-            .above(of: participantsImageView, aligned: .left)
-            .marginBottom(12)
+            .top()
+            .right()
             .width(50)
             .height(50)
     }
@@ -136,16 +137,26 @@ extension MenuTableViewCell {
         self.distance = distance
         participants = event.countOfParticipants
 
-        deleteButton.setImage(UIImage(systemName: "trash"), for: .normal)
+        deleteButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
         deleteButton.tintColor = .red
         deleteButton.addTarget(self, action: #selector(deleteEvent), for: .touchUpInside)
+
+        var koef = 100.0
+        switch distance {
+        case 10..<100:
+            koef = 10
+        case 100...:
+            koef = 1
+        default:
+            koef = 100
+        }
 
         setUpCellContainerView()
         setUpEventImageView()
         setUp(label: titleLabel, of: 17, weight: .medium, text: eventName)
         setUp(icon: chevronImageView, color: .systemGray)
         setUp(icon: distanceImageView)
-        setUp(label: distanceLabel, text: "\(round(100 * distance) / 100)" + " km away")
+        setUp(label: distanceLabel, text: (koef != 1 ? "\(round(koef * distance) / koef)" : "\(Int(distance))") + " км от вас")
         setUp(icon: participantsImageView)
         setUp(label: participantsLabel, text: "\(participants)")
 
@@ -154,10 +165,11 @@ extension MenuTableViewCell {
             return
         }
 
-        if UID != adminUid {
-            deleteButton.isHidden = true
-        } else {
+        if UID == adminUid || (!(adapter?.needAddSection ?? true)) && (adapter?.isCreatedTV ?? false) {
             deleteButton.isHidden = false
+        } else {
+            deleteButton.isHidden = true
+            print(deleteButton.isHidden)
         }
     }
 
@@ -187,6 +199,7 @@ extension MenuTableViewCell {
         label.font = .systemFont(ofSize: size, weight: weight)
         label.textColor = .label
         label.textAlignment = .left
+        label.numberOfLines = 0
     }
 
     @objc
@@ -197,8 +210,8 @@ extension MenuTableViewCell {
         EventManager.shared.adminDeleteEvent(event: event) { res in
             switch res {
             case .success:
+                NotificationCenter.default.post(name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"), object: nil)
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
-
             case .failure(let error):
                 print(error.rawValue)
                 UINotificationFeedbackGenerator().notificationOccurred(.error)

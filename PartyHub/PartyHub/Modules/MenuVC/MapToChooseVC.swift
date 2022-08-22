@@ -272,9 +272,6 @@ private extension MapToChooseVC {
 
         view.endEditing(true)
         navigationController?.view.endEditing(true)
-
-//        NotificationCenter.default.post(name: <#T##NSNotification.Name#>, object: <#T##Any?#>)
-//        NotificationCenter.default.addObserver(self, selector: #updateMap(), name: <#T##NSNotification.Name?#>, object: nil)
     }
 
     @objc
@@ -382,7 +379,7 @@ extension MapToChooseVC: YMKUserLocationObjectListener {
             )
         )
 
-        view.accuracyCircle.fillColor = UIColor.systemIndigo.withAlphaComponent(0.8)
+        view.accuracyCircle.fillColor = UIColor.systemIndigo.withAlphaComponent(0.6)
     }
 
     func onObjectRemoved(with view: YMKUserLocationView) {}

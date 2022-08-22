@@ -7,6 +7,8 @@
 
 import UIKit
 import PinLayout
+import CoreLocation
+import YandexMapsMobile
 
 final class EventVC: UIViewController {
 
@@ -25,12 +27,24 @@ final class EventVC: UIViewController {
         static let buttonHeight: CGFloat = 50
     }
 
-    private let event: Event
+    private var event: Event
     private let eventImageView = UIImageView()
     private let dateLabel = UILabel()
     private let addressLabel = UILabel()
     private let priceLabel = UILabel()
+    private let contactsLabel = UILabel()
     private let participantsLabel = UILabel()
+    private var flagStartDragMap = false
+
+    var resPoint = GeoPoint(name: "place", latitude: nil, longtitude: nil)
+    var currentLocation: CLLocation?
+    private var userLocationLayer: YMKUserLocationLayer!
+    private var flagLocation = false
+    private var locationManager = CLLocationManager()
+    private let mapView = YMKMapView()
+    private let currentLocationButton = CurLocationButton()
+    private let currentTagButton = UIButton()
+    private var scrollViewContentSize = CGSize(width: 1, height: 1)
 
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -58,10 +72,24 @@ final class EventVC: UIViewController {
 
     private lazy var goForEventButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
-        button.setTitle("Иду!", for: .normal)
+        EventManager.shared.isEventFollowedByUser(event: event) { [weak self] res in
+            switch res {
+            case .success(let variant):
+                if variant {
+                    button.repaintButton(to: .cancel)
+                } else {
+                    button.repaintButton(to: .go)
+                }
+
+            case .failure:
+                button.repaintButton(to: .go)
+            }
+        }
+//        button.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
+//        button.setTitle("Иду!", for: .normal)
         button.layer.cornerRadius = 15
-        button.addTarget(self, action: #selector(didTapMapButton), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.addTarget(self, action: #selector(didTapGoButton), for: .touchUpInside)
         button.tintColor = .white
         return button
     }()
@@ -70,6 +98,7 @@ final class EventVC: UIViewController {
     private let addressImageName = "mappin.and.ellipse"
     private let priceImageName = "dollarsign.circle"
     private let participantsImageName = "person.2"
+    private let contactsImageName = "link"
     private let xmarkImageName = "xmark.circle"
 
     // MARK: - Initialization
@@ -95,21 +124,169 @@ final class EventVC: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setupUI()
+//        setupUI()
         setUpLayout()
     }
 
     // MARK: - Actions
 
     @objc
-    private func didTapMapButton() {
+    private func didTapGoButton() {
+        let group = DispatchGroup()
+        goForEventButton.isUserInteractionEnabled = false
+
+        group.enter()
+        if self.goForEventButton.titleLabel?.text == "Иду!" {
+            EventManager.shared.goToEvent(event: event) { [weak self] res in
+                switch res {
+                case.success:
+                    self?.goForEventButton.repaintButton(to: .cancel)
+                    group.leave()
+                case .failure(let error):
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self?.goForEventButton.isUserInteractionEnabled = true
+                }
+            }
+
+            group.enter()
+            EventManager.shared.updateParticipantsCount(for: event, to: event.countOfParticipants + 1) { [weak self] res in
+
+                switch res {
+                case.success:
+                    self?.event.countOfParticipants += 1
+                    group.leave()
+                case .failure(let error):
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self?.goForEventButton.isUserInteractionEnabled = true
+                }
+            }
+        } else {
+            EventManager.shared.cancelGoToEvent(event: event) { [weak self] res in
+                switch res {
+                case.success:
+                    self?.goForEventButton.repaintButton(to: .go)
+                    group.leave()
+                case .failure(let error):
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self?.goForEventButton.isUserInteractionEnabled = true
+                }
+            }
+
+            group.enter()
+            EventManager.shared.updateParticipantsCount(for: event, to: event.countOfParticipants - 1) { [weak self] res in
+
+                switch res {
+                case.success:
+                    self?.event.countOfParticipants -= 1
+                    group.leave()
+                case .failure(let error):
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self?.goForEventButton.isUserInteractionEnabled = true
+                }
+            }
+        }
+
+        group.notify(queue: DispatchQueue.main) {
+            self.setupIconWithLabel(label: self.participantsLabel,
+                                    iconName: self.participantsImageName,
+                                    text: "\(self.event.countOfParticipants)")
+            FeedbackGenerator.shared.succesFeedbackGenerator()
+            self.goForEventButton.isUserInteractionEnabled = true
+        }
+
         navigation?(.go)
     }
 
     @objc
     private func backAction() {
+        NotificationCenter.default.post(name: NSNotification.Name( "EventVC.BackAction.Sirius.PartyHub"), object: nil)
         FeedbackGenerator.shared.customFeedbackGeneration(.medium)
         navigation?(.back)
+    }
+
+    @objc
+    private func contactsLabelClicked() {
+        debugPrint(#function, event.contacts.trimmingCharacters(in: .whitespacesAndNewlines))
+
+        guard let url = URL(string: event.contacts.trimmingCharacters(in: .whitespacesAndNewlines)) else { return }
+
+        let application = UIApplication.shared
+
+        application.open(url)
+    }
+
+    @objc
+    func clickedCurrentLocationButton() {
+        guard let location = currentLocation else {
+            return
+        }
+
+        mapView.mapWindow.map.move(
+            with: YMKCameraPosition(
+                target: YMKPoint(
+                    latitude: location.coordinate.latitude,
+                    longitude: location.coordinate.longitude
+                ),
+                zoom: 15,
+                azimuth: 0,
+                tilt: 0
+            ),
+            animationType: YMKAnimation(
+                type: YMKAnimationType.smooth,
+                duration: 0.3
+            ),
+            cameraCallback: nil
+        )
+    }
+
+    @objc
+    func clickedCurrentTagButton() {
+        let latitude = Double(event.place.split(separator: "|")[1]) ?? 0
+        let longitude = Double(event.place.split(separator: "|")[2]) ?? 0
+
+        mapView.mapWindow.map.move(
+            with: YMKCameraPosition(
+                target: YMKPoint(
+                    latitude: latitude,
+                    longitude: longitude
+                ),
+                zoom: 15,
+                azimuth: 0,
+                tilt: 0
+            ),
+            animationType: YMKAnimation(
+                type: YMKAnimationType.smooth,
+                duration: 0.4
+            ),
+            cameraCallback: nil
+        )
+    }
+
+    func getUserLocation() {
+        locationManager.requestAlwaysAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+
+        let mapKit = YMKMapKit.sharedInstance()
+        userLocationLayer = mapKit.createUserLocationLayer(with: mapView.mapWindow)
+        userLocationLayer.setVisibleWithOn(true)
+        userLocationLayer.isHeadingEnabled = true
+
+        currentLocationButton.setImage(UIImage(systemName: "location"), for: .normal)
+        currentLocationButton.backgroundColor = .systemGray6
+        currentLocationButton.tintColor = .label
+        currentLocationButton.layer.cornerRadius = 20
+        currentLocationButton.addTarget(self, action: #selector(clickedCurrentLocationButton), for: .touchUpInside)
+
+        currentTagButton.setImage(UIImage(systemName: "mappin.and.ellipse"), for: .normal)
+        currentTagButton.backgroundColor = .systemGray6
+        currentTagButton.tintColor = .label
+        currentTagButton.layer.cornerRadius = 20
+        currentTagButton.addTarget(self, action: #selector(clickedCurrentTagButton), for: .touchUpInside)
     }
 
     // MARK: - Private methods
@@ -117,6 +294,7 @@ final class EventVC: UIViewController {
     private func setupUI() {
         let eventPlace = String(describing: event.place.split(separator: "|")[0])
         eventNameLabel.text = event.title
+        eventNameLabel.numberOfLines = 0
         descriptionLabel.text = event.description
         setupIconWithLabel(label: dateLabel,
                            iconName: dateImageName,
@@ -126,20 +304,30 @@ final class EventVC: UIViewController {
                            text: eventPlace)
         setupIconWithLabel(label: priceLabel,
                            iconName: priceImageName,
-                           text: (event.cost == 0) ? "FREE" : "\(event.cost)")
+                           text: (event.cost == 0) ? "FREE" : "\(event.cost) ₽")
+        setupIconWithLabel(label: contactsLabel,
+                           iconName: contactsImageName,
+                           text: (event.contacts == "") ? "-" : "\(event.contacts)")
         setupIconWithLabel(label: participantsLabel,
                            iconName: participantsImageName,
                            text: "\(event.countOfParticipants)")
 
+        contactsLabel.isUserInteractionEnabled = true
+        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contactsLabelClicked))
+        contactsLabel.addGestureRecognizer(guestureRecognizer)
+
         view.addSubview(eventImageView)
         view.addGradient(
-            firstColor: .systemBackground.withAlphaComponent(0.1),
+            firstColor: .systemBackground.withAlphaComponent(0),
             secondColor: .systemBackground
         )
+        view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
         scrollView.addSubview(goForEventButton)
         scrollView.addSubview(eventNameLabel)
         scrollView.addSubview(descriptionLabel)
+
+        setupMapView()
     }
 
     private func setupImage() {
@@ -162,6 +350,39 @@ final class EventVC: UIViewController {
         )
 
         navigationItem.rightBarButtonItem = backNavigationItem
+    }
+
+    private func setupMapView() {
+        scrollView.addSubview(mapView)
+        mapView.addSubview(currentLocationButton)
+        mapView.addSubview(currentTagButton)
+        getUserLocation()
+
+        mapView.layer.masksToBounds = true
+        mapView.layer.cornerRadius = 15
+        mapView.mapWindow.map.addCameraListener(with: self)
+        userLocationLayer.setObjectListenerWith(self)
+
+        let latitude = Double(event.place.split(separator: "|")[1]) ?? 0
+        let longitude = Double(event.place.split(separator: "|")[2]) ?? 0
+        let mapObjects = mapView.mapWindow.map.mapObjects
+        let placemark = mapObjects.addPlacemark(with: YMKPoint(latitude: latitude, longitude: longitude))
+        let image = UIImage(named: "eventTag")?.resizeImage(
+            targetSize: CGSize(
+                width: 250 * UIScreen.main.bounds.height/926,
+                height: 250 * UIScreen.main.bounds.height/926
+            )
+        )
+        placemark.setIconWith(
+            image?.withTintColor(UIColor(
+                red: 0.205,
+                green: 0.369,
+                blue: 0.792,
+                alpha: 1
+            ), renderingMode: .alwaysOriginal) ?? UIImage()
+        )
+
+        clickedCurrentTagButton()
     }
 
     private func setupIconWithLabel(label: UILabel, iconName: String, text: String) {
@@ -200,10 +421,10 @@ final class EventVC: UIViewController {
         eventNameLabel.pin
             .top(eventImageView.frame.height - 72)
             .hCenter()
-            .width(view.frame.width * Constants.labelWidthMultiplier)
-            .height(Constants.labelHeight)
+            .maxWidth(view.frame.width * Constants.labelWidthMultiplier)
+            .sizeToFit(.width)
 
-        let labelsWithImages = [dateLabel, addressLabel, priceLabel, participantsLabel]
+        let labelsWithImages = [dateLabel, addressLabel, priceLabel, contactsLabel, participantsLabel]
         var labelTop = eventNameLabel.frame.maxY + 12
         for label in labelsWithImages {
             label.pin
@@ -222,14 +443,110 @@ final class EventVC: UIViewController {
             descriptionLabel.widthAnchor.constraint(equalTo: participantsLabel.widthAnchor)
         ])
 
+        mapView.pin
+            .below(of: descriptionLabel)
+            .marginTop(12)
+            .hCenter()
+            .width(view.frame.width * Constants.labelWidthMultiplier)
+            .height(240)
+
+        currentLocationButton.pin
+            .bottomRight(to: mapView.anchor.bottomRight)
+            .height(40)
+            .width(40)
+            .marginRight(15)
+            .marginBottom(15)
+
+        currentTagButton.pin
+            .bottomLeft(to: mapView.anchor.bottomLeft)
+            .height(40)
+            .width(40)
+            .marginLeft(15)
+            .marginBottom(15)
+
         goForEventButton.pin
-            .top(descriptionLabel.frame.maxY + 12)
+            .top(mapView.frame.maxY + 24)
             .hCenter()
             .width(view.frame.width * Constants.labelWidthMultiplier)
             .height(Constants.buttonHeight)
 
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width,
-                                        height: UIScreen.main.bounds.height + descriptionLabel.frame.height - 150)
+        scrollViewContentSize = CGSize(width: UIScreen.main.bounds.width,
+                                      height: UIScreen.main.bounds.height + descriptionLabel.frame.height + eventNameLabel.frame.height + mapView.frame.height - 100)
 
+        scrollView.contentSize = scrollViewContentSize
+    }
+}
+
+extension EventVC: YMKUserLocationObjectListener {
+    func onObjectAdded(with view: YMKUserLocationView) {
+        let pinPlacemark = view.pin.useCompositeIcon()
+        pinPlacemark.setIconWithName(
+            "SearchResult",
+            image: UIImage(named: "SearchResult") ?? UIImage(),
+            style: YMKIconStyle(
+                anchor: CGPoint(x: 0.5, y: 0.5) as NSValue,
+                rotationType: YMKRotationType.rotate.rawValue as NSNumber,
+                zIndex: 1,
+                flat: true,
+                visible: true,
+                scale: 1,
+                tappableArea: nil
+            )
+        )
+
+        view.accuracyCircle.fillColor = UIColor.systemIndigo.withAlphaComponent(0.6)
+    }
+
+    func onObjectRemoved(with view: YMKUserLocationView) {}
+
+    func onObjectUpdated(with view: YMKUserLocationView, event: YMKObjectEvent) {}
+}
+
+extension EventVC: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        currentLocation = locations.last!
+        if !flagLocation {
+            guard currentLocation != nil else {
+                return
+            }
+            flagLocation = true
+        }
+    }
+}
+
+extension EventVC: YMKMapCameraListener {
+    func onCameraPositionChanged(with map: YMKMap, cameraPosition: YMKCameraPosition, cameraUpdateReason: YMKCameraUpdateReason, finished: Bool) {
+        if finished {
+            debugPrint("-----")
+            flagStartDragMap = false
+            scrollView.isScrollEnabled = true
+        } else if !flagStartDragMap {
+            debugPrint("+++++")
+            debugPrint(scrollView.contentOffset)
+            flagStartDragMap = true
+            scrollView.isScrollEnabled = false
+        }
+    }
+}
+
+
+
+// TODO: - вынести отсюда
+
+enum GoButtonState {
+    case go
+    case cancel
+}
+
+extension UIButton {
+    func repaintButton(to state: GoButtonState) {
+        switch state {
+        case .go:
+            self.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
+            self.setTitle("Иду!", for: .normal)
+        case .cancel:
+            self.backgroundColor = .red.withAlphaComponent(0.6)
+            self.setTitle("Отказаться", for: .normal)
+        }
     }
 }

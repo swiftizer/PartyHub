@@ -74,7 +74,10 @@ extension TabBarCoordinator: UITabBarControllerDelegate {
         let authCoordinator = AuthRegCoordinator()
         authCoordinator.result = { [weak self] res in
             switch res {
-            case .success, .canceled:
+            case .success:
+                NotificationCenter.default.post(name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"), object: nil)
+                self?.router.popModule(animated: true)
+            case .canceled:
                 self?.router.popModule(animated: true)
             default :
                 break

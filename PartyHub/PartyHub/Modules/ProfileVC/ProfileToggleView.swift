@@ -39,7 +39,7 @@ final class ProfileToggleView: UIView {
     private lazy var favoritesButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
-        button.setTitle("Я пойду", for: .normal)
+        button.setTitle("Выбранные", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.addTarget(self, action: #selector(favoritesButtonTapped), for: .touchUpInside)
         return button
@@ -48,7 +48,7 @@ final class ProfileToggleView: UIView {
     private lazy var createdButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
-        button.setTitle("Мои мероприятия", for: .normal)
+        button.setTitle("Созданные", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.addTarget(self, action: #selector(createdButtonTapped), for: .touchUpInside)
         return button
@@ -91,6 +91,7 @@ final class ProfileToggleView: UIView {
     // MARK: - Methods
 
     func update(for state: State) {
+        NotificationCenter.default.post(name: NSNotification.Name("ProfileToggleView.Update.Sirius.PartyHub"), object: nil)
         self.state = state
         UIView.animate(withDuration: 0.3) {
             self.layoutIndicator()

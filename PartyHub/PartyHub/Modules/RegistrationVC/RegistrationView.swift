@@ -28,7 +28,7 @@ final class RegistrationView: UIView {
 
     private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Regiter", for: .normal)
+        button.setTitle("Зарегистрироваться", for: .normal)
         button.backgroundColor = .systemGray5
         button.layer.cornerRadius = 15
         button.tintColor = .label

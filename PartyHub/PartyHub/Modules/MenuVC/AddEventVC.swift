@@ -277,9 +277,9 @@ final class AddNewEventVC: UIViewController {
             message: "Пожалуйста, включите разрешение в настройках",
             preferredStyle: .alert
         )
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .destructive)
         let settingsAction = UIAlertAction(
-            title: "Settings",
+            title: "Настройки",
             style: .default
         ) { [weak self] _ in
             self?.openSettings()

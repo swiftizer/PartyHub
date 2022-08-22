@@ -27,10 +27,10 @@ extension UIView {
 
     func addGradient(firstColor: UIColor, secondColor: UIColor) {
             let gradientLayer = CAGradientLayer()
-            gradientLayer.frame = self.bounds
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height/2)
             gradientLayer.colors = [
                 firstColor.cgColor,
-                secondColor.cgColor,
+                firstColor.cgColor,
                 secondColor.cgColor
             ]
             self.layer.addSublayer(gradientLayer)

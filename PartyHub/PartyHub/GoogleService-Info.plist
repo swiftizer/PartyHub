@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>64512096969-vpjkve4o5k8pnhn6os7ljsh4c4m86rgp.apps.googleusercontent.com</string>
+	<string>64512096969-uigvuiike6kt6pqhq57148j9lk2tm1cn.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.64512096969-vpjkve4o5k8pnhn6os7ljsh4c4m86rgp</string>
+	<string>com.googleusercontent.apps.64512096969-uigvuiike6kt6pqhq57148j9lk2tm1cn</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAUX_PJwa7WK_Hgx9TXF3nVnhgHL468LFI</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>-14.PartyHub</string>
+	<string>com.PoelPospalPoprogal.PartyHub</string>
 	<key>PROJECT_ID</key>
 	<string>partyhub-59946</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:64512096969:ios:a2707f9bfb5d5382ed6b18</string>
+	<string>1:64512096969:ios:652c816b4e04ec4ded6b18</string>
 </dict>
 </plist>

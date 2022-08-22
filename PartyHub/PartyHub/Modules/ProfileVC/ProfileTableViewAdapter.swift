@@ -17,7 +17,6 @@ final class ProfileTableViewAdapter: NSObject, UITableViewDataSource, UITableVie
     }
 
     private var tableView = UITableView()
-
     private var eventsNumber: Int = 0 // count  events
     private let menuCellHeight: CGFloat = 150
 

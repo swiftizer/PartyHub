@@ -29,14 +29,14 @@ final class CustomTextField: UITextField {
             textContentType = .emailAddress
         case .passwordTextField:
             attributedPlaceholder = NSAttributedString(
-                string: "Password",
+                string: "Пароль",
                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
             )
             isSecureTextEntry = true
             textContentType = .oneTimeCode
         case .confirmPasswordTextField:
             attributedPlaceholder = NSAttributedString(
-                string: "Confirm password",
+                string: "Повторить пароль",
                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.4)]
             )
             isSecureTextEntry = true

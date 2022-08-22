@@ -17,6 +17,6 @@ struct Event {
     let place: String
     let cost: Int
     let contacts: String
-    let countOfParticipants: Int
+    var countOfParticipants: Int
     let docName: String
 }

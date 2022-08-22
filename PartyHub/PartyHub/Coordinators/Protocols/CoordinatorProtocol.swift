@@ -17,6 +17,5 @@ enum FlowResult<Void> {
 
 protocol Coordinator: Presentable {
     var result: ((FlowResult<Void>) -> Void)? { get set }
-
     func start()
 }

@@ -103,7 +103,7 @@ final class MapVC: UIViewController {
 
         tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
 
-        navigationItem.title = "Map"
+        navigationItem.title = "Карта"
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
@@ -193,7 +193,6 @@ private extension MapVC {
     @objc
     func closeKeyboard() {
         if !searchController.isActive { return }
-        print(#function)
 
         view.endEditing(true)
         navigationController?.view.endEditing(true)
@@ -294,7 +293,7 @@ extension MapVC: YMKUserLocationObjectListener {
             )
         )
 
-        view.accuracyCircle.fillColor = UIColor.lightGray
+        view.accuracyCircle.fillColor = UIColor.systemIndigo.withAlphaComponent(0.6)
     }
 
     func onObjectRemoved(with view: YMKUserLocationView) {}

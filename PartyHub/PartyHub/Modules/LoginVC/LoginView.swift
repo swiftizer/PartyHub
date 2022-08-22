@@ -29,14 +29,14 @@ final class LoginView: UIView {
 
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Log in", for: .normal)
+        button.setTitle("Войти", for: .normal)
         button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return button
     }()
 
     private lazy var registerButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Add account", for: .normal)
+        button.setTitle("Создать аккаунт", for: .normal)
         button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         return button
     }()

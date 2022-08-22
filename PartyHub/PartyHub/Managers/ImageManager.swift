@@ -62,7 +62,6 @@ final class ImageManager: ImageManagerDescription {
     }
 
     func deleteImage(imageName: String, completion: @escaping (Result<String, NetworkError>) -> Void) {
-
         storageRef.child(imageName).delete { error in
             if let error = error {
                 completion(.failure(NetworkError.badAttempt))

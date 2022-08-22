@@ -18,10 +18,11 @@ final class AuthRegCoordinator: Coordinator {
 
     func start() {
         let module = LoginVC()
-        module.title = "Login"
+        module.title = "Авторизация"
         module.navigation = { [weak self] navType in
             switch navType {
             case .enter:
+                NotificationCenter.default.post(name: NSNotification.Name("AuthRegCoordinator.Succes.Sirius.PartyHub"), object: nil)
                 self?.result?(.success(Void()))
             case .register:
                 self?.presentRegistration()
@@ -34,7 +35,7 @@ final class AuthRegCoordinator: Coordinator {
 
     func presentRegistration() {
         let module = RegistrationVC()
-        module.title = "Registration"
+        module.title = "Регистрация"
         let nav = UINavigationController(rootViewController: module)
         module.navigation = { [weak self] typeNav in
             switch typeNav {

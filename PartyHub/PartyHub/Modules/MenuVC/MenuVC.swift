@@ -22,6 +22,7 @@ final class MenuVC: UIViewController {
     private var flagLocation = false
     private var locationManager = CLLocationManager()
     private var currentLocation: CLLocation?
+    private var isFirst = true
 
     // MARK: - Initialization
 
@@ -44,11 +45,26 @@ final class MenuVC: UIViewController {
         locationManager.requestAlwaysAuthorization()
 
         if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+                case .notDetermined, .restricted, .denied:
+                    print("No access")
+                    createDeniedAlertController()
+
+                case .authorizedAlways, .authorizedWhenInUse:
+                    print("Access")
+            }
             locationManager.delegate = self
             group.enter()
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+
+
+        // TODO: - попробовать загнать во viewDidAppear
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("AuthManager.SignOut.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name( "EventVC.BackAction.Sirius.PartyHub"), object: nil)
 
         loadData()
 
@@ -56,11 +72,13 @@ final class MenuVC: UIViewController {
     }
 
     func loadData() {
+        if !isFirst {
+            menuTableView.refreshControl?.beginRefreshing()
+        }
+        isFirst = false
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         menuTableView.refreshControl = refreshControl
-
-        menuTableView.refreshControl?.beginRefreshing()
 
         group.enter()
         EventManager.shared.downloadEvents { result in
@@ -68,7 +86,7 @@ final class MenuVC: UIViewController {
             case .success(let events):
                 self.events = events
                 self.group.leave()
-                FeedbackGenerator.shared.succesFeedbackGenerator()
+//                FeedbackGenerator.shared.succesFeedbackGenerator()
             case .failure(let error):
                 let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .cancel)
@@ -118,6 +136,30 @@ final class MenuVC: UIViewController {
             let distance = (currentLocation?.distance(from: CLLocation(latitude: latitude, longitude: longitude)) ?? 0) / 1000.0
             distanses.append(distance)
         }
+    }
+
+    private func createDeniedAlertController() {
+        let alert = UIAlertController(
+            title: "Не удалось вас найти",
+            message: "Пожалуйста, включите разрешение в настройках. Оно требуется для работы прилоения",
+            preferredStyle: .alert
+        )
+        let cancelAction = UIAlertAction(title: "Отмена", style: .destructive)
+        let settingsAction = UIAlertAction(
+            title: "Настройки",
+            style: .default
+        ) { [weak self] _ in
+            self?.openSettings()
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(settingsAction)
+        present(alert, animated: true)
+    }
+
+    private func openSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString),
+              UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url)
     }
 
     @objc

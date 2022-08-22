@@ -14,7 +14,6 @@ protocol FeedbackGeneratorDescription {
 }
 
 final class FeedbackGenerator {
-
     static let shared = FeedbackGenerator()
 
     private init() {}
