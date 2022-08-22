@@ -31,7 +31,12 @@ final class AddNewEventVC: UIViewController {
     private var currentEditingDateTextField = UITextField()
     private var imagePicker: ImagePicker?
     private let datePicker = UIDatePicker()
-    private let activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 67, height: 67), type: .ballClipRotateMultiple, color: UIColor.label, padding: 0)
+    private let activityIndicator = NVActivityIndicatorView(
+        frame: CGRect(x: 0, y: 0, width: 67, height: 67),
+        type: .ballClipRotateMultiple,
+        color: UIColor.label,
+        padding: 0
+    )
 
     private let eventTitleTextField: UITextField = {
         let textField = UITextField()
@@ -42,9 +47,8 @@ final class AddNewEventVC: UIViewController {
         return textField
     }()
 
-    private let placeButton: UIButton = {
+    private lazy var placeButton: UIButton = {
         let button = UIButton(type: .system)
-
         button.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
         button.layer.cornerRadius = 15
         button.setTitle("Выбрать место", for: .normal)
@@ -105,7 +109,12 @@ final class AddNewEventVC: UIViewController {
         button.layer.cornerRadius = 15
         button.tintColor = .white
         button.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
-        button.dropShadow(shadowColor: UIColor(hexString: "#000000").withAlphaComponent(0.3), shadowOpacity: 1, shadowOffset: CGSize(width: 0, height: 0.5), shadowRadius: 0)
+        button.dropShadow(
+            shadowColor: UIColor(hexString: "#000000").withAlphaComponent(0.3),
+            shadowOpacity: 1,
+            shadowOffset: CGSize(width: 0, height: 0.5),
+            shadowRadius: 0
+        )
         return button
     }()
 
@@ -221,7 +230,10 @@ final class AddNewEventVC: UIViewController {
         scrollView.backgroundColor = .systemBackground
         scrollView.isUserInteractionEnabled = true
         scrollView.isScrollEnabled = true
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100 * 926 / UIScreen.main.bounds.height)
+        scrollView.contentSize = CGSize(
+            width: UIScreen.main.bounds.width,
+            height: UIScreen.main.bounds.height + 100 * 926 / UIScreen.main.bounds.height
+        )
 
         scrollView.addSubview(eventImageView)
         scrollView.addSubview(eventTitleTextField)
@@ -402,7 +414,7 @@ private extension AddNewEventVC {
             switch result {
             case .success(let events):
                 print(events)
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                FeedbackGenerator.shared.succesFeedbackGenerator()
             case .failure(let error):
                 let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .cancel)
@@ -410,14 +422,13 @@ private extension AddNewEventVC {
                 self.present(alertController, animated: true, completion: nil)
                 print("ГГ")
                 print("Error! \(error.localizedDescription)")
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
+                FeedbackGenerator.shared.errorFeedbackGenerator()
             }
         }
     }
 
     @objc
     func didTapEventImageView(_ sender: UIButton) {
-//        test(UIButton())
         dismissKeyboard(UITapGestureRecognizer())
         self.imagePicker?.present(from: sender)
     }
@@ -449,7 +460,6 @@ private extension AddNewEventVC {
               let contacts = contactsTextField.text,
               let cost = Int(costStr) else {
 
-            
             addButton.invalidAnimation()
             if eventTitleTextField.text == "" {
                 eventTitleTextField.repaintBorder()
@@ -486,7 +496,8 @@ private extension AddNewEventVC {
                     self.activityIndicatorView.alpha = 0
                 }
                 self.view.isUserInteractionEnabled = true
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                FeedbackGenerator.shared.succesFeedbackGenerator()
+                NotificationCenter.default.post(name: NSNotification.Name("EventManager.UploadEvent.Sirius.PartyHub"), object: nil)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.navigation?(.registration)
                 }

@@ -45,12 +45,8 @@ final class MapVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         setupEvents()
+        setup()
     }
 
     override func viewDidLayoutSubviews() {
@@ -112,6 +108,13 @@ final class MapVC: UIViewController {
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
 
+        // TODO: - вынести в константы
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updatePlacemarks),
+            name: NSNotification.Name("EventManager.UploadEvent.Sirius.PartyHub"),
+            object: nil
+        )
         getUserLocation()
     }
 
@@ -158,6 +161,11 @@ final class MapVC: UIViewController {
 // MARK: - Actions
 
 private extension MapVC {
+    @objc
+    func updatePlacemarks() {
+        setupEvents()
+    }
+
     @objc
     func clickedCurrentLocationButton() {
         guard let location = currentLocation else {

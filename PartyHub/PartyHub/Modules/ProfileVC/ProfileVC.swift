@@ -125,25 +125,25 @@ class ProfileVC: UIViewController {
     }
 
     private func addChildren() {
-        addChild(createdEventsVC)
-        scrollView.addSubview(createdEventsVC.view)
-        createdEventsVC.view.frame = CGRect(
+        addChild(favoriteEventsVC)
+        scrollView.addSubview(favoriteEventsVC.view)
+        favoriteEventsVC.view.frame = CGRect(
             x: 0,
             y: 0,
             width: scrollView.width,
             height: scrollView.height
         )
-        createdEventsVC.didMove(toParent: self)
+        favoriteEventsVC.didMove(toParent: self)
 
-        addChild(favoriteEventsVC)
-        scrollView.addSubview(favoriteEventsVC.view)
-        favoriteEventsVC.view.frame = CGRect(
+        addChild(createdEventsVC)
+        scrollView.addSubview(createdEventsVC.view)
+        createdEventsVC.view.frame = CGRect(
             x: view.width,
             y: 0,
             width: scrollView.width,
             height: scrollView.height
         )
-        favoriteEventsVC.didMove(toParent: self)
+        createdEventsVC.didMove(toParent: self)
     }
 
 }
@@ -153,9 +153,9 @@ class ProfileVC: UIViewController {
 extension ProfileVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.x >= (view.width - 100) {
-            toggleView.update(for: .favorites)
-        } else {
             toggleView.update(for: .created)
+        } else {
+            toggleView.update(for: .favorites)
         }
     }
 }

@@ -52,5 +52,4 @@ final class AddNewEventCoordinator: Coordinator {
     func toPresent() -> UIViewController {
         return router.toPresent()
     }
-
 }

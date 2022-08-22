@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C06FBA828B35D3600B7633B /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBA728B35D3600B7633B /* EventModel.swift */; };
+		2C06FBAA28B35D6700B7633B /* DocIDsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBA928B35D6700B7633B /* DocIDsModel.swift */; };
+		2C06FBAC28B35DBA00B7633B /* GeoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBAB28B35DBA00B7633B /* GeoDataModel.swift */; };
+		2C06FBAE28B35DE000B7633B /* GeoPointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBAD28B35DE000B7633B /* GeoPointModel.swift */; };
 		2C19D2A328B31A8C00F799B7 /* AddNewEventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19D2A228B31A8C00F799B7 /* AddNewEventCoordinator.swift */; };
 		2C30710328B1502200BB6C60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C30710228B1502200BB6C60 /* GoogleService-Info.plist */; };
 		2C30710C28B2145A00BB6C60 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710B28B2145A00BB6C60 /* EventVC.swift */; };
@@ -61,6 +65,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C06FBA728B35D3600B7633B /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
+		2C06FBA928B35D6700B7633B /* DocIDsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocIDsModel.swift; sourceTree = "<group>"; };
+		2C06FBAB28B35DBA00B7633B /* GeoDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoDataModel.swift; sourceTree = "<group>"; };
+		2C06FBAD28B35DE000B7633B /* GeoPointModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoPointModel.swift; sourceTree = "<group>"; };
 		2C19D2A228B31A8C00F799B7 /* AddNewEventCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewEventCoordinator.swift; sourceTree = "<group>"; };
 		2C30710228B1502200BB6C60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C30710B28B2145A00BB6C60 /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
@@ -127,6 +135,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C06FBA628B35D2B00B7633B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2C06FBA728B35D3600B7633B /* EventModel.swift */,
+				2C06FBA928B35D6700B7633B /* DocIDsModel.swift */,
+				2C06FBAB28B35DBA00B7633B /* GeoDataModel.swift */,
+				2C06FBAD28B35DE000B7633B /* GeoPointModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		2C30710928B2144400BB6C60 /* LoginVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -318,6 +337,7 @@
 		B330662928A2578800528BCE /* PartyHub */ = {
 			isa = PBXGroup;
 			children = (
+				2C06FBA628B35D2B00B7633B /* Models */,
 				2C81638D28AE77EA00D9D564 /* Managers */,
 				2CCA56DD28A42C6500934F99 /* Coordinators */,
 				2CCA56C128A2DF2400934F99 /* Modules */,
@@ -426,6 +446,7 @@
 			files = (
 				2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */,
 				2C6E103428AEF4A8006FDE82 /* UIView+AddBlur.swift in Sources */,
+				2C06FBAE28B35DE000B7633B /* GeoPointModel.swift in Sources */,
 				B3F62C1D28B2D83C0081E0FC /* ProfileToggleView.swift in Sources */,
 				B3178CE628B2577700D72091 /* MapToChooseVC.swift in Sources */,
 				2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */,
@@ -460,6 +481,7 @@
 				2CCB627D28AD5CA4005586AF /* MapVC.swift in Sources */,
 				2CCB627728AD5BE6005586AF /* MenuTableViewCell.swift in Sources */,
 				2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */,
+				2C06FBAA28B35D6700B7633B /* DocIDsModel.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
 				B3F62C2128B2D84E0081E0FC /* CreatedEventsVC.swift in Sources */,
 				2C8163A328AE8A3800D9D564 /* UIVIew+Frame.swift in Sources */,
@@ -470,6 +492,8 @@
 				B3178CE028B256FE00D72091 /* ImagePicker.swift in Sources */,
 				2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */,
 				2C6E102828AE8B3A006FDE82 /* String+Validation.swift in Sources */,
+				2C06FBAC28B35DBA00B7633B /* GeoDataModel.swift in Sources */,
+				2C06FBA828B35D3600B7633B /* EventModel.swift in Sources */,
 				B3F62C1F28B2D8450081E0FC /* FavoriteEventsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

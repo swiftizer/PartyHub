@@ -24,13 +24,13 @@ final class ProfileToggleView: UIView {
         case created
     }
 
-    var state: State = .created
+    var state: State = .favorites
 
     // MARK: - Private properties
 
     private let indicatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .label
+        view.backgroundColor = .systemIndigo
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 4
         return view
@@ -39,7 +39,7 @@ final class ProfileToggleView: UIView {
     private lazy var favoritesButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
-        button.setTitle("Мои мероприятия", for: .normal)
+        button.setTitle("Я пойду", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.addTarget(self, action: #selector(favoritesButtonTapped), for: .touchUpInside)
         return button
@@ -48,7 +48,7 @@ final class ProfileToggleView: UIView {
     private lazy var createdButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.label, for: .normal)
-        button.setTitle("Иду", for: .normal)
+        button.setTitle("Мои мероприятия", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.addTarget(self, action: #selector(createdButtonTapped), for: .touchUpInside)
         return button
@@ -78,19 +78,13 @@ final class ProfileToggleView: UIView {
 
     @objc
     private func favoritesButtonTapped() {
-        state = .favorites
-        UIView.animate(withDuration: 0.3) {
-            self.layoutIndicator()
-        }
+        update(for: .favorites)
         delegate?.profileToggleViewDidTapFavorites(self)
     }
 
     @objc
     private func createdButtonTapped() {
-        state = .created
-        UIView.animate(withDuration: 0.3) {
-            self.layoutIndicator()
-        }
+        update(for: .created)
         delegate?.profileToggleViewDidTapCreated(self)
     }
 
@@ -121,13 +115,13 @@ final class ProfileToggleView: UIView {
 
     private func layoutIndicator() {
         switch state {
-        case .created:
+        case .favorites:
             indicatorView.pin
                 .top(favoritesButton.bottom)
                 .width(frame.width/2)
                 .left()
                 .height(3)
-        case .favorites:
+        case .created:
             indicatorView.pin
                 .top(createdButton.bottom)
                 .width(frame.width/2)

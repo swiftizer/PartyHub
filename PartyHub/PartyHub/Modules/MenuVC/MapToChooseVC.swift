@@ -272,6 +272,9 @@ private extension MapToChooseVC {
 
         view.endEditing(true)
         navigationController?.view.endEditing(true)
+
+//        NotificationCenter.default.post(name: <#T##NSNotification.Name#>, object: <#T##Any?#>)
+//        NotificationCenter.default.addObserver(self, selector: #updateMap(), name: <#T##NSNotification.Name?#>, object: nil)
     }
 
     @objc

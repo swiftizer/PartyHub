@@ -8,25 +8,6 @@
 import Foundation
 import FirebaseFirestore
 
-struct Event {
-    var image: UIImage?
-    let imageName: String
-    let title: String
-    let description: String
-    let begin: String
-    let end: String
-    let place: String
-    let cost: Int
-    let contacts: String
-    let countOfParticipants: Int
-    let docName: String
-}
-
-struct DocIDs {
-    var created: [String]
-    let followed: [String]
-}
-
 protocol EventManagerDescription {
     func downloadEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
     func downloadFollowedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
@@ -50,7 +31,7 @@ final class EventManager: EventManagerDescription {
 
     func downloadEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void) {
         database.collection("events").getDocuments { [weak self] snapshot, error in
-            if let _ = error {
+            if error != nil {
                 completion(.failure(NetworkError.emptyData))
             } else if let events = self?.events(from: snapshot) {
                 completion(.success(events))
@@ -67,7 +48,7 @@ final class EventManager: EventManagerDescription {
         }
 
         database.collection("\(userID)").document("userData").getDocument { document, error in
-            if let _ = error {
+            if error != nil {
                 completion(.failure(NetworkError.emptyData))
             } else if let docs = self.getDocIDs(from: (document?.data())!) {
                 completion(.success(docs))
@@ -96,11 +77,11 @@ final class EventManager: EventManagerDescription {
                 for doc in docs.followed {
                     group.enter()
                     self?.database.collection("events").document(doc).getDocument { document, error in
-                        guard let data = document?.data() else {
+                        guard document?.data() != nil else {
                             group.leave()
                             return
                         }
-                        if let _ = error {
+                        if error != nil {
                             completion(.failure(NetworkError.emptyData))
                         } else if let event = self?.event(from: (document?.data())!) {
                             events.append(event)
@@ -144,7 +125,7 @@ final class EventManager: EventManagerDescription {
                             group.leave()
                             return
                         }
-                        if let _ = error {
+                        if error != nil {
                             completion(.failure(NetworkError.emptyData))
                         } else if let event = self?.event(from: data) {
                             events.append(event)
@@ -173,11 +154,9 @@ final class EventManager: EventManagerDescription {
         }
 
         database.collection("\(userID)").document("userData").updateData(["followed": FieldValue.arrayUnion([event.docName])]) { error in
-
-            if let _ = error {
+            if error != nil {
                 self.database.collection("\(userID)").document("userData").setData(["followed": [event.docName]]) { error in
-
-                    if let _ = error {
+                    if error != nil {
                         completion(.failure(NetworkError.badAttempt))
                     } else {
                         completion(.success(event))
@@ -197,8 +176,7 @@ final class EventManager: EventManagerDescription {
         }
 
         database.collection("\(userID)").document("userData").updateData(["followed": FieldValue.arrayRemove([event.docName])]) { error in
-
-            if let _ = error {
+            if error != nil {
                 completion(.failure(NetworkError.badAttempt))
             } else {
                 completion(.success(event))
@@ -207,7 +185,6 @@ final class EventManager: EventManagerDescription {
     }
 
     func uploadEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
-
         let group = DispatchGroup()
 
         guard let userID = AuthManager.shared.currentUser()?.uid else {
@@ -237,10 +214,10 @@ final class EventManager: EventManagerDescription {
                         return
                     }
 
-                    if let _ = error {
+                    if error != nil {
                         completion(.failure(NetworkError.badAttempt))
                     } else {
-                        if let event = self.event(from: data) {
+                        if self.event(from: data) != nil {
                             group.leave()
                         } else {
                             completion(.failure(NetworkError.badAttempt))
@@ -257,11 +234,10 @@ final class EventManager: EventManagerDescription {
         group.enter()
 
         database.collection("\(userID)").document("userData").updateData(["created": FieldValue.arrayUnion([event.docName])]) { error in
-
-            if let _ = error {
+            if error != nil {
                 self.database.collection("\(userID)").document("userData").setData(["created": [event.docName]]) { error in
 
-                    if let _ = error {
+                    if error != nil {
                         completion(.failure(NetworkError.badAttempt))
                     } else {
                         group.leave()
@@ -284,8 +260,7 @@ final class EventManager: EventManagerDescription {
         }
 
         database.collection("\(userID)").document("userData").setData(["created": [], "followed": []]) { error in
-
-            if let _ = error {
+            if error != nil {
                 completion(.failure(NetworkError.badAttempt))
             } else {
                 completion(.success(userID))
@@ -304,8 +279,7 @@ final class EventManager: EventManagerDescription {
 
         group.enter()
         database.collection("\(userID)").document("userData").updateData(["created": FieldValue.arrayRemove([event.docName])]) { error in
-
-            if let _ = error {
+            if error != nil {
                 completion(.failure(NetworkError.badAttempt))
             } else {
                 group.leave()
@@ -313,15 +287,14 @@ final class EventManager: EventManagerDescription {
         }
 
         group.enter()
-        database.collection("events").document(event.docName).delete() { err in
-            if let err = err {
+        database.collection("events").document(event.docName).delete { error in
+            if  error != nil {
                 completion(.failure(NetworkError.badAttempt))
             } else {
                 self.imageManager.deleteImage(imageName: event.imageName) { result in
                     switch result {
-                    case .success(let uploadedImageName):
+                    case .success:
                         group.leave()
-
                     case .failure:
                         completion(.failure(NetworkError.badAttempt))
                     }
@@ -335,13 +308,13 @@ final class EventManager: EventManagerDescription {
     }
 
     func adminDeleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
-        database.collection("events").document(event.docName).delete() { err in
-            if let err = err {
+        database.collection("events").document(event.docName).delete { err in
+            if err != nil {
                 completion(.failure(NetworkError.badAttempt))
             } else {
                 self.imageManager.deleteImage(imageName: event.imageName) { result in
                     switch result {
-                    case .success(let uploadedImageName):
+                    case .success:
                         completion(.success(event))
 
                     case .failure:

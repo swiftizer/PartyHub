@@ -64,9 +64,7 @@ extension MenuTableViewCell {
     // MARK: - Private methods
 
     private func setUpLayout() {
-
         let descriptionHeight: CGFloat = 20
-
         cellContainerView.pin
             .top(12)
             .left(12)
@@ -117,7 +115,6 @@ extension MenuTableViewCell {
             .marginBottom(12)
             .width(50)
             .height(50)
-
     }
 
     func setUpCell(with event: Event, distance: Double) {
@@ -130,8 +127,6 @@ extension MenuTableViewCell {
             switch result {
             case .success(let downloadedImage):
                 self.eventImageView.image = downloadedImage
-                break
-
             case .failure:
                 break
             }
@@ -153,8 +148,6 @@ extension MenuTableViewCell {
         setUp(label: distanceLabel, text: "\(round(100 * distance) / 100)" + " km away")
         setUp(icon: participantsImageView)
         setUp(label: participantsLabel, text: "\(participants)")
-
-        debugPrint(AuthManager.shared.currentUser()?.uid)
 
         guard let UID = AuthManager.shared.currentUser()?.uid else {
             deleteButton.isHidden = true
@@ -204,14 +197,12 @@ extension MenuTableViewCell {
         EventManager.shared.adminDeleteEvent(event: event) { res in
             switch res {
             case .success:
-//                self.adapter?.rootVC?.loadData()
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
 
             case .failure(let error):
                 print(error.rawValue)
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
             }
-            
         }
     }
 }
