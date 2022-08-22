@@ -309,12 +309,12 @@ extension MapToChooseVC: UISearchResultsUpdating, UISearchBarDelegate {
         let JSONAdress = query.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
 
         NetworkManager.shared.getCoordinates(
-            with: JSONAdress,
-            curLocation: GeoPoint(
-                name: "curLoc",
-                latitude: currentLocation?.coordinate.latitude,
-                longtitude: currentLocation?.coordinate.longitude
-            )
+            with: JSONAdress
+//            curLocation: GeoPoint(
+//                name: "curLoc",
+//                latitude: currentLocation?.coordinate.latitude,
+//                longtitude: currentLocation?.coordinate.longitude
+//            )
         ) { result in
             DispatchQueue.main.async { [weak self] in
                 switch result {

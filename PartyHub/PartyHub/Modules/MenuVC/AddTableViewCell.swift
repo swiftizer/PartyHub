@@ -91,7 +91,7 @@ final class AddTableViewCell: UITableViewCell {
             .top(14)
             .left(12)
             .right(12)
-            .bottom(14)
+            .bottom(8)
 
         plusImageView.pin
             .width(14)

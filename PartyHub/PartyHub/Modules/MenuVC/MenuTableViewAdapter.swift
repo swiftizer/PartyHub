@@ -16,6 +16,7 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
     }
 
     var navigation: ((Navigation) -> Void)?
+    weak var rootVC: MenuVC?
 
     // MARK: - Private Properties
 
@@ -28,17 +29,19 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
     private var dictForSort = [String: Int]()
     private var distanses = [Double]()
     private var currentLocation: CLLocation?
+    private var needAddSection: Bool = true
 
     private var menuCellCount = 0 // count events
     private let addCellCount = 1
-    private let addCellHeight: CGFloat = 80
+    private let addCellHeight: CGFloat = 74
     private let menuCellHeight: CGFloat = 150
     private let menuTableView: UITableView
 
     // MARK: - Initialization
 
-    init(tableView: UITableView) {
+    init(tableView: UITableView, needAddSection: Bool = true) {
         self.menuTableView = tableView
+        self.needAddSection = needAddSection
         super.init()
         setUpTableView()
     }
@@ -55,20 +58,24 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        switch indexPath.section {
-        case 0:
-            navigation?(.addEvent)
-        default:
+        if needAddSection {
+            switch indexPath.section {
+            case 0:
+                navigation?(.addEvent)
+            default:
+                navigation?(.description)
+            }
+        } else {
             navigation?(.description)
         }
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-       return 2
+        return needAddSection ? 2 : 1
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        if indexPath.section == 0 && needAddSection{
             return addCellHeight
         } else {
             return menuCellHeight
@@ -76,7 +83,7 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        if section == 0 && needAddSection {
             return addCellCount
         } else {
             return events.count
@@ -84,7 +91,7 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        if indexPath.section == 0 && needAddSection {
             return tableView.dequeueReusableCell(withIdentifier: Cells.addCell,
                                                  for: indexPath) as? AddTableViewCell ?? .init()
         } else {
@@ -92,6 +99,7 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
                                                      for: indexPath) as? MenuTableViewCell
 
             cell?.setUpCell(with: events[indexPath.row], distance: distanses[indexPath.row])
+            cell?.adapter = self
             return cell ?? .init()
         }
     }

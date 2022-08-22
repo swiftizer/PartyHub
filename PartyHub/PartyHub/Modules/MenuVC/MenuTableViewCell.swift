@@ -16,9 +16,11 @@ final class MenuTableViewCell: UITableViewCell {
     var distance: Double = 0.0
     var participants: Int = 0
     var eventImage = UIImage()
+    weak var adapter: MenuTableViewAdapter?
 
     // MARK: - Private properties
 
+    private let adminUid = "GuG1p2o0B6ZkMfQPxbW5oY6wZXM2"
     private let cellContainerView = UIView()
     private let eventImageView = UIImageView()
     private let titleLabel = UILabel()
@@ -27,6 +29,8 @@ final class MenuTableViewCell: UITableViewCell {
     private let chevronImageView = UIImageView(image: UIImage(systemName: "chevron.right"))
     private let distanceImageView = UIImageView(image: UIImage(systemName: "mappin.and.ellipse"))
     private let participantsImageView = UIImageView(image: UIImage(systemName: "person.2"))
+    private var event: Event? = nil
+    private let deleteButton = UIButton()
 
     // MARK: - Initialization
 
@@ -64,10 +68,10 @@ extension MenuTableViewCell {
         let descriptionHeight: CGFloat = 20
 
         cellContainerView.pin
-            .top(6)
+            .top(12)
             .left(12)
             .right(12)
-            .bottom(6)
+            .bottom(0)
 
         eventImageView.pin
             .top(16)
@@ -108,11 +112,19 @@ extension MenuTableViewCell {
             .height(descriptionHeight)
             .width(frame.width*0.15)
 
+        deleteButton.pin
+            .above(of: participantsImageView, aligned: .left)
+            .marginBottom(12)
+            .width(50)
+            .height(50)
+
     }
 
     func setUpCell(with event: Event, distance: Double) {
         backgroundColor = .clear
         selectionStyle = .none
+
+        self.event = event
 
         ImageManager.shared.downloadImage(with: event.imageName) { result in
             switch result {
@@ -129,6 +141,10 @@ extension MenuTableViewCell {
         self.distance = distance
         participants = event.countOfParticipants
 
+        deleteButton.setImage(UIImage(systemName: "trash"), for: .normal)
+        deleteButton.tintColor = .red
+        deleteButton.addTarget(self, action: #selector(deleteEvent), for: .touchUpInside)
+
         setUpCellContainerView()
         setUpEventImageView()
         setUp(label: titleLabel, of: 17, weight: .medium, text: eventName)
@@ -137,6 +153,19 @@ extension MenuTableViewCell {
         setUp(label: distanceLabel, text: "\(round(100 * distance) / 100)" + " km away")
         setUp(icon: participantsImageView)
         setUp(label: participantsLabel, text: "\(participants)")
+
+        debugPrint(AuthManager.shared.currentUser()?.uid)
+
+        guard let UID = AuthManager.shared.currentUser()?.uid else {
+            deleteButton.isHidden = true
+            return
+        }
+
+        if UID != adminUid {
+            deleteButton.isHidden = true
+        } else {
+            deleteButton.isHidden = false
+        }
     }
 
     private func setUpCellContainerView() {
@@ -148,6 +177,7 @@ extension MenuTableViewCell {
 
     private func setUpEventImageView() {
         cellContainerView.addSubview(eventImageView)
+        cellContainerView.addSubview(deleteButton)
         eventImageView.backgroundColor = .systemGray6
         eventImageView.layer.cornerRadius = 15
         eventImageView.layer.masksToBounds = true
@@ -164,5 +194,24 @@ extension MenuTableViewCell {
         label.font = .systemFont(ofSize: size, weight: weight)
         label.textColor = .label
         label.textAlignment = .left
+    }
+
+    @objc
+    private func deleteEvent() {
+        guard let event = event else {
+            return
+        }
+        EventManager.shared.adminDeleteEvent(event: event) { res in
+            switch res {
+            case .success:
+                self.adapter?.rootVC?.loadData()
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+
+            case .failure(let error):
+                print(error.rawValue)
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
+            }
+            
+        }
     }
 }

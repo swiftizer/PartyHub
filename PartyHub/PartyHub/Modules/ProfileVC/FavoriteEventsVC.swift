@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-final class MenuVC: UIViewController {
+final class FavoriteEventsVC: UIViewController {
 
     var adapter: MenuTableViewAdapter
 
@@ -27,7 +27,7 @@ final class MenuVC: UIViewController {
 
     init() {
 
-        self.adapter = MenuTableViewAdapter(tableView: menuTableView)
+        self.adapter = MenuTableViewAdapter(tableView: menuTableView, needAddSection: false)
         super.init(nibName: nil, bundle: nil)
         adapter.relodeCells(events: [], location: nil, distances: [])
     }
@@ -65,13 +65,13 @@ final class MenuVC: UIViewController {
         menuTableView.refreshControl?.beginRefreshing()
 
         group.enter()
-        EventManager.shared.downloadEvents { result in
+        EventManager.shared.downloadFollowedEvents { result in
             switch result {
             case .success(let events):
                 self.events = events
                 self.group.leave()
 
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
+//                UINotificationFeedbackGenerator().notificationOccurred(.success)
 
             case .failure(let error):
                 let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)
@@ -87,7 +87,7 @@ final class MenuVC: UIViewController {
             self!.events = self!.sortEventsByDistance(events: self!.events)
             self?.getDistances()
             self?.adapter.relodeCells(events: self!.events, location: self!.currentLocation!, distances: self!.distanses)
-            self?.adapter.rootVC = self
+//            self?.adapter.rootVC = self
         }
     }
 
@@ -96,6 +96,7 @@ final class MenuVC: UIViewController {
 
         menuTableView.pin
             .all()
+            .marginTop(30)
     }
 
     private func sortEventsByDistance(events: [Event]) -> [Event] {
@@ -130,7 +131,7 @@ final class MenuVC: UIViewController {
     }
 }
 
-extension MenuVC: CLLocationManagerDelegate {
+extension FavoriteEventsVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last!
         if !flagLocation {

@@ -184,12 +184,12 @@ extension MapVC: UISearchResultsUpdating, UISearchBarDelegate {
         let JSONAdress = query.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
 
         NetworkManager.shared.getCoordinates(
-            with: JSONAdress,
-            curLocation: GeoPoint(
-                name: "curLoc",
-                latitude: model.currentLocation?.coordinate.latitude,
-                longtitude: model.currentLocation?.coordinate.longitude
-            )
+            with: JSONAdress
+//            curLocation: GeoPoint(
+//                name: "curLoc",
+//                latitude: model.currentLocation?.coordinate.latitude,
+//                longtitude: model.currentLocation?.coordinate.longitude
+//            )
         ) { result in
             DispatchQueue.main.async { [weak self] in
                 switch result {

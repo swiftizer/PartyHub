@@ -53,6 +53,10 @@
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
+		B3F62C1B28B2D8320081E0FC /* ProfileTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */; };
+		B3F62C1D28B2D83C0081E0FC /* ProfileToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */; };
+		B3F62C1F28B2D8450081E0FC /* FavoriteEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */; };
+		B3F62C2128B2D84E0081E0FC /* CreatedEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C2028B2D84E0081E0FC /* CreatedEventsVC.swift */; };
 		E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E921D60728A8F8A0001DFB51 /* ProfileVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +109,10 @@
 		B330663328A2578900528BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewAdapter.swift; sourceTree = "<group>"; };
+		B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToggleView.swift; sourceTree = "<group>"; };
+		B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEventsVC.swift; sourceTree = "<group>"; };
+		B3F62C2028B2D84E0081E0FC /* CreatedEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedEventsVC.swift; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +174,10 @@
 			isa = PBXGroup;
 			children = (
 				E921D60728A8F8A0001DFB51 /* ProfileVC.swift */,
+				B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */,
+				B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */,
+				B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */,
+				B3F62C2028B2D84E0081E0FC /* CreatedEventsVC.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -414,9 +426,11 @@
 			files = (
 				2C52F2E128AB8DF20007938C /* UIApplication+TopViewController.swift in Sources */,
 				2C6E103428AEF4A8006FDE82 /* UIView+AddBlur.swift in Sources */,
+				B3F62C1D28B2D83C0081E0FC /* ProfileToggleView.swift in Sources */,
 				B3178CE628B2577700D72091 /* MapToChooseVC.swift in Sources */,
 				2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */,
 				2C81638F28AE77EA00D9D564 /* FeedbackGenerator.swift in Sources */,
+				B3F62C1B28B2D8320081E0FC /* ProfileTableViewAdapter.swift in Sources */,
 				E921D60828A8F8A0001DFB51 /* ProfileVC.swift in Sources */,
 				2C30712D28B22D5900BB6C60 /* UIImage+resizeImage.swift in Sources */,
 				2C30712F28B22EBB00BB6C60 /* CurLocationButton.swift in Sources */,
@@ -447,6 +461,7 @@
 				2CCB627728AD5BE6005586AF /* MenuTableViewCell.swift in Sources */,
 				2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
+				B3F62C2128B2D84E0081E0FC /* CreatedEventsVC.swift in Sources */,
 				2C8163A328AE8A3800D9D564 /* UIVIew+Frame.swift in Sources */,
 				2C30711028B2185B00BB6C60 /* LoginVC.swift in Sources */,
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
@@ -455,6 +470,7 @@
 				B3178CE028B256FE00D72091 /* ImagePicker.swift in Sources */,
 				2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */,
 				2C6E102828AE8B3A006FDE82 /* String+Validation.swift in Sources */,
+				B3F62C1F28B2D8450081E0FC /* FavoriteEventsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -161,10 +161,6 @@ final class AddNewEventVC: UIViewController {
         costTextField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 50))
         costTextField.rightViewMode = .always
 
-//        contactsTextField.delegate = self
-//        contactsTextField.tag = 0
-//        contactsTextField.rightViewMode = .always
-
         eventDescriptionTextView.delegate = self
 
         placeholderLabel.text = "Описание"
@@ -464,10 +460,6 @@ private extension AddNewEventVC {
             }
 
             FeedbackGenerator.shared.errorFeedbackGenerator()
-//            let alertController = UIAlertController(title: nil, message: "Поля заголовка и места обязательные!", preferredStyle: .alert)
-//            let okAction = UIAlertAction(title: "OK", style: .cancel)
-//            alertController.addAction(okAction)
-//            self.present(alertController, animated: true, completion: nil)
             self.activityIndicatorView.isHidden = true
             self.activityIndicator.stopAnimating()
             view.isUserInteractionEnabled = true
@@ -477,7 +469,9 @@ private extension AddNewEventVC {
 
         let image: UIImage? = didPhotoTakenFlag ? eventImageView.image : nil
 
-        let event = Event(image: image, imageName: "", title: title, description: description, begin: begin, end: end, place: "\(place)|\(latitude)|\(longtitude)", cost: cost, contacts: contacts, countOfParticipants: 0)
+        let docName = "\(title)-\(UUID().uuidString)"
+
+        let event = Event(image: image, imageName: "", title: title, description: description, begin: begin, end: end, place: "\(place)|\(latitude)|\(longtitude)", cost: cost, contacts: contacts, countOfParticipants: 0, docName: docName)
         EventManager.shared.uploadEvent(event: event) { result in
             switch result {
             case .success:

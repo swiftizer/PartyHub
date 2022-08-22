@@ -19,11 +19,24 @@ struct Event {
     let cost: Int
     let contacts: String
     let countOfParticipants: Int
+    let docName: String
+}
+
+struct DocIDs {
+    var created: [String]
+    let followed: [String]
 }
 
 protocol EventManagerDescription {
     func downloadEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
+    func downloadFollowedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
+    func downloadCreatedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void)
+    func goToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
+    func cancelGoToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
     func uploadEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
+    func deleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
+    func adminDeleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
+    func initUserStructure(completion: @escaping (Result<String, NetworkError>) -> Void)
 }
 
 final class EventManager: EventManagerDescription {
@@ -47,7 +60,156 @@ final class EventManager: EventManagerDescription {
         }
     }
 
+    private func downloadEventIDsForUser(completion: @escaping (Result<DocIDs, NetworkError>) -> Void) {
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        database.collection("\(userID)").document("userData").getDocument { document, error in
+            if let _ = error {
+                completion(.failure(NetworkError.emptyData))
+            } else if let docs = self.getDocIDs(from: (document?.data())!) {
+                completion(.success(docs))
+            } else {
+                fatalError()
+            }
+        }
+    }
+
+    func downloadFollowedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void) {
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        downloadEventIDsForUser { [weak self] result in
+            switch result {
+            case .success(let docs):
+                if docs.followed.count == 0 {
+                    completion(.success([]))
+                    return
+                }
+                var events = [Event]()
+
+                let group = DispatchGroup()
+                group.enter()
+                for doc in docs.followed {
+                    self?.database.collection("events").document(doc).getDocument { document, error in
+                        if let _ = error {
+                            completion(.failure(NetworkError.emptyData))
+                        } else if let event = self?.event(from: (document?.data())!) {
+                            events.append(event)
+                            group.leave()
+                        } else {
+                            fatalError()
+                        }
+                    }
+                }
+
+                group.notify(queue: DispatchQueue.main) {
+                    completion(.success(events))
+                }
+
+            case .failure:
+                completion(.failure(NetworkError.badAttempt))
+            }
+        }
+    }
+
+    func downloadCreatedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void) {
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        downloadEventIDsForUser { [weak self] result in
+            switch result {
+            case .success(let docs):
+                if docs.created.count == 0 {
+                    completion(.success([]))
+                    return
+                }
+                var events = [Event]()
+
+//                database.collection("events").getDocuments
+                let group = DispatchGroup()
+                
+                for doc in docs.created {
+                    group.enter()
+                    self?.database.collection("events").document(doc).getDocument { document, error in
+                        if let _ = error {
+                            completion(.failure(NetworkError.emptyData))
+                        } else if let event = self?.event(from: (document?.data())!) {
+                            events.append(event)
+                            group.leave()
+                        } else {
+                            fatalError()
+                        }
+                    }
+                }
+
+                group.notify(queue: DispatchQueue.main) {
+                    completion(.success(events))
+                }
+
+            case .failure:
+                completion(.failure(NetworkError.badAttempt))
+            }
+        }
+    }
+
+    func goToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
+
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        database.collection("\(userID)").document("userData").updateData(["followed": FieldValue.arrayUnion([event.docName])]) { error in
+
+            if let _ = error {
+                self.database.collection("\(userID)").document("userData").setData(["followed": [event.docName]]) { error in
+
+                    if let _ = error {
+                        completion(.failure(NetworkError.badAttempt))
+                    } else {
+                        completion(.success(event))
+                    }
+                }
+            } else {
+                completion(.success(event))
+            }
+        }
+    }
+
+    func cancelGoToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
+
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        database.collection("\(userID)").document("userData").updateData(["followed": FieldValue.arrayRemove([event.docName])]) { error in
+
+            if let _ = error {
+                completion(.failure(NetworkError.badAttempt))
+            } else {
+                completion(.success(event))
+            }
+        }
+    }
+
     func uploadEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
+
+        let group = DispatchGroup()
+
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        group.enter()
         imageManager.uploadImage(image: event.image) { [weak self] result in
             switch result {
             case .success(let uploadedImageName):
@@ -60,10 +222,11 @@ final class EventManager: EventManagerDescription {
                     Keys.place.rawValue: event.place,
                     Keys.cost.rawValue: event.cost,
                     Keys.contacts.rawValue: event.contacts,
-                    Keys.countOfParticipants.rawValue: event.countOfParticipants
+                    Keys.countOfParticipants.rawValue: event.countOfParticipants,
+                    Keys.docName.rawValue: event.docName
                 ]
 
-                self?.database.collection("events").addDocument(data: data) { [weak self] error in
+                self?.database.collection("events").document(event.docName).setData(data) { [weak self] error in
                     guard let self = self else {
                         return
                     }
@@ -72,17 +235,140 @@ final class EventManager: EventManagerDescription {
                         completion(.failure(NetworkError.badAttempt))
                     } else {
                         if let event = self.event(from: data) {
-                            completion(.success(event))
+                            group.leave()
                         } else {
+                            completion(.failure(NetworkError.badAttempt))
                             fatalError()
                         }
                     }
                 }
 
-
-            case .failure(_):
+            case .failure:
                 completion(.failure(NetworkError.badAttempt))
+            }
+        }
 
+        group.enter()
+
+        database.collection("\(userID)").document("userData").updateData(["created": FieldValue.arrayUnion([event.docName])]) { error in
+
+            if let _ = error {
+                self.database.collection("\(userID)").document("userData").setData(["created": [event.docName]]) { error in
+
+                    if let _ = error {
+                        completion(.failure(NetworkError.badAttempt))
+                    } else {
+                        group.leave()
+                    }
+                }
+            } else {
+                group.leave()
+            }
+        }
+
+//        group.enter()
+//        self.database.collection("\(userID)").document("userData").setData(["followed": []]) { error in
+//
+//            if let _ = error {
+//                completion(.failure(NetworkError.badAttempt))
+//            } else {
+//                group.leave()
+//            }
+//        }
+
+//        group.enter()
+//        database.collection("\(userID)").document("userData").updateData(["followed": FieldValue.arrayUnion([])]) { error in
+//
+//            if let _ = error {
+//                self.database.collection("\(userID)").document("userData").setData(["followed": []]) { error in
+//
+//                    if let _ = error {
+//                        completion(.failure(NetworkError.badAttempt))
+//                    } else {
+//                        completion(.success(event))
+//                    }
+//                }
+//            } else {
+//                completion(.success(event))
+//            }
+//        }
+
+        group.notify(queue: DispatchQueue.main) {
+            completion(.success(event))
+        }
+    }
+
+    func initUserStructure(completion: @escaping (Result<String, NetworkError>) -> Void) {
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        database.collection("\(userID)").document("userData").setData(["created": [], "followed": []]) { error in
+
+            if let _ = error {
+                completion(.failure(NetworkError.badAttempt))
+            } else {
+                completion(.success(userID))
+            }
+        }
+    }
+
+    func deleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
+
+        guard let userID = AuthManager.shared.currentUser()?.uid else {
+            completion(.failure(NetworkError.invalidUrl))
+            return
+        }
+
+        let group = DispatchGroup()
+
+        group.enter()
+        database.collection("\(userID)").document("userData").updateData(["created": FieldValue.arrayRemove([event.docName])]) { error in
+
+            if let _ = error {
+                completion(.failure(NetworkError.badAttempt))
+            } else {
+                group.leave()
+            }
+        }
+
+        group.enter()
+        database.collection("events").document(event.docName).delete() { err in
+            if let err = err {
+                completion(.failure(NetworkError.badAttempt))
+            } else {
+                self.imageManager.deleteImage(imageName: event.imageName) { result in
+                    switch result {
+                    case .success(let uploadedImageName):
+                        group.leave()
+
+                    case .failure:
+                        completion(.failure(NetworkError.badAttempt))
+                    }
+                }
+            }
+        }
+
+        group.notify(queue: DispatchQueue.main) {
+            completion(.success(event))
+        }
+    }
+
+    func adminDeleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
+        database.collection("events").document(event.docName).delete() { err in
+            if let err = err {
+                completion(.failure(NetworkError.badAttempt))
+            } else {
+                self.imageManager.deleteImage(imageName: event.imageName) { result in
+                    switch result {
+                    case .success(let uploadedImageName):
+                        completion(.success(event))
+
+                    case .failure:
+                        completion(.failure(NetworkError.badAttempt))
+                    }
+                }
             }
         }
     }
@@ -103,7 +389,8 @@ private extension EventManager {
             let place = data[Keys.place.rawValue] as? String,
             let cost = data[Keys.cost.rawValue] as? Int,
             let contacts = data[Keys.contacts.rawValue] as? String,
-            let countOfParticipants = data[Keys.countOfParticipants.rawValue] as? Int
+            let countOfParticipants = data[Keys.countOfParticipants.rawValue] as? Int,
+            let docName = data[Keys.docName.rawValue] as? String
         else {
             return nil
         }
@@ -117,7 +404,8 @@ private extension EventManager {
                      place: place,
                      cost: cost,
                      contacts: contacts,
-                     countOfParticipants: countOfParticipants)
+                     countOfParticipants: countOfParticipants,
+                     docName: docName)
     }
 
     enum Keys: String {
@@ -130,5 +418,27 @@ private extension EventManager {
         case cost
         case contacts
         case countOfParticipants
+        case docName
+    }
+
+//
+//    func docIDs(from snapshot: QuerySnapshot?) -> [Event]? {
+//        return snapshot?.documents.compactMap { event(from: $0.data()) }
+//    }
+
+    func getDocIDs(from data: [String: Any]) -> DocIDs? {
+        guard
+            let created = data[Keys2.created.rawValue] as? [String],
+            let followed = data[Keys2.followed.rawValue] as? [String]
+        else {
+            return nil
+        }
+
+        return DocIDs(created: created, followed: followed)
+    }
+
+    enum Keys2: String {
+        case created
+        case followed
     }
 }
