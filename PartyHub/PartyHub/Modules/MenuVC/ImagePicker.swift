@@ -38,21 +38,21 @@ open class ImagePicker: NSObject {
         return UIAlertAction(title: title, style: .default) { [unowned self] _ in
             if type == .camera {
                 if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
-                    //already authorized
+                    // already authorized
                     print("already authorized")
                     self.pickerController.sourceType = type
                     self.presentationController?.present(self.pickerController, animated: true)
                 } else {
                     AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
                         if granted {
-                            //access allowed
+                            // access allowed
                             print("access allowed")
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 self.pickerController.sourceType = type
                                 self.presentationController?.present(self.pickerController, animated: true)
                             }
                         } else {
-                            //access denied
+                            // access denied
                             print("access denied")
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 self.presentationController?.createDeniedAlertController()

@@ -8,6 +8,7 @@
 import UIKit
 import NVActivityIndicatorView
 
+// TODO: - вынести логику, слишком большой файл
 final class AddNewEventVC: UIViewController {
     enum Navigation {
         case back
@@ -32,7 +33,12 @@ final class AddNewEventVC: UIViewController {
     private var currentEditingDateTextField = UITextField()
     private var imagePicker: ImagePicker?
     private let datePicker = UIDatePicker()
-    private let activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 67, height: 67), type: .ballClipRotateMultiple, color: UIColor.label, padding: 0)
+    private let activityIndicator = NVActivityIndicatorView(
+        frame: CGRect(x: 0, y: 0, width: 67, height: 67),
+        type: .ballClipRotateMultiple,
+        color: UIColor.label,
+        padding: 0
+    )
 
     private let eventTitleTextField: UITextField = {
         let textField = UITextField()
@@ -114,6 +120,7 @@ final class AddNewEventVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        definesPresentationContext = true
         setupUI()
     }
 
@@ -160,10 +167,6 @@ final class AddNewEventVC: UIViewController {
         costTextField.returnKeyType = .done
         costTextField.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 50))
         costTextField.rightViewMode = .always
-
-//        contactsTextField.delegate = self
-//        contactsTextField.tag = 0
-//        contactsTextField.rightViewMode = .always
 
         eventDescriptionTextView.delegate = self
 
@@ -226,7 +229,10 @@ final class AddNewEventVC: UIViewController {
         scrollView.backgroundColor = .systemBackground
         scrollView.isUserInteractionEnabled = true
         scrollView.isScrollEnabled = true
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100 * 926 / UIScreen.main.bounds.height)
+        scrollView.contentSize = CGSize(
+            width: UIScreen.main.bounds.width,
+            height: UIScreen.main.bounds.height + 100 * 926 / UIScreen.main.bounds.height
+        )
 
         scrollView.addSubview(eventImageView)
         scrollView.addSubview(eventTitleTextField)
@@ -422,7 +428,6 @@ private extension AddNewEventVC {
 
     @objc
     func didTapEventImageView(_ sender: UIButton) {
-//        test(UIButton())
         dismissKeyboard(UITapGestureRecognizer())
         self.imagePicker?.present(from: sender)
     }
@@ -454,7 +459,6 @@ private extension AddNewEventVC {
               let contacts = contactsTextField.text,
               let cost = Int(costStr) else {
 
-            
             addButton.invalidAnimation()
             if eventTitleTextField.text == "" {
                 eventTitleTextField.repaintBorder()
@@ -464,10 +468,6 @@ private extension AddNewEventVC {
             }
 
             FeedbackGenerator.shared.errorFeedbackGenerator()
-//            let alertController = UIAlertController(title: nil, message: "Поля заголовка и места обязательные!", preferredStyle: .alert)
-//            let okAction = UIAlertAction(title: "OK", style: .cancel)
-//            alertController.addAction(okAction)
-//            self.present(alertController, animated: true, completion: nil)
             self.activityIndicatorView.isHidden = true
             self.activityIndicator.stopAnimating()
             view.isUserInteractionEnabled = true
@@ -476,8 +476,9 @@ private extension AddNewEventVC {
         }
 
         let image: UIImage? = didPhotoTakenFlag ? eventImageView.image : nil
+        let docName = "\(title)-\(UUID().uuidString)"
 
-        let event = Event(image: image, imageName: "", title: title, description: description, begin: begin, end: end, place: "\(place)|\(latitude)|\(longtitude)", cost: cost, contacts: contacts, countOfParticipants: 0)
+        let event = Event(image: image, imageName: "", title: title, description: description, begin: begin, end: end, place: "\(place)|\(latitude)|\(longtitude)", cost: cost, contacts: contacts, countOfParticipants: 0, docName: docName)
         EventManager.shared.uploadEvent(event: event) { result in
             switch result {
             case .success:
@@ -495,7 +496,8 @@ private extension AddNewEventVC {
                 self.view.isUserInteractionEnabled = true
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.dismiss(animated: true)
+//                    self.dismiss(animated: true)
+                    self.navigation?(.registration)
                 }
 
             case .failure(let error):
@@ -515,28 +517,14 @@ private extension AddNewEventVC {
 
     @objc
     func choosePlace() {
-        print(#function)
-        mapVC.addNewEventVC = self
-//        if #available(iOS 15, *) {
-//            let navBarAppearance = UINavigationBarAppearance()
-//            navBarAppearance.backgroundColor = .systemGray6
-//            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-//        } else {
-//            navigationController?.navigationBar.backgroundColor = .systemGray6
-//        }
-//        navigationController?.navigationBar.tintColor = .label
-        navigationController?.pushViewController(mapVC, animated: true)
-//        navigation?(.choosePlace)
+//        mapVC.addNewEventVC = self
+//        navigationController?.pushViewController(mapVC, animated: true)
+        self.navigation?(.choosePlace)
     }
 
     @objc
     private func backAction() {
         self.navigation?(.back)
-    }
-
-    @objc
-    private func registerButtonTapped() {
-        navigation?(.registration)
     }
 
     @objc

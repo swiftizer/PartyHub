@@ -9,8 +9,8 @@ import UIKit
 
 final class MenuCoordinator: Coordinator {
     var result: ((FlowResult<Void>) -> Void)?
-
     let router = DefaultRouter(with: nil)
+    let rootModule = MenuVC()
 
     init() {
         (router.toPresent() as? UINavigationController)?.setNavigationBarHidden(false, animated: false)
@@ -18,9 +18,8 @@ final class MenuCoordinator: Coordinator {
     }
 
     func start() {
-        let module = MenuVC()
-        module.title = "Menu"
-        module.adapter.navigation = { [weak self] navType in
+        rootModule.title = "Menu"
+        rootModule.adapter.navigation = { [weak self] navType in
             switch navType {
             case .addEvent:
                 if AuthManager.shared.currentUser() != nil {
@@ -28,47 +27,45 @@ final class MenuCoordinator: Coordinator {
                 } else {
                     self?.presentLogin()
                 }
-            case .description:
-                debugPrint("description tapped")
+            case .description(event: let event):
+                self?.presentDescription(event: event)
             }
         }
-        router.setRootModule(module)
+        router.setRootModule(rootModule)
+    }
+
+    func presentDescription(event: Event) {
+        let module = EventVC(event: event)
+        let nav = UINavigationController(rootViewController: module)
+        nav.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        nav.navigationBar.shadowImage = UIImage()
+        nav.navigationBar.tintColor = .label
+        nav.modalPresentationStyle = .overFullScreen
+        module.navigation = { [weak self] result in
+            switch result {
+            case .back:
+                self?.router.popModule(animated: true)
+            case .go:
+                print("press GO in Menu Coordinator")
+            }
+        }
+        router.present(nav, animated: true, completion: nil)
     }
 
     func presentAddEvent() {
-        let module = AddNewEventVC()
-        module.title = "Создать мероприятие"
-        module.navigation = { [weak self] result in
+        let addNewEventCoordinator = AddNewEventCoordinator()
+        addNewEventCoordinator.result = { [weak self] result in
             switch result {
-            case .registration, .back:
+            case .success:
+                self?.rootModule.loadData()
                 self?.router.popModule(animated: true)
-            case .choosePlace:
-                // TODO: - Динар разбирается
-                self?.presentChoosePlace()
+            case .canceled:
+                self?.router.popModule(animated: true)
+            default:
+                break
             }
         }
-
-        let nav = UINavigationController(rootViewController: module)
-        if #available(iOS 15, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.backgroundColor = .systemGray6
-            nav.navigationBar.scrollEdgeAppearance = navBarAppearance
-        } else {
-            nav.navigationBar.backgroundColor = .systemGray6
-        }
-        nav.navigationBar.tintColor = .label
-        nav.modalPresentationStyle = .overFullScreen
-
-        self.router.present(nav, animated: true, completion: nil)
-    }
-
-    func presentChoosePlace() {
-        let module = MapToChooseVC()
-        module.title = "Карта"
-//        module.navigation = {
-//
-//        }
-        router.push(module, animated: true)
+        router.present(addNewEventCoordinator, animated: true, completion: nil)
     }
 
     func presentLogin() {
@@ -87,5 +84,4 @@ final class MenuCoordinator: Coordinator {
     func toPresent() -> UIViewController {
         return router.toPresent()
     }
-
 }

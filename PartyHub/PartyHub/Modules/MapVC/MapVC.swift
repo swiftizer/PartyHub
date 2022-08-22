@@ -14,20 +14,24 @@ import YandexMapsMobile
 final class MapVC: UIViewController {
 
     enum Navigation {
-        case description
+        case description(event: Event)
     }
 
     var navigation: ((Navigation) -> Void)?
 
     // MARK: - Private Properties
 
-    private var model = MapModel()
+    private var dictionaryPoints: [YMKPlacemarkMapObject: Event] = [:]
+    private var currentLocation: CLLocation?
     private var userLocationLayer: YMKUserLocationLayer!
-    private let mapView = YMKMapView()
-    private let currentLocationButton = CurLocationButton()
     private var flagLocation = false
     private var locationManager = CLLocationManager()
     private var tapGestureReconizer = UITapGestureRecognizer()
+    private var events: [Event] = []
+
+    private let mapView = YMKMapView()
+    private let currentLocationButton = CurLocationButton()
+
     private let searchController: UISearchController = {
         let viewController = UISearchController(searchResultsController: nil)
         viewController.searchBar.placeholder = "Поиск"
@@ -44,16 +48,17 @@ final class MapVC: UIViewController {
         setup()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupEvents()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupLayout()
     }
 
     // MARK: - Methods
-
-    func loadPoints(points: [GeoPoint]) {
-        self.model.points = points
-    }
 
     func getUserLocation() {
         locationManager.requestAlwaysAuthorization()
@@ -81,6 +86,20 @@ final class MapVC: UIViewController {
 
     // MARK: - Private Metods
 
+    private func setupEvents() {
+        EventManager.shared.downloadEvents { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let events):
+                    self?.events = events
+                    self?.setEvents()
+                case .failure(let error):
+                    debugPrint(error.rawValue)
+                }
+            }
+        }
+    }
+
     private func setup() {
         view.backgroundColor = .systemGray6
         view.addSubview(mapView)
@@ -94,7 +113,30 @@ final class MapVC: UIViewController {
         navigationItem.searchController = searchController
 
         getUserLocation()
-        setPoints(points: model.points)
+    }
+
+    private func setEvents() {
+        for event in events {
+            let latitude = Double(event.place.split(separator: "|")[1]) ?? 0
+            let longitude = Double(event.place.split(separator: "|")[2]) ?? 0
+            let mapObjects = mapView.mapWindow.map.mapObjects
+            let placemark = mapObjects.addPlacemark(with: YMKPoint(latitude: latitude, longitude: longitude))
+            let image = UIImage(named: "eventTag")?.resizeImage(
+                targetSize: CGSize(
+                    width: 250 * UIScreen.main.bounds.height/926,
+                    height: 250 * UIScreen.main.bounds.height/926
+                )
+            )
+            placemark.setIconWith(
+                image?.withTintColor(UIColor(
+                    red: 0.205,
+                    green: 0.369,
+                    blue: 0.792,
+                    alpha: 1
+                ), renderingMode: .alwaysOriginal) ?? UIImage()
+            )
+            dictionaryPoints.updateValue(event, forKey: placemark)
+        }
     }
 
     private func setupLayout() {
@@ -111,24 +153,6 @@ final class MapVC: UIViewController {
             .marginRight(15)
             .marginBottom(30)
     }
-
-    private func setPoints(points: [GeoPoint]) {
-        for point in points {
-            if let latitude = point.latitude, let longtitude = point.longtitude {
-                let mapObjects = mapView.mapWindow.map.mapObjects
-                let placemark = mapObjects.addPlacemark(with: YMKPoint(latitude: latitude, longitude: longtitude))
-                let image = UIImage(named: "eventTag")?.resizeImage(targetSize: CGSize(width: 250 * UIScreen.main.bounds.height/926, height: 250 * UIScreen.main.bounds.height/926))
-                placemark.setIconWith(
-                    image?.withTintColor(UIColor(
-                        red: 0.205,
-                        green: 0.369,
-                        blue: 0.792,
-                        alpha: 1
-                    ), renderingMode: .alwaysOriginal) ?? UIImage())
-                model.dictionaryPoints.updateValue(point, forKey: placemark)
-            }
-        }
-    }
 }
 
 // MARK: - Actions
@@ -136,7 +160,7 @@ final class MapVC: UIViewController {
 private extension MapVC {
     @objc
     func clickedCurrentLocationButton() {
-        guard let location = model.currentLocation else {
+        guard let location = currentLocation else {
             return
         }
 
@@ -183,14 +207,7 @@ extension MapVC: UISearchResultsUpdating, UISearchBarDelegate {
         print(query)
         let JSONAdress = query.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
 
-        NetworkManager.shared.getCoordinates(
-            with: JSONAdress,
-            curLocation: GeoPoint(
-                name: "curLoc",
-                latitude: model.currentLocation?.coordinate.latitude,
-                longtitude: model.currentLocation?.coordinate.longitude
-            )
-        ) { result in
+        NetworkManager.shared.getCoordinates(with: JSONAdress) { result in
             DispatchQueue.main.async { [weak self] in
                 switch result {
                 case .success(let res):
@@ -242,9 +259,8 @@ extension MapVC: UISearchControllerDelegate {
 extension MapVC: YMKMapObjectTapListener {
     func onMapObjectTap(with mapObject: YMKMapObject, point: YMKPoint) -> Bool {
         if let placemark = mapObject as? YMKPlacemarkMapObject {
-            // TODO: - что-то с этим сделать
-            if let point = model.dictionaryPoints[placemark] {
-                navigation?(.description)
+            if let event = dictionaryPoints[placemark] {
+                navigation?(.description(event: event))
             }
         }
         return true
@@ -282,9 +298,9 @@ extension MapVC: YMKUserLocationObjectListener {
 
 extension MapVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        model.currentLocation = locations.last!
+        currentLocation = locations.last!
         if !flagLocation {
-            guard model.currentLocation != nil else {
+            guard currentLocation != nil else {
                 return
             }
             flagLocation = true

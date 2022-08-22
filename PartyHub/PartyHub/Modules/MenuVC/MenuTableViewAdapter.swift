@@ -12,7 +12,7 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
 
     enum Navigation {
         case addEvent
-        case description
+        case description(event: Event)
     }
 
     var navigation: ((Navigation) -> Void)?
@@ -59,7 +59,7 @@ final class MenuTableViewAdapter: NSObject, UITableViewDataSource, UITableViewDe
         case 0:
             navigation?(.addEvent)
         default:
-            navigation?(.description)
+            navigation?(.description(event: events[indexPath.row]))
         }
     }
 

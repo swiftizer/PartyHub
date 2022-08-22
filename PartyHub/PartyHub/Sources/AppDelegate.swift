@@ -47,11 +47,14 @@ extension AppDelegate {
         let mapCordinator = MapCoordinator()
         let profileCoordinator = ProfileCoordinator()
 
-        // TODO: - убрать force unwrap
+        guard let listImage = UIImage(systemName: "list.bullet"),
+              let mapImage = UIImage(systemName: "map"),
+              let profile = UIImage(systemName: "person.circle") else { return }
+
         appCoordinator = TabBarCoordinator(with: [
-            .init(module: menuCordinator, icon: UIImage(systemName: "list.bullet")!, title: "Menu", tag: 0),
-            .init(module: mapCordinator, icon: UIImage(systemName: "map")!, title: "Map", tag: 1),
-            .init(module: profileCoordinator, icon: UIImage(systemName: "person.circle")!, title: "Profile", tag: 2)
+            .init(module: menuCordinator, icon: listImage, title: "Menu", tag: 0),
+            .init(module: mapCordinator, icon: mapImage, title: "Map", tag: 1),
+            .init(module: profileCoordinator, icon: profile, title: "Profile", tag: 2)
         ])
 
         window?.rootViewController = appCoordinator?.toPresent()

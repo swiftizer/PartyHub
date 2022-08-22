@@ -57,10 +57,38 @@ final class MenuTableViewCell: UITableViewCell {
 
 extension MenuTableViewCell {
 
+    // MARK: - Mathods
+
+    func setUpCell(with event: Event, distance: Double) {
+        backgroundColor = .clear
+        selectionStyle = .none
+
+        ImageManager.shared.downloadImage(with: event.imageName) { result in
+            switch result {
+            case .success(let downloadedImage):
+                self.eventImageView.image = downloadedImage
+            case .failure:
+                break
+            }
+        }
+
+        eventName = event.title
+        self.distance = distance
+        participants = event.countOfParticipants
+
+        setUpCellContainerView()
+        setUpEventImageView()
+        setUp(label: titleLabel, of: 17, weight: .medium, text: eventName)
+        setUp(icon: chevronImageView, color: .systemGray)
+        setUp(icon: distanceImageView)
+        setUp(label: distanceLabel, text: "\(round(100 * distance) / 100)" + " km away")
+        setUp(icon: participantsImageView)
+        setUp(label: participantsLabel, text: "\(participants)")
+    }
+
     // MARK: - Private methods
 
     private func setUpLayout() {
-
         let descriptionHeight: CGFloat = 20
 
         cellContainerView.pin
@@ -108,35 +136,6 @@ extension MenuTableViewCell {
             .height(descriptionHeight)
             .width(frame.width*0.15)
 
-    }
-
-    func setUpCell(with event: Event, distance: Double) {
-        backgroundColor = .clear
-        selectionStyle = .none
-
-        ImageManager.shared.downloadImage(with: event.imageName) { result in
-            switch result {
-            case .success(let downloadedImage):
-                self.eventImageView.image = downloadedImage
-                break
-
-            case .failure:
-                break
-            }
-        }
-
-        eventName = event.title
-        self.distance = distance
-        participants = event.countOfParticipants
-
-        setUpCellContainerView()
-        setUpEventImageView()
-        setUp(label: titleLabel, of: 17, weight: .medium, text: eventName)
-        setUp(icon: chevronImageView, color: .systemGray)
-        setUp(icon: distanceImageView)
-        setUp(label: distanceLabel, text: "\(round(100 * distance) / 100)" + " km away")
-        setUp(icon: participantsImageView)
-        setUp(label: participantsLabel, text: "\(participants)")
     }
 
     private func setUpCellContainerView() {

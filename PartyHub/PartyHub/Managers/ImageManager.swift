@@ -12,13 +12,13 @@ import Kingfisher
 protocol ImageManagerDescription {
     func uploadImage(image: UIImage?, completion: @escaping (Result<String, NetworkError>) -> Void)
     func downloadImage(with name: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void)
+    func deleteImage(imageName: String, completion: @escaping (Result<String, NetworkError>) -> Void)
 }
 
 final class ImageManager: ImageManagerDescription {
     static let shared: ImageManagerDescription = ImageManager()
 
     private let storageRef = Storage.storage().reference()
-
     private let cache = ImageCache.default
 
     private init() {}
@@ -52,15 +52,27 @@ final class ImageManager: ImageManagerDescription {
                 if let image = imageResult.image {
                     completion(.success(image))
                 } else {
-                    self?.downloadFromFirebase(imageName: name, completion: completion)
+                    self?.downloadImageFromFirebase(imageName: name, completion: completion)
                 }
             case .failure:
-                self?.downloadFromFirebase(imageName: name, completion: completion)
+                self?.downloadImageFromFirebase(imageName: name, completion: completion)
             }
         }
     }
 
-    private func downloadFromFirebase(
+    func deleteImage(imageName: String, completion: @escaping (Result<String, NetworkError>) -> Void) {
+
+        storageRef.child(imageName).delete { error in
+            if let error = error {
+                completion(.failure(NetworkError.badAttempt))
+            } else {
+                self.cache.removeImage(forKey: imageName)
+                completion(.success(imageName))
+            }
+        }
+    }
+
+    private func downloadImageFromFirebase(
         imageName: String,
         completion: @escaping (Result<UIImage, NetworkError>) -> Void
     ) {

@@ -9,6 +9,7 @@ import UIKit
 
 protocol FeedbackGeneratorDescription {
     func errorFeedbackGenerator()
+    func succesFeedbackGenerator()
     func customFeedbackGeneration(_ style: UIImpactFeedbackGenerator.FeedbackStyle)
 }
 
@@ -20,6 +21,10 @@ final class FeedbackGenerator {
 
     func errorFeedbackGenerator() {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
+    }
+
+    func succesFeedbackGenerator() {
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
     }
 
     func customFeedbackGeneration(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {

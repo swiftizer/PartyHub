@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C19D2A128B302FC00F799B7 /* AddNewEventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19D2A028B302FC00F799B7 /* AddNewEventCoordinator.swift */; };
 		2C30710328B1502200BB6C60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C30710228B1502200BB6C60 /* GoogleService-Info.plist */; };
 		2C30710C28B2145A00BB6C60 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710B28B2145A00BB6C60 /* EventVC.swift */; };
 		2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710D28B2185B00BB6C60 /* LoginView.swift */; };
@@ -14,7 +15,6 @@
 		2C30712528B22B9400BB6C60 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712428B22B9300BB6C60 /* NetworkManager.swift */; };
 		2C30712728B22BE600BB6C60 /* String+EncodeURL+Strip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712628B22BE600BB6C60 /* String+EncodeURL+Strip.swift */; };
 		2C30712928B22C0500BB6C60 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712828B22C0500BB6C60 /* CLLocation.swift */; };
-		2C30712B28B22D2D00BB6C60 /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712A28B22D2D00BB6C60 /* MapModel.swift */; };
 		2C30712D28B22D5900BB6C60 /* UIImage+resizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712C28B22D5900BB6C60 /* UIImage+resizeImage.swift */; };
 		2C30712F28B22EBB00BB6C60 /* CurLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30712E28B22EBB00BB6C60 /* CurLocationButton.swift */; };
 		2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52F2D928AB047E0007938C /* PresentableProtocol.swift */; };
@@ -57,6 +57,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C19D2A028B302FC00F799B7 /* AddNewEventCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewEventCoordinator.swift; sourceTree = "<group>"; };
 		2C30710228B1502200BB6C60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C30710B28B2145A00BB6C60 /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		2C30710D28B2185B00BB6C60 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		2C30712428B22B9300BB6C60 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		2C30712628B22BE600BB6C60 /* String+EncodeURL+Strip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EncodeURL+Strip.swift"; sourceTree = "<group>"; };
 		2C30712828B22C0500BB6C60 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
-		2C30712A28B22D2D00BB6C60 /* MapModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
 		2C30712C28B22D5900BB6C60 /* UIImage+resizeImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+resizeImage.swift"; sourceTree = "<group>"; };
 		2C30712E28B22EBB00BB6C60 /* CurLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurLocationButton.swift; sourceTree = "<group>"; };
 		2C52F2D928AB047E0007938C /* PresentableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableProtocol.swift; sourceTree = "<group>"; };
@@ -173,7 +173,6 @@
 		2C6E103C28AFFEA7006FDE82 /* MapVC */ = {
 			isa = PBXGroup;
 			children = (
-				2C30712A28B22D2D00BB6C60 /* MapModel.swift */,
 				2CCB627C28AD5CA4005586AF /* MapVC.swift */,
 				2C30712E28B22EBB00BB6C60 /* CurLocationButton.swift */,
 			);
@@ -251,6 +250,7 @@
 				2CCA56F228A588BA00934F99 /* MapCoordinator.swift */,
 				2CCA56F428A588CA00934F99 /* ProfileCoordinator.swift */,
 				2C6E102A28AE8D98006FDE82 /* AuthRegCoordinator.swift */,
+				2C19D2A028B302FC00F799B7 /* AddNewEventCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -267,14 +267,14 @@
 		2CCB627128AD5BE6005586AF /* MenuVC */ = {
 			isa = PBXGroup;
 			children = (
+				2CCB627528AD5BE6005586AF /* MenuVC.swift */,
+				B3178CE128B2571500D72091 /* AddEventVC.swift */,
+				B3178CE528B2577700D72091 /* MapToChooseVC.swift */,
+				B3178CDF28B256FE00D72091 /* ImagePicker.swift */,
 				2CCB627328AD5BE6005586AF /* MenuTableViewCell.swift */,
 				2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */,
-				2CCB627528AD5BE6005586AF /* MenuVC.swift */,
 				2CCB627228AD5BE6005586AF /* MenuTableViewAdapter.swift */,
-				B3178CDF28B256FE00D72091 /* ImagePicker.swift */,
-				B3178CE128B2571500D72091 /* AddEventVC.swift */,
 				B3178CE328B2574E00D72091 /* EventImageView.swift */,
-				B3178CE528B2577700D72091 /* MapToChooseVC.swift */,
 			);
 			path = MenuVC;
 			sourceTree = "<group>";
@@ -427,7 +427,6 @@
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
 				B3178CDE28B2564200D72091 /* ImageManager.swift in Sources */,
 				2C6E103B28AFB4D5006FDE82 /* AuthManager.swift in Sources */,
-				2C30712B28B22D2D00BB6C60 /* MapModel.swift in Sources */,
 				B3178CDC28B2562E00D72091 /* EventManager.swift in Sources */,
 				2C30712928B22C0500BB6C60 /* CLLocation.swift in Sources */,
 				2C30712728B22BE600BB6C60 /* String+EncodeURL+Strip.swift in Sources */,
@@ -435,6 +434,7 @@
 				2CCA56F328A588BA00934F99 /* MapCoordinator.swift in Sources */,
 				B3178CE228B2571500D72091 /* AddEventVC.swift in Sources */,
 				2C81639D28AE7EF100D9D564 /* RegistrationVC.swift in Sources */,
+				2C19D2A128B302FC00F799B7 /* AddNewEventCoordinator.swift in Sources */,
 				2C6E103128AE98BA006FDE82 /* UIView+InvalidAnimation.swift in Sources */,
 				2C8163A128AE8A3800D9D564 /* UIColor+HexString.swift in Sources */,
 				2C8163A228AE8A3800D9D564 /* UIView+DropShadow.swift in Sources */,
@@ -593,7 +593,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
+				DEVELOPMENT_TEAM = 69S65245DU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -622,7 +622,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
+				DEVELOPMENT_TEAM = 69S65245DU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

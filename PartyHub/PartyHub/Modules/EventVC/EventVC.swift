@@ -8,19 +8,14 @@
 import UIKit
 import PinLayout
 
-// TODO - исправить CodeStyle
 final class EventVC: UIViewController {
 
-    // MARK: - Internal properties
+    enum Navigation {
+        case back
+        case go
+    }
 
-    var eventName: String = "Event Name"
-    var eventDate: String = "Some date and time"
-    var eventAddress: String = "Somewhere on Earth"
-    var eventDescription: String = "Some description"
-    var eventPrice: Int = 0
-    var participants: Int = 0
-    var eventImage = UIImage()
-    var isFavorite: Bool = false
+    var navigation: ((Navigation) -> Void)?
 
     // MARK: - Private properties
 
@@ -30,51 +25,77 @@ final class EventVC: UIViewController {
         static let buttonHeight: CGFloat = 50
     }
 
+    private let event: Event
     private let eventImageView = UIImageView()
-    private let scrollView = UIScrollView()
-    private let eventNameLabel = UILabel()
     private let dateLabel = UILabel()
     private let addressLabel = UILabel()
     private let priceLabel = UILabel()
-    private let descriptionLabel = UILabel()
     private let participantsLabel = UILabel()
-    private let mapButton = UIButton(type: .system)
+
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+
+    private let eventNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 28, weight: .semibold)
+        label.textColor = .label
+        label.textAlignment = .left
+        return label
+    }()
+
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 17, weight: .regular)
+        label.textColor = .label
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
+    }()
+
+    private lazy var goForEventButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
+        button.setTitle("Иду!", for: .normal)
+        button.layer.cornerRadius = 15
+        button.addTarget(self, action: #selector(didTapMapButton), for: .touchUpInside)
+        button.tintColor = .white
+        return button
+    }()
 
     private let dateImageName = "clock"
     private let addressImageName = "mappin.and.ellipse"
     private let priceImageName = "dollarsign.circle"
     private let participantsImageName = "person.2"
-    private let favoriteImageName = "heart.fill"
-    private let notFavoriteImageName = "heart"
+    private let xmarkImageName = "xmark.circle"
+
+    // MARK: - Initialization
+
+    init(event: Event) {
+        self.event = event
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setUpBackground()
-        setUpEventNameLabel()
-        setUpIconWithLabel(label: dateLabel,
-                           iconName: dateImageName,
-                           text: eventDate)
-        setUpIconWithLabel(label: addressLabel,
-                           iconName: addressImageName,
-                           text: eventAddress)
-        setUpIconWithLabel(label: priceLabel,
-                           iconName: priceImageName,
-                           text: (eventPrice == 0) ? "FREE" : "\(eventPrice)")
-        setUpIconWithLabel(label: participantsLabel,
-                           iconName: participantsImageName,
-                           text: "\(participants)")
-
-        setUpDescriptionLabel()
-        setUpMapButton()
-        setUpNavigationBar()
+        setupImage()
+        setupUI()
+        setupNavigationBar()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setUpBackground()
+        setupUI()
         setUpLayout()
     }
 
@@ -82,74 +103,78 @@ final class EventVC: UIViewController {
 
     @objc
     private func didTapMapButton() {
-        print(#function)
-    }
-
-    @objc
-    private func didTapFavoriteButton() {
-        if isFavorite {
-            isFavorite = false
-        } else {
-            isFavorite = true
-        }
-        setUpFavoriteButton()
-        // make event favorite
+        navigation?(.go)
     }
 
     @objc
     private func backAction() {
-        dismiss(animated: true)
+        FeedbackGenerator.shared.customFeedbackGeneration(.medium)
+        navigation?(.back)
     }
 
     // MARK: - Private methods
 
-    private func setUpBackground() {
+    private func setupUI() {
+        let eventPlace = String(describing: event.place.split(separator: "|")[0])
+        eventNameLabel.text = event.title
+        descriptionLabel.text = event.description
+        setupIconWithLabel(label: dateLabel,
+                           iconName: dateImageName,
+                           text: "\(event.begin) - \(event.end)")
+        setupIconWithLabel(label: addressLabel,
+                           iconName: addressImageName,
+                           text: eventPlace)
+        setupIconWithLabel(label: priceLabel,
+                           iconName: priceImageName,
+                           text: (event.cost == 0) ? "FREE" : "\(event.cost)")
+        setupIconWithLabel(label: participantsLabel,
+                           iconName: participantsImageName,
+                           text: "\(event.countOfParticipants)")
+
         view.addSubview(eventImageView)
-        eventImageView.backgroundColor = .systemIndigo
-        view.addGradient(firstColor: .systemBackground.withAlphaComponent(0.1),
-                         secondColor: .systemBackground)
+        view.addGradient(
+            firstColor: .systemBackground.withAlphaComponent(0.1),
+            secondColor: .systemBackground
+        )
         view.addSubview(scrollView)
-        scrollView.showsVerticalScrollIndicator = false
+        scrollView.addSubview(goForEventButton)
+        scrollView.addSubview(eventNameLabel)
+        scrollView.addSubview(descriptionLabel)
     }
 
-    private func setUpNavigationBar() {
+    private func setupImage() {
+        ImageManager.shared.downloadImage(with: event.imageName) { [weak self] result in
+            switch result {
+            case .success(let image):
+                self?.eventImageView.image = image
+            case .failure(let error):
+                debugPrint(error.rawValue)
+            }
+        }
+    }
+
+    private func setupNavigationBar() {
         let backNavigationItem = UIBarButtonItem(
-            image: UIImage(systemName: "xmark.circle"),
+            image: UIImage(systemName: xmarkImageName),
             style: .plain,
             target: self,
             action: #selector(backAction)
         )
-        navigationItem.leftBarButtonItem = backNavigationItem
-        setUpFavoriteButton()
+
+        navigationItem.rightBarButtonItem = backNavigationItem
     }
 
-    private func setUpFavoriteButton() {
-        let favoriteButton = UIBarButtonItem(
-            image: UIImage(systemName: isFavorite ? favoriteImageName : notFavoriteImageName),
-            style: .plain,
-            target: self,
-            action: #selector(didTapFavoriteButton)
-        )
-        navigationItem.rightBarButtonItem = favoriteButton
-    }
-
-    private func setUpEventNameLabel() {
-        scrollView.addSubview(eventNameLabel)
-        eventNameLabel.text = eventName
-        eventNameLabel.font = .systemFont(ofSize: 28, weight: .semibold)
-        eventNameLabel.textColor = .label
-        eventNameLabel.textAlignment = .left
-    }
-
-    private func setUpIconWithLabel(label: UILabel, iconName: String, text: String) {
+    private func setupIconWithLabel(label: UILabel, iconName: String, text: String) {
         if let icon = UIImage(systemName: iconName) {
             let labelText = NSMutableAttributedString()
             let imageAttachment = NSTextAttachment()
             imageAttachment.image = icon.withTintColor(.label)
-            let textAttribute = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .regular),
-                                 NSAttributedString.Key.foregroundColor: UIColor.label ]
-            let textAttachment = NSMutableAttributedString(string: text,
-                                                           attributes: textAttribute as [ NSAttributedString.Key: Any ])
+            let textAttribute = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .regular),
+                                 NSAttributedString.Key.foregroundColor: UIColor.label]
+            let textAttachment = NSMutableAttributedString(
+                string: text,
+                attributes: textAttribute as [NSAttributedString.Key: Any]
+            )
             labelText.append(NSAttributedString(attachment: imageAttachment))
             labelText.append(NSAttributedString(string: " "))
             labelText.append(textAttachment)
@@ -159,27 +184,7 @@ final class EventVC: UIViewController {
         }
     }
 
-    private func setUpDescriptionLabel() {
-        scrollView.addSubview(descriptionLabel)
-        descriptionLabel.text = eventDescription
-        descriptionLabel.font = .systemFont(ofSize: 17, weight: .regular)
-        descriptionLabel.textColor = .label
-        descriptionLabel.textAlignment = .left
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.lineBreakMode = .byWordWrapping
-    }
-
-    private func setUpMapButton() {
-        scrollView.addSubview(mapButton)
-        mapButton.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
-        mapButton.setTitle("Show on map", for: .normal)
-        mapButton.layer.cornerRadius = 15
-        mapButton.addTarget(self, action: #selector(didTapMapButton), for: .touchUpInside)
-        mapButton.tintColor = .white
-    }
-
     private func setUpLayout() {
-
         eventImageView.pin
             .top()
             .left()
@@ -187,7 +192,10 @@ final class EventVC: UIViewController {
             .height(view.frame.height/2)
 
         scrollView.pin
-            .all()
+            .top(view.safeAreaInsets.top)
+            .left()
+            .right()
+            .bottom()
 
         eventNameLabel.pin
             .top(eventImageView.frame.height - 72)
@@ -214,14 +222,14 @@ final class EventVC: UIViewController {
             descriptionLabel.widthAnchor.constraint(equalTo: participantsLabel.widthAnchor)
         ])
 
-        mapButton.pin
+        goForEventButton.pin
             .top(descriptionLabel.frame.maxY + 12)
             .hCenter()
             .width(view.frame.width * Constants.labelWidthMultiplier)
             .height(Constants.buttonHeight)
 
         scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width,
-                                        height: UIScreen.main.bounds.height + descriptionLabel.frame.height - 250)
+                                        height: UIScreen.main.bounds.height + descriptionLabel.frame.height - 150)
 
     }
 }

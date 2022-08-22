@@ -66,7 +66,6 @@ final class NetworkManager {
     // MARK: JSON в виде текста
     func getCoordinates(
         with adress: String,
-        curLocation: GeoPoint,
         completion: @escaping (Result<GeoPoint, NetworkError>) -> Void
     ) {
         let urlString = "https://geocode-maps.yandex.ru/1.x/?apikey=\(token)&format=json&geocode=\(adress)&lang=en_RU".encodeUrl

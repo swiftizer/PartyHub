@@ -12,12 +12,17 @@ import MapKit
 import YandexMapsMobile
 
 final class MapToChooseVC: UIViewController {
+    enum Navigation {
+        case enter(gePoint: GeoPoint)
+        case back
+    }
+
+    var navigation: ((Navigation) -> Void)?
 
     // MARK: - Private Properties
 
     var resPoint = GeoPoint(name: "place", latitude: nil, longtitude: nil)
     var currentLocation: CLLocation?
-    weak var addNewEventVC: AddNewEventVC?
     private var userLocationLayer: YMKUserLocationLayer!
     private let mapView = YMKMapView()
     private let currentLocationButton = CurLocationButton()
@@ -30,7 +35,7 @@ final class MapToChooseVC: UIViewController {
     private var locView = UIImageView()
     private let adressLabel = UILabel()
 
-    private let chooseButton: UIButton = {
+    private lazy var chooseButton: UIButton = {
         let button = UIButton(type: .system)
         button.layer.masksToBounds = true
         button.backgroundColor = .systemIndigo
@@ -117,8 +122,8 @@ final class MapToChooseVC: UIViewController {
     }
 
     // MARK: - Private Metods
-    private func setup() {
 
+    private func setup() {
         view.backgroundColor = .systemGray6
         view.addSubview(mapView)
         mapView.addSubview(currentLocationButton)
@@ -144,7 +149,7 @@ final class MapToChooseVC: UIViewController {
 
         tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
 
-        navigationItem.title = "Карта"
+        navigationController?.navigationBar.tintColor = .label
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
@@ -198,13 +203,13 @@ final class MapToChooseVC: UIViewController {
         var adressPart2: String = ""
 
         group.enter()
-        location.fetchCityAndCountry { name, error, arg  in
+        location.fetchCityAndCountry { name, _, _  in
             adressPart1 = name ?? "-"
             group.leave()
         }
 
         group.enter()
-        location.fetchName { name, error in
+        location.fetchName { name, _ in
             adressPart2 = name ?? "-"
             group.leave()
         }
@@ -277,19 +282,15 @@ private extension MapToChooseVC {
         }
 
         if !adress.contains("...") {
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
-            addNewEventVC?.choosedPoint = resPoint
-            addNewEventVC?.updateAdress()
-            navigationController?.popViewController(animated: true)
+            FeedbackGenerator.shared.succesFeedbackGenerator()
+            navigation?(.enter(gePoint: resPoint))
         } else {
-            updateAdress() {
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
+            updateAdress(completion: {
+                FeedbackGenerator.shared.succesFeedbackGenerator()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.addNewEventVC?.choosedPoint = self.resPoint
-                    self.addNewEventVC?.updateAdress()
-                    self.navigationController?.popViewController(animated: true)
+                    self.navigation?(.enter(gePoint: self.resPoint))
                 }
-            }
+            })
         }
     }
 }
@@ -308,14 +309,7 @@ extension MapToChooseVC: UISearchResultsUpdating, UISearchBarDelegate {
         print(query)
         let JSONAdress = query.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
 
-        NetworkManager.shared.getCoordinates(
-            with: JSONAdress,
-            curLocation: GeoPoint(
-                name: "curLoc",
-                latitude: currentLocation?.coordinate.latitude,
-                longtitude: currentLocation?.coordinate.longitude
-            )
-        ) { result in
+        NetworkManager.shared.getCoordinates(with: JSONAdress) { result in
             DispatchQueue.main.async { [weak self] in
                 switch result {
                 case .success(let res):
@@ -398,7 +392,6 @@ extension MapToChooseVC: YMKMapCameraListener {
         if finished {
             updateAdress()
             flagStartDragMap = false
-//            setupLayout()
             UIView.animate(withDuration: 0.3, delay: 0) {
                 self.locView.pin
                     .height(120)
