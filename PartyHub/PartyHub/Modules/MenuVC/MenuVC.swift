@@ -23,6 +23,7 @@ final class MenuVC: UIViewController {
     private var locationManager = CLLocationManager()
     private var currentLocation: CLLocation?
     private var isFirst = true
+    private let activityIndicator = LoadindIndicatorView()
 
     // MARK: - Initialization
 
@@ -124,16 +125,29 @@ final class MenuVC: UIViewController {
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didPullToRefresh),
-                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventSuccess.Sirius.PartyHub"),
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didPullToRefresh),
                                                name: NSNotification.Name( "EventVC.BackAction.Sirius.PartyHub"),
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(activityIndicatorStart),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventStart.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(activityIndicatorStopSuccess),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventSuccess.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(activityIndicatorStopFailure),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventFailure.Sirius.PartyHub"),
+                                               object: nil)
 
         loadData()
 
         view.addSubview(menuTableView)
+        activityIndicator.pinToRootVC(rootVC: self)
     }
 
     private func sortEventsByDistance(events: [Event]) -> [Event] {
@@ -187,6 +201,23 @@ final class MenuVC: UIViewController {
     }
 }
 
+private extension MenuVC {
+    @objc
+    func activityIndicatorStart() {
+        activityIndicator.start()
+    }
+
+    @objc
+    func activityIndicatorStopSuccess() {
+        activityIndicator.stopSuccess()
+    }
+
+    @objc
+    func activityIndicatorStopFailure() {
+        activityIndicator.stopFailure()
+    }
+}
+
 // MARK: - CLLocationManagerDelegate
 
 extension MenuVC: CLLocationManagerDelegate {
@@ -201,3 +232,4 @@ extension MenuVC: CLLocationManagerDelegate {
         }
     }
 }
+

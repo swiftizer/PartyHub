@@ -22,6 +22,7 @@ final class FavoriteEventsVC: UIViewController {
     private var flagLocation = false
     private var locationManager = CLLocationManager()
     private var currentLocation: CLLocation?
+    private let activityIndicator = LoadindIndicatorView()
 
     // MARK: - Initialization
 
@@ -44,7 +45,7 @@ final class FavoriteEventsVC: UIViewController {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didPullToRefresh),
-                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventSuccess.Sirius.PartyHub"),
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didPullToRefresh),
@@ -53,6 +54,18 @@ final class FavoriteEventsVC: UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didPullToRefresh),
                                                name: NSNotification.Name("ProfileCoordinator.PresentDescrption.Back.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(activityIndicatorStart),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventStart.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(activityIndicatorStopSuccess),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventSuccess.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(activityIndicatorStopFailure),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventFailure.Sirius.PartyHub"),
                                                object: nil)
 
         if CLLocationManager.locationServicesEnabled() {
@@ -63,6 +76,7 @@ final class FavoriteEventsVC: UIViewController {
         }
 
         view.addSubview(menuTableView)
+        activityIndicator.pinToRootVC(rootVC: self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -142,6 +156,23 @@ final class FavoriteEventsVC: UIViewController {
             let distance = (currentLocation?.distance(from: CLLocation(latitude: latitude, longitude: longitude)) ?? 0) / 1000.0
             distanses.append(distance)
         }
+    }
+}
+
+private extension FavoriteEventsVC {
+    @objc
+    func activityIndicatorStart() {
+        activityIndicator.start()
+    }
+
+    @objc
+    func activityIndicatorStopSuccess() {
+        activityIndicator.stopSuccess()
+    }
+
+    @objc
+    func activityIndicatorStopFailure() {
+        activityIndicator.stopFailure()
     }
 }
 

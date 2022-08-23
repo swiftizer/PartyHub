@@ -9,9 +9,19 @@ import FirebaseStorage
 import UIKit
 import Kingfisher
 
+struct ImageResult {
+    let image: UIImage
+    let way: DownloadWay
+}
+
+enum DownloadWay {
+    case cashe
+    case firebase
+}
+
 protocol ImageManagerDescription {
     func uploadImage(image: UIImage?, completion: @escaping (Result<String, NetworkError>) -> Void)
-    func downloadImage(with name: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void)
+    func downloadImage(with name: String, completion: @escaping (Result<ImageResult, NetworkError>) -> Void)
     func deleteImage(imageName: String, completion: @escaping (Result<String, NetworkError>) -> Void)
 }
 
@@ -45,12 +55,12 @@ final class ImageManager: ImageManagerDescription {
         }
     }
 
-    func downloadImage(with name: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+    func downloadImage(with name: String, completion: @escaping (Result<ImageResult, NetworkError>) -> Void) {
         cache.retrieveImage(forKey: name) { [weak self] result in
             switch result {
             case .success(let imageResult):
                 if let image = imageResult.image {
-                    completion(.success(image))
+                    completion(.success(ImageResult(image: image, way: .cashe)))
                 } else {
                     self?.downloadImageFromFirebase(imageName: name, completion: completion)
                 }
@@ -73,7 +83,7 @@ final class ImageManager: ImageManagerDescription {
 
     private func downloadImageFromFirebase(
         imageName: String,
-        completion: @escaping (Result<UIImage, NetworkError>) -> Void
+        completion: @escaping (Result<ImageResult, NetworkError>) -> Void
     ) {
         storageRef.child(imageName).getData(maxSize: 5 * 1024 * 1024) { [weak self] data, error in
             if let error = error {
@@ -88,7 +98,7 @@ final class ImageManager: ImageManagerDescription {
             }
 
             self?.cache.store(image, forKey: imageName)
-            completion(.success(image))
+            completion(.success(ImageResult(image: image, way: .firebase)))
         }
     }
 }

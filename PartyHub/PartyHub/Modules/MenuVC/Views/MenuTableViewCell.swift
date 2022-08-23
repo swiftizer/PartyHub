@@ -31,6 +31,7 @@ final class MenuTableViewCell: UITableViewCell {
     private let participantsImageView = UIImageView(image: UIImage(systemName: "person.2"))
     private var event: Event?
     private let deleteButton = UIButton()
+    private let activityIndicator = LoadindIndicatorView()
 
     // MARK: - Initialization
 
@@ -116,6 +117,8 @@ extension MenuTableViewCell {
             .right()
             .width(50)
             .height(50)
+
+        activityIndicator.pinToRootView(rootView: eventImageView, frame: eventImageView.frame)
     }
 
     func setUpCell(with event: Event, distance: Double) {
@@ -123,15 +126,6 @@ extension MenuTableViewCell {
         selectionStyle = .none
 
         self.event = event
-
-        ImageManager.shared.downloadImage(with: event.imageName) { result in
-            switch result {
-            case .success(let downloadedImage):
-                self.eventImageView.image = downloadedImage
-            case .failure:
-                break
-            }
-        }
 
         eventName = event.title
         self.distance = distance
@@ -159,6 +153,22 @@ extension MenuTableViewCell {
         setUp(label: distanceLabel, text: (koef != 1 ? "\(round(koef * distance) / koef)" : "\(Int(distance))") + " км от вас")
         setUp(icon: participantsImageView)
         setUp(label: participantsLabel, text: "\(participants)")
+
+        activityIndicator.start()
+        ImageManager.shared.downloadImage(with: event.imageName) { result in
+            switch result {
+            case .success(let downloadedImageRes):
+                if downloadedImageRes.way == .cashe {
+                    self.activityIndicator.instantStop()
+                } else {
+                    self.activityIndicator.stopSuccess()
+                }
+
+                self.eventImageView.image = downloadedImageRes.image
+            case .failure:
+                self.activityIndicator.stopFailure()
+            }
+        }
 
         guard let UID = AuthManager.shared.currentUser()?.uid else {
             deleteButton.isHidden = true
@@ -207,13 +217,15 @@ extension MenuTableViewCell {
         guard let event = event else {
             return
         }
+        NotificationCenter.default.post(name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventStart.Sirius.PartyHub"), object: nil)
         EventManager.shared.adminDeleteEvent(event: event) { res in
             switch res {
             case .success:
-                NotificationCenter.default.post(name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventSuccess.Sirius.PartyHub"), object: nil)
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
             case .failure(let error):
-                print(error.rawValue)
+                debugPrint(error.rawValue)
+                NotificationCenter.default.post(name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventFailure.Sirius.PartyHub"), object: nil)
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
             }
         }

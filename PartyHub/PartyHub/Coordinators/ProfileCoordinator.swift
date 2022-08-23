@@ -33,11 +33,18 @@ final class ProfileCoordinator: Coordinator {
                     }
                 }
             case .removeAccount:
-                AuthManager.shared.deleteAccount { result in
-                    switch result {
+                EventManager.shared.deleteCreatedEventsByUser { res in
+                    switch res {
                     case .success:
-                        FeedbackGenerator.shared.succesFeedbackGenerator()
-                        module.tabBarController?.selectedIndex = 0
+                        AuthManager.shared.deleteAccount { result in
+                            switch result {
+                            case .success:
+                                FeedbackGenerator.shared.succesFeedbackGenerator()
+                                module.tabBarController?.selectedIndex = 0
+                            case .failure:
+                                FeedbackGenerator.shared.errorFeedbackGenerator()
+                            }
+                        }
                     case .failure:
                         FeedbackGenerator.shared.errorFeedbackGenerator()
                     }
