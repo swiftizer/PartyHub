@@ -391,7 +391,6 @@ final class EventVC: UIViewController {
 
         mapView.layer.masksToBounds = true
         mapView.layer.cornerRadius = 15
-        mapView.mapWindow.map.addCameraListener(with: self)
         mapView.rootVC = self
         userLocationLayer.setObjectListenerWith(self)
 
@@ -545,22 +544,6 @@ extension EventVC: CLLocationManagerDelegate {
         }
     }
 }
-
-extension EventVC: YMKMapCameraListener {
-    func onCameraPositionChanged(with map: YMKMap, cameraPosition: YMKCameraPosition, cameraUpdateReason: YMKCameraUpdateReason, finished: Bool) {
-        if finished {
-            debugPrint("-----")
-            flagStartDragMap = false
-//            scrollView.isScrollEnabled = true
-        } else if !flagStartDragMap {
-            debugPrint("+++++")
-            debugPrint(scrollView.contentOffset)
-            flagStartDragMap = true
-//            scrollView.isScrollEnabled = false
-        }
-    }
-}
-
 
 
 // TODO: - вынести отсюда
