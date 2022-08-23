@@ -10,6 +10,35 @@ import PinLayout
 import CoreLocation
 import YandexMapsMobile
 
+final class MyMapView: YMKMapView {
+    weak var rootVC: EventVC?
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let res = super.hitTest(point, with: event) {
+            print(#function, #line)
+            rootVC?.scrollView.isScrollEnabled = false
+            rootVC?.checkSum -= 1
+            return res
+        }
+        return nil
+    }
+}
+
+final class MyScrollView: UIScrollView {
+    weak var rootVC: EventVC?
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let res = super.hitTest(point, with: event) {
+            print(#function, #line)
+            if rootVC?.checkSum ?? 1 == 1 {
+                rootVC?.scrollView.isScrollEnabled = true
+            } else {
+                rootVC?.checkSum = 1
+            }
+            return res
+        }
+        return nil
+    }
+}
+
 final class EventVC: UIViewController {
 
     enum Navigation {
@@ -38,16 +67,17 @@ final class EventVC: UIViewController {
 
     var resPoint = GeoPoint(name: "place", latitude: nil, longtitude: nil)
     var currentLocation: CLLocation?
+    var checkSum = 1
     private var userLocationLayer: YMKUserLocationLayer!
     private var flagLocation = false
     private var locationManager = CLLocationManager()
-    private let mapView = YMKMapView()
+    private let mapView = MyMapView()
     private let currentLocationButton = CurLocationButton()
     private let currentTagButton = UIButton()
     private var scrollViewContentSize = CGSize(width: 1, height: 1)
 
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
+    let scrollView: MyScrollView = {
+        let scrollView = MyScrollView()
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
@@ -326,6 +356,7 @@ final class EventVC: UIViewController {
         scrollView.addSubview(goForEventButton)
         scrollView.addSubview(eventNameLabel)
         scrollView.addSubview(descriptionLabel)
+        scrollView.rootVC = self
 
         setupMapView()
     }
@@ -361,6 +392,7 @@ final class EventVC: UIViewController {
         mapView.layer.masksToBounds = true
         mapView.layer.cornerRadius = 15
         mapView.mapWindow.map.addCameraListener(with: self)
+        mapView.rootVC = self
         userLocationLayer.setObjectListenerWith(self)
 
         let latitude = Double(event.place.split(separator: "|")[1]) ?? 0
@@ -519,12 +551,12 @@ extension EventVC: YMKMapCameraListener {
         if finished {
             debugPrint("-----")
             flagStartDragMap = false
-            scrollView.isScrollEnabled = true
+//            scrollView.isScrollEnabled = true
         } else if !flagStartDragMap {
             debugPrint("+++++")
             debugPrint(scrollView.contentOffset)
             flagStartDragMap = true
-            scrollView.isScrollEnabled = false
+//            scrollView.isScrollEnabled = false
         }
     }
 }
