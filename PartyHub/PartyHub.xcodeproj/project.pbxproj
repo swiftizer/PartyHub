@@ -52,6 +52,7 @@
 		2CCB627828AD5BE6005586AF /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */; };
 		2CCB627928AD5BE6005586AF /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB627528AD5BE6005586AF /* MenuVC.swift */; };
 		2CCB627D28AD5CA4005586AF /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCB627C28AD5CA4005586AF /* MapVC.swift */; };
+		375FB9E2AE83489CE1469531 /* Pods_PartyHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04CA2AD21F950C94B0D04E3 /* Pods_PartyHub.framework */; };
 		B3178CDC28B2562E00D72091 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3178CDB28B2562E00D72091 /* EventManager.swift */; };
 		B3178CDE28B2564200D72091 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3178CDD28B2564200D72091 /* ImageManager.swift */; };
 		B3178CE028B256FE00D72091 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3178CDF28B256FE00D72091 /* ImagePicker.swift */; };
@@ -114,6 +115,8 @@
 		2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
 		2CCB627528AD5BE6005586AF /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		2CCB627C28AD5CA4005586AF /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		A04CA2AD21F950C94B0D04E3 /* Pods_PartyHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PartyHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A79DCEC33B7A6F466B1F75E1 /* Pods-PartyHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.release.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.release.xcconfig"; sourceTree = "<group>"; };
 		B3178CDB28B2562E00D72091 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		B3178CDD28B2564200D72091 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		B3178CDF28B256FE00D72091 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -129,6 +132,7 @@
 		B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToggleView.swift; sourceTree = "<group>"; };
 		B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEventsVC.swift; sourceTree = "<group>"; };
 		B3F62C2028B2D84E0081E0FC /* CreatedEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedEventsVC.swift; sourceTree = "<group>"; };
+		D518D26DC464B8E195E97B96 /* Pods-PartyHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyHub.debug.xcconfig"; path = "Target Support Files/Pods-PartyHub/Pods-PartyHub.debug.xcconfig"; sourceTree = "<group>"; };
 		E921D60728A8F8A0001DFB51 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				375FB9E2AE83489CE1469531 /* Pods_PartyHub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,9 +344,19 @@
 			path = MenuVC;
 			sourceTree = "<group>";
 		};
+		390F9B94906A22E8B8C0A503 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A04CA2AD21F950C94B0D04E3 /* Pods_PartyHub.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7C68373E680DE8072465D3B3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				D518D26DC464B8E195E97B96 /* Pods-PartyHub.debug.xcconfig */,
+				A79DCEC33B7A6F466B1F75E1 /* Pods-PartyHub.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -352,6 +367,7 @@
 				B330662928A2578800528BCE /* PartyHub */,
 				B330662828A2578800528BCE /* Products */,
 				7C68373E680DE8072465D3B3 /* Pods */,
+				390F9B94906A22E8B8C0A503 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -385,10 +401,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B330663B28A2578900528BCE /* Build configuration list for PBXNativeTarget "PartyHub" */;
 			buildPhases = (
+				941406B95CAD78123A2A0F38 /* [CP] Check Pods Manifest.lock */,
 				2CCA56DC28A3E87E00934F99 /* SwiftLint */,
 				B330662328A2578800528BCE /* Sources */,
 				B330662428A2578800528BCE /* Frameworks */,
 				B330662528A2578800528BCE /* Resources */,
+				359D76A3041E35924E4AC0D7 /* [CP] Embed Pods Frameworks */,
+				5BB9990622A2BCA6B90FB9F5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -464,6 +483,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		359D76A3041E35924E4AC0D7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5BB9990622A2BCA6B90FB9F5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PartyHub/Pods-PartyHub-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		941406B95CAD78123A2A0F38 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PartyHub-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -660,12 +735,13 @@
 		};
 		B330663C28A2578900528BCE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D518D26DC464B8E195E97B96 /* Pods-PartyHub.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 69S65245DU;
+				DEVELOPMENT_TEAM = 5YVA2G85CL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Требуется доступ к камере";
@@ -684,7 +760,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "-23123.choney.qwe";
+				PRODUCT_BUNDLE_IDENTIFIER = moorled1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -694,12 +770,13 @@
 		};
 		B330663D28A2578900528BCE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A79DCEC33B7A6F466B1F75E1 /* Pods-PartyHub.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 69S65245DU;
+				DEVELOPMENT_TEAM = 5YVA2G85CL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Требуется доступ к камере";
@@ -718,7 +795,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "-23123.choney.qwe";
+				PRODUCT_BUNDLE_IDENTIFIER = moorled1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
