@@ -10,30 +10,60 @@ import FirebaseAuth
 import PinLayout
 
 class ProfileVC: UIViewController {
-
     // MARK: - Internal properties
 
     enum Navigation {
         case exit
+        case removeAccount
     }
 
     var navigation: ((Navigation) -> Void)?
     let favoriteEventsVC = FavoriteEventsVC()
     let createdEventsVC = CreatedEventsVC()
-    
+
     // MARK: - Private properties
 
-    private let iconImageView = UIImageView()
-    private let nameLabel = UILabel()
+    private let iconImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "person.crop.circle"))
+        imageView.layer.masksToBounds = true
+        imageView.tintColor = .systemIndigo
+        imageView.contentMode = .scaleToFill
+        return imageView
+    }()
+
+    private let emailLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 17, weight: .semibold)
+        label.textColor = .label
+        label.textAlignment = .center
+        return label
+    }()
+
+    private lazy var removebutton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Удалить аккаунт", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
+        button.tintColor = .red.withAlphaComponent(0.8)
+        return button
+    }()
+
     private let toggleView = ProfileToggleView()
-    private let scrollView = UIScrollView()
+
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupEmail()
         setupDelegates()
         addChildren()
     }
@@ -52,24 +82,32 @@ class ProfileVC: UIViewController {
 
     @objc
     private func exitButtonTapped() {
-        AuthManager.shared.signOut { [weak self] result in
-            switch result {
-            case .success:
-                FeedbackGenerator.shared.customFeedbackGeneration(.medium)
-                NotificationCenter.default.post(name: NSNotification.Name("AuthManager.SignOut.Sirius.PartyHub"), object: nil)
-                self?.navigation?(.exit)
-            case .failure(let error):
-                debugPrint(error.localizedDescription)
-            }
-        }
+        navigation?(.exit)
         tabBarController?.selectedIndex = 0
+    }
+
+    @objc
+    private func removeButtonTapped() {
+        presentAlert()
     }
 
     // MARK: - Private Methods
 
+    private func presentAlert() {
+        let alert = UIAlertController(title: "Подтверждение", message: "Вы уверены, что хотите удалить аккаунт?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        let removeAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            self?.navigation?(.removeAccount)
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(removeAction)
+
+        present(alert, animated: true, completion: nil)
+    }
+
     private func setupEmail() {
         guard let email = AuthManager.shared.currentUser()?.email else { return }
-        nameLabel.text = email
+        emailLabel.text = email
     }
 
     private func setupUI() {
@@ -80,27 +118,14 @@ class ProfileVC: UIViewController {
             action: #selector(exitButtonTapped)
         )
 
-        view.addSubview(iconImageView)
-//        iconImageView.backgroundColor = .systemIndigo
-//        iconImageView.layer.cornerRadius = 15
-
-        iconImageView.layer.masksToBounds = true
-        iconImageView.image = UIImage(systemName: "person.crop.circle")
-        iconImageView.tintColor = .systemIndigo
-        iconImageView.contentMode = .scaleToFill
-
-        view.addSubview(nameLabel)
-        nameLabel.font = .systemFont(ofSize: 17, weight: .semibold)
-        nameLabel.textColor = .label
-        nameLabel.textAlignment = .center
-
-        scrollView.isPagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
         exitNavigationItem.tintColor = .label
         navigationItem.rightBarButtonItem = exitNavigationItem
 
         view.backgroundColor = .systemBackground
+
+        view.addSubview(iconImageView)
+        view.addSubview(emailLabel)
+        view.addSubview(removebutton)
         view.addSubview(scrollView)
         view.addSubview(toggleView)
     }
@@ -115,21 +140,27 @@ class ProfileVC: UIViewController {
             .width(imageViewWidth)
             .height(imageViewWidth)
 
-        nameLabel.pin
+        emailLabel.pin
             .top(iconImageView.frame.maxY + basicPadding)
             .hCenter(to: iconImageView.edge.hCenter)
             .width(view.frame.width*0.8)
             .height(24)
 
+        removebutton.pin
+            .top(emailLabel.frame.maxY + basicPadding)
+            .right(12)
+            .left(12)
+            .height(24)
+
         scrollView.pin
-            .top(nameLabel.frame.maxY + basicPadding*2)
+            .top(removebutton.frame.maxY + basicPadding*2)
             .right()
             .left()
             .bottom()
         scrollView.contentSize = CGSize(width: view.width * 2, height: scrollView.height)
 
         toggleView.pin
-            .top(nameLabel.frame.maxY + basicPadding)
+            .top(removebutton.frame.maxY + basicPadding)
             .width(view.frame.width)
             .height(55)
     }

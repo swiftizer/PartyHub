@@ -19,7 +19,32 @@ final class ProfileCoordinator: Coordinator {
     func start() {
         let module = ProfileVC()
         module.title = "Профиль"
-        // MARK: - Приплыли...
+        module.navigation = { result in
+            switch result {
+            case .exit:
+                AuthManager.shared.signOut { result in
+                    switch result {
+                    case .success:
+                        FeedbackGenerator.shared.customFeedbackGeneration(.medium)
+                        NotificationCenter.default.post(name: NSNotification.Name("AuthManager.SignOut.Sirius.PartyHub"), object: nil)
+                        module.tabBarController?.selectedIndex = 0
+                    case .failure(let error):
+                        debugPrint(error.localizedDescription)
+                    }
+                }
+            case .removeAccount:
+                AuthManager.shared.deleteAccount { result in
+                    switch result {
+                    case .success:
+                        FeedbackGenerator.shared.succesFeedbackGenerator()
+                        module.tabBarController?.selectedIndex = 0
+                    case .failure:
+                        FeedbackGenerator.shared.errorFeedbackGenerator()
+                    }
+                }
+            }
+        }
+        // MARK: - Приплыли... По хорошему сделать отдельный координатор
         module.createdEventsVC.adapter.navigation = { [weak self] result in
             switch result {
             case .description(event: let event):

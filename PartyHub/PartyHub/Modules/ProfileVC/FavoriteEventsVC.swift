@@ -42,9 +42,18 @@ final class FavoriteEventsVC: UIViewController {
 
         locationManager.requestAlwaysAuthorization()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("ProfileCoordinator.PresentDescrption.Back.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("ProfileCoordinator.PresentDescrption.Back.Sirius.PartyHub"),
+                                               object: nil)
 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self

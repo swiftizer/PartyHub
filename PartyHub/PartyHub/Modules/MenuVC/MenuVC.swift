@@ -27,7 +27,6 @@ final class MenuVC: UIViewController {
     // MARK: - Initialization
 
     init() {
-
         self.adapter = MenuTableViewAdapter(tableView: menuTableView)
         super.init(nibName: nil, bundle: nil)
         adapter.relodeCells(events: [], location: nil, distances: [])
@@ -42,34 +41,24 @@ final class MenuVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        locationManager.requestAlwaysAuthorization()
-
-        if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
-                case .notDetermined, .restricted, .denied:
-                    print("No access")
-                    createDeniedAlertController()
-
-                case .authorizedAlways, .authorizedWhenInUse:
-                    print("Access")
-            }
-            locationManager.delegate = self
-            group.enter()
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
-
-
-        // TODO: - попробовать загнать во viewDidAppear
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("AuthManager.SignOut.Sirius.PartyHub"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name( "EventVC.BackAction.Sirius.PartyHub"), object: nil)
-
-        loadData()
-
-        view.addSubview(menuTableView)
+        setupUI()
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        menuTableView.pin
+            .all()
+    }
+
+    // MARK: - Actions
+
+    @objc
+    private func didPullToRefresh() {
+        loadData()
+    }
+
+    // MARK: - Methods
 
     func loadData() {
         if !isFirst {
@@ -86,7 +75,6 @@ final class MenuVC: UIViewController {
             case .success(let events):
                 self.events = events
                 self.group.leave()
-//                FeedbackGenerator.shared.succesFeedbackGenerator()
             case .failure(let error):
                 let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .cancel)
@@ -105,11 +93,47 @@ final class MenuVC: UIViewController {
         }
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    // MARK: - Private Methods
 
-        menuTableView.pin
-            .all()
+    private func setupUI() {
+        locationManager.requestAlwaysAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                print("No access")
+                createDeniedAlertController()
+            case .authorizedAlways, .authorizedWhenInUse:
+                print("Access")
+            @unknown default:
+                fatalError()
+            }
+            locationManager.delegate = self
+            group.enter()
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("AuthManager.SignOut.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name( "EventVC.BackAction.Sirius.PartyHub"),
+                                               object: nil)
+
+        loadData()
+
+        view.addSubview(menuTableView)
     }
 
     private func sortEventsByDistance(events: [Event]) -> [Event] {
@@ -161,12 +185,9 @@ final class MenuVC: UIViewController {
               UIApplication.shared.canOpenURL(url) else { return }
         UIApplication.shared.open(url)
     }
-
-    @objc
-    private func didPullToRefresh() {
-        loadData()
-    }
 }
+
+// MARK: - CLLocationManagerDelegate
 
 extension MenuVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

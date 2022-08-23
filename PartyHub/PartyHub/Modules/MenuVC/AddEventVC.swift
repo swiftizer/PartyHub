@@ -298,14 +298,14 @@ final class AddNewEventVC: UIViewController {
     private func setupLayout() {
         scrollView.pin.all()
         if didPhotoTakenFlag {
-            print("----------1----------")
+            debugPrint("----------1----------")
             eventImageView.pin
                 .top(24)
                 .height(250 * UIScreen.main.bounds.height/926)
                 .width(250 * UIScreen.main.bounds.height/926)
                 .hCenter()
         } else {
-            print("----------2----------")
+            debugPrint("----------2----------")
             eventImageView.pin
                 .top(24)
                 .height(100)
@@ -406,33 +406,13 @@ private extension AddNewEventVC {
         view.endEditing(true)
     }
 
-    // TODO: - убрать (тест бека)
-    @objc
-    func test(_ sender: UIButton) {
-        debugPrint("--------start download--------")
-        EventManager.shared.downloadEvents { result in
-            switch result {
-            case .success(let events):
-                print(events)
-                FeedbackGenerator.shared.succesFeedbackGenerator()
-            case .failure(let error):
-                let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .cancel)
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true, completion: nil)
-                print("ГГ")
-                print("Error! \(error.localizedDescription)")
-                FeedbackGenerator.shared.errorFeedbackGenerator()
-            }
-        }
-    }
-
     @objc
     func didTapEventImageView(_ sender: UIButton) {
         dismissKeyboard(UITapGestureRecognizer())
         self.imagePicker?.present(from: sender)
     }
 
+    // MARK: - разбить на функции
     @objc
     func didTapAddButton() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()

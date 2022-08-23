@@ -9,7 +9,6 @@ import UIKit
 import CoreLocation
 
 // TODO: - отнаследовать от другого класса
-
 final class CreatedEventsVC: UIViewController {
 
     var adapter: MenuTableViewAdapter
@@ -44,11 +43,23 @@ final class CreatedEventsVC: UIViewController {
 
         locationManager.requestAlwaysAuthorization()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("ProfileToggleView.Update.Sirius.PartyHub"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didPullToRefresh), name: NSNotification.Name("ProfileCoordinator.PresentDescrption.Back.Sirius.PartyHub"), object: nil)
-        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("MenuTableViewCell.AdminDeleteEvent.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("TabBarCoordinator.UserIsLogged.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("ProfileToggleView.Update.Sirius.PartyHub"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("ProfileCoordinator.PresentDescrption.Back.Sirius.PartyHub"),
+                                               object: nil)
+
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             group.enter()
@@ -93,9 +104,6 @@ final class CreatedEventsVC: UIViewController {
             case .success(let events):
                 self.events = events
                 self.group.leave()
-
-//                UINotificationFeedbackGenerator().notificationOccurred(.success)
-
             case .failure(let error):
                 let alertController = UIAlertController(title: nil, message: error.rawValue, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .cancel)

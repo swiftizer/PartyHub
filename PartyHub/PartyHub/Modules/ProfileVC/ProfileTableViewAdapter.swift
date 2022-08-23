@@ -24,8 +24,8 @@ final class ProfileTableViewAdapter: NSObject, UITableViewDataSource, UITableVie
 
     init(tableView: UITableView, eventsNumber: Int) {
         self.tableView = tableView
-        super.init()
         self.eventsNumber = eventsNumber
+        super.init()
         setUpTableView()
     }
 
@@ -46,12 +46,11 @@ final class ProfileTableViewAdapter: NSObject, UITableViewDataSource, UITableVie
 
     // MARK: - Private methods
 
-        private func setUpTableView() {
-            tableView.backgroundColor = .systemGray6
-            tableView.separatorStyle = .none
-            tableView.register(MenuTableViewCell.self, forCellReuseIdentifier: Cells.menuCell)
-            tableView.delegate = self
-            tableView.dataSource = self
-        }
-
+    private func setUpTableView() {
+        tableView.backgroundColor = .systemGray6
+        tableView.separatorStyle = .none
+        tableView.register(MenuTableViewCell.self, forCellReuseIdentifier: Cells.menuCell)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
 }

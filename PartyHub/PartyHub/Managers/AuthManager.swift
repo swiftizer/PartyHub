@@ -9,6 +9,7 @@ import FirebaseAuth
 
 protocol AuthManagerDescription {
     func currentUser() -> User?
+    func deleteAccount(completion: @escaping (Result<Void, Error>) -> Void)
     func signIn(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
     func signOut(completion: @escaping (Result<Void, Error>) -> Void)
     func registration(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -21,6 +22,16 @@ final class AuthManager: AuthManagerDescription {
 
     func currentUser() -> User? {
         return Auth.auth().currentUser
+    }
+
+    func deleteAccount(completion: @escaping (Result<Void, Error>) -> Void) {
+        currentUser()?.delete { error in
+            if let error = error {
+                completion(.failure(error))
+          } else {
+              completion(.success(()))
+          }
+        }
     }
 
     func signIn(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {

@@ -10,6 +10,7 @@ import FirebaseAuth
 
 final class TabBarCoordinator: NSObject, Coordinator {
     var result: ((FlowResult<Void>) -> Void)?
+
     private let router: TabBarRouter
 
     init(with items: [TabBarControllerItem]) {
@@ -21,8 +22,7 @@ final class TabBarCoordinator: NSObject, Coordinator {
         }
     }
 
-    func start() {
-    }
+    func start() {}
 
     func toPresent() -> UIViewController {
         return self.router.toPresent()
@@ -58,11 +58,26 @@ extension TabBarCoordinator: UITabBarControllerDelegate {
         _ tabBarController: UITabBarController,
         shouldSelect viewController: UIViewController
     ) -> Bool {
-        guard let item = tabBarController.tabBar.selectedItem else { return false }
+        guard let fromView = tabBarController.selectedViewController?.view,
+              let toView = viewController.view,
+              let item = tabBarController.tabBar.selectedItem
+        else {
+            return false
+        }
+
         switch item.tag {
         case 2:
-            return userIsLogged()
+            if userIsLogged() {
+                if fromView != toView {
+                    UIView.transition(from: fromView, to: toView, duration: 0.3, options: [.transitionCrossDissolve], completion: nil)
+                }
+                return true
+            }
+            return false
         default:
+            if fromView != toView {
+                UIView.transition(from: fromView, to: toView, duration: 0.3, options: [.transitionCrossDissolve], completion: nil)
+            }
             return true
         }
     }

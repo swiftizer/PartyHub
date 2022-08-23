@@ -11,6 +11,11 @@
 		2C06FBAA28B35D6700B7633B /* DocIDsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBA928B35D6700B7633B /* DocIDsModel.swift */; };
 		2C06FBAC28B35DBA00B7633B /* GeoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBAB28B35DBA00B7633B /* GeoDataModel.swift */; };
 		2C06FBAE28B35DE000B7633B /* GeoPointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBAD28B35DE000B7633B /* GeoPointModel.swift */; };
+		2C06FBB028B4ABF000B7633B /* MyMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBAF28B4ABF000B7633B /* MyMapView.swift */; };
+		2C06FBB228B4AC2300B7633B /* MyScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBB128B4AC2300B7633B /* MyScrollView.swift */; };
+		2C06FBB728B4B6DC00B7633B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C06FBB628B4B6DC00B7633B /* GoogleService-Info.plist */; };
+		2C06FBBA28B4CE7200B7633B /* Extension+MapToChooseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBB928B4CE7200B7633B /* Extension+MapToChooseVC.swift */; };
+		2C06FBBE28B4E91300B7633B /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBBD28B4E91300B7633B /* Reachability.swift */; };
 		2C19D2A328B31A8C00F799B7 /* AddNewEventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19D2A228B31A8C00F799B7 /* AddNewEventCoordinator.swift */; };
 		2C30710C28B2145A00BB6C60 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710B28B2145A00BB6C60 /* EventVC.swift */; };
 		2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710D28B2185B00BB6C60 /* LoginView.swift */; };
@@ -56,7 +61,6 @@
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
-		B3DBD9E428B4234F008B0C66 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3DBD9E328B4234F008B0C66 /* GoogleService-Info.plist */; };
 		B3F62C1B28B2D8320081E0FC /* ProfileTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */; };
 		B3F62C1D28B2D83C0081E0FC /* ProfileToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */; };
 		B3F62C1F28B2D8450081E0FC /* FavoriteEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */; };
@@ -69,6 +73,11 @@
 		2C06FBA928B35D6700B7633B /* DocIDsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocIDsModel.swift; sourceTree = "<group>"; };
 		2C06FBAB28B35DBA00B7633B /* GeoDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoDataModel.swift; sourceTree = "<group>"; };
 		2C06FBAD28B35DE000B7633B /* GeoPointModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoPointModel.swift; sourceTree = "<group>"; };
+		2C06FBAF28B4ABF000B7633B /* MyMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMapView.swift; sourceTree = "<group>"; };
+		2C06FBB128B4AC2300B7633B /* MyScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScrollView.swift; sourceTree = "<group>"; };
+		2C06FBB628B4B6DC00B7633B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2C06FBB928B4CE7200B7633B /* Extension+MapToChooseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+MapToChooseVC.swift"; sourceTree = "<group>"; };
+		2C06FBBD28B4E91300B7633B /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		2C19D2A228B31A8C00F799B7 /* AddNewEventCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewEventCoordinator.swift; sourceTree = "<group>"; };
 		2C30710B28B2145A00BB6C60 /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		2C30710D28B2185B00BB6C60 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -116,7 +125,6 @@
 		B330663328A2578900528BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B3DBD9E328B4234F008B0C66 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewAdapter.swift; sourceTree = "<group>"; };
 		B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToggleView.swift; sourceTree = "<group>"; };
 		B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEventsVC.swift; sourceTree = "<group>"; };
@@ -146,6 +154,24 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		2C06FBB328B4B11E00B7633B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2C06FBAF28B4ABF000B7633B /* MyMapView.swift */,
+				2C06FBB128B4AC2300B7633B /* MyScrollView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2C06FBB828B4B87200B7633B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2CCB627328AD5BE6005586AF /* MenuTableViewCell.swift */,
+				2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2C30710928B2144400BB6C60 /* LoginVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				2C30710B28B2145A00BB6C60 /* EventVC.swift */,
+				2C06FBB328B4B11E00B7633B /* Views */,
 			);
 			path = EventVC;
 			sourceTree = "<group>";
@@ -185,6 +212,7 @@
 				2C6E103328AEF4A8006FDE82 /* UIView+AddBlur.swift */,
 				2C30712628B22BE600BB6C60 /* String+EncodeURL+Strip.swift */,
 				2C30712828B22C0500BB6C60 /* CLLocation.swift */,
+				2C06FBB928B4CE7200B7633B /* Extension+MapToChooseVC.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -218,6 +246,7 @@
 				2C6E103A28AFB4D5006FDE82 /* AuthManager.swift */,
 				B3178CDB28B2562E00D72091 /* EventManager.swift */,
 				B3178CDD28B2564200D72091 /* ImageManager.swift */,
+				2C06FBBD28B4E91300B7633B /* Reachability.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -259,6 +288,7 @@
 				2C52F2E228AB8E700007938C /* Extensions */,
 				B330663528A2578900528BCE /* LaunchScreen.storyboard */,
 				B330663328A2578900528BCE /* Assets.xcassets */,
+				2C06FBB628B4B6DC00B7633B /* GoogleService-Info.plist */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -298,12 +328,11 @@
 		2CCB627128AD5BE6005586AF /* MenuVC */ = {
 			isa = PBXGroup;
 			children = (
-				2CCB627328AD5BE6005586AF /* MenuTableViewCell.swift */,
-				2CCB627428AD5BE6005586AF /* AddTableViewCell.swift */,
+				2C06FBB828B4B87200B7633B /* Views */,
+				B3178CE128B2571500D72091 /* AddEventVC.swift */,
 				2CCB627528AD5BE6005586AF /* MenuVC.swift */,
 				2CCB627228AD5BE6005586AF /* MenuTableViewAdapter.swift */,
 				B3178CDF28B256FE00D72091 /* ImagePicker.swift */,
-				B3178CE128B2571500D72091 /* AddEventVC.swift */,
 				B3178CE328B2574E00D72091 /* EventImageView.swift */,
 				B3178CE528B2577700D72091 /* MapToChooseVC.swift */,
 			);
@@ -337,7 +366,6 @@
 		B330662928A2578800528BCE /* PartyHub */ = {
 			isa = PBXGroup;
 			children = (
-				B3DBD9E328B4234F008B0C66 /* GoogleService-Info.plist */,
 				2C06FBA628B35D2B00B7633B /* Models */,
 				2C81638D28AE77EA00D9D564 /* Managers */,
 				2CCA56DD28A42C6500934F99 /* Coordinators */,
@@ -410,8 +438,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */,
-				B3DBD9E428B4234F008B0C66 /* GoogleService-Info.plist in Resources */,
 				2CCA56D428A3935100934F99 /* Localizable.strings in Resources */,
+				2C06FBB728B4B6DC00B7633B /* GoogleService-Info.plist in Resources */,
 				B330663428A2578900528BCE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,6 +476,7 @@
 				2C6E103428AEF4A8006FDE82 /* UIView+AddBlur.swift in Sources */,
 				2C06FBAE28B35DE000B7633B /* GeoPointModel.swift in Sources */,
 				B3F62C1D28B2D83C0081E0FC /* ProfileToggleView.swift in Sources */,
+				2C06FBB228B4AC2300B7633B /* MyScrollView.swift in Sources */,
 				B3178CE628B2577700D72091 /* MapToChooseVC.swift in Sources */,
 				2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */,
 				2C81638F28AE77EA00D9D564 /* FeedbackGenerator.swift in Sources */,
@@ -461,9 +490,11 @@
 				2C52F2DF28AB04D20007938C /* DefaultRouter.swift in Sources */,
 				2C81639A28AE796800D9D564 /* CustomTextField.swift in Sources */,
 				2CCA56F128A588A900934F99 /* MenuCoordinator.swift in Sources */,
+				2C06FBBE28B4E91300B7633B /* Reachability.swift in Sources */,
 				B3178CDE28B2564200D72091 /* ImageManager.swift in Sources */,
 				2C6E103B28AFB4D5006FDE82 /* AuthManager.swift in Sources */,
 				B3178CDC28B2562E00D72091 /* EventManager.swift in Sources */,
+				2C06FBBA28B4CE7200B7633B /* Extension+MapToChooseVC.swift in Sources */,
 				2C30712928B22C0500BB6C60 /* CLLocation.swift in Sources */,
 				2C30712728B22BE600BB6C60 /* String+EncodeURL+Strip.swift in Sources */,
 				2CCB627928AD5BE6005586AF /* MenuVC.swift in Sources */,
@@ -489,6 +520,7 @@
 				2CCA56EA28A4451700934F99 /* TabBarCoordinator.swift in Sources */,
 				2CCA56E828A443EA00934F99 /* CoordinatorProtocol.swift in Sources */,
 				2C30710C28B2145A00BB6C60 /* EventVC.swift in Sources */,
+				2C06FBB028B4ABF000B7633B /* MyMapView.swift in Sources */,
 				B3178CE028B256FE00D72091 /* ImagePicker.swift in Sources */,
 				2C52F2DA28AB047E0007938C /* PresentableProtocol.swift in Sources */,
 				2C6E102828AE8B3A006FDE82 /* String+Validation.swift in Sources */,
@@ -633,7 +665,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
+				DEVELOPMENT_TEAM = 69S65245DU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Требуется доступ к камере";
@@ -652,7 +684,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PoelPospalPoprogal.PartyHub;
+				PRODUCT_BUNDLE_IDENTIFIER = "-23123.choney.qwe";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -667,7 +699,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
+				DEVELOPMENT_TEAM = 69S65245DU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Требуется доступ к камере";
@@ -686,7 +718,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PoelPospalPoprogal.PartyHub;
+				PRODUCT_BUNDLE_IDENTIFIER = "-23123.choney.qwe";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -97,7 +97,7 @@ open class ImagePicker: NSObject {
     }
 }
 
-extension ImagePicker: UIImagePickerControllerDelegate {
+extension ImagePicker: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.pickerController(picker, didSelect: nil)
@@ -110,8 +110,4 @@ extension ImagePicker: UIImagePickerControllerDelegate {
         }
         self.pickerController(picker, didSelect: image)
     }
-}
-
-extension ImagePicker: UINavigationControllerDelegate {
-
 }

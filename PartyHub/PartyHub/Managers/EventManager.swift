@@ -44,7 +44,7 @@ final class EventManager: EventManagerDescription {
 
     func updateParticipantsCount(for event: Event, to value: Int, completion: @escaping (Result<Int, NetworkError>) -> Void) {
         database.collection("events").document(event.docName).updateData(["countOfParticipants": value]) { err in
-            if let err = err {
+            if err != nil {
                 completion(.failure(NetworkError.badAttempt))
             } else {
                 completion(.success(value))
@@ -53,12 +53,12 @@ final class EventManager: EventManagerDescription {
     }
 
     func isEventFollowedByUser(event: Event, completion: @escaping (Result<Bool, NetworkError>) -> Void) {
-        guard let userID = AuthManager.shared.currentUser()?.uid else {
-            completion(.success(false))
+        guard AuthManager.shared.currentUser()?.uid != nil else {
+            completion(.success(false)) // TODO: - тут точно .success(false)?
             return
         }
 
-        downloadEventIDsForUser { [weak self] result in
+        downloadEventIDsForUser { result in
             switch result {
             case .success(let docs):
                 if docs.followed.contains(event.docName) {
@@ -66,7 +66,6 @@ final class EventManager: EventManagerDescription {
                 } else {
                     completion(.success(false))
                 }
-
             case .failure:
                 completion(.failure(NetworkError.badAttempt))
             }
@@ -91,7 +90,7 @@ final class EventManager: EventManagerDescription {
     }
 
     func downloadFollowedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void) {
-        guard let userID = AuthManager.shared.currentUser()?.uid else {
+        guard AuthManager.shared.currentUser()?.uid != nil else {
             completion(.failure(NetworkError.invalidUrl))
             return
         }
@@ -135,7 +134,7 @@ final class EventManager: EventManagerDescription {
     }
 
     func downloadCreatedEvents(completion: @escaping (Result<[Event], NetworkError>) -> Void) {
-        guard let userID = AuthManager.shared.currentUser()?.uid else {
+        guard AuthManager.shared.currentUser()?.uid != nil else {
             completion(.failure(NetworkError.invalidUrl))
             return
         }
@@ -179,7 +178,6 @@ final class EventManager: EventManagerDescription {
     }
 
     func goToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
-
         guard let userID = AuthManager.shared.currentUser()?.uid else {
             completion(.failure(NetworkError.invalidUrl))
             return
@@ -201,7 +199,6 @@ final class EventManager: EventManagerDescription {
     }
 
     func cancelGoToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
-
         guard let userID = AuthManager.shared.currentUser()?.uid else {
             completion(.failure(NetworkError.invalidUrl))
             return
@@ -301,7 +298,6 @@ final class EventManager: EventManagerDescription {
     }
 
     func deleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
-
         guard let userID = AuthManager.shared.currentUser()?.uid else {
             completion(.failure(NetworkError.invalidUrl))
             return
@@ -414,9 +410,8 @@ private extension EventManager {
     }
 
     func getDocIDs(from data: [String: Any]) -> DocIDs? {
-        guard
-            let created = data[Keys2.created.rawValue] as? [String],
-            let followed = data[Keys2.followed.rawValue] as? [String]
+        guard let created = data[Keys2.created.rawValue] as? [String],
+              let followed = data[Keys2.followed.rawValue] as? [String]
         else {
             return nil
         }

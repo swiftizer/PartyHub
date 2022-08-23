@@ -9,36 +9,36 @@ import Foundation
 
 struct GeoData: Codable {
     let response: Response
+}
 
-    struct Response: Codable {
-        let geoObjectCollection: GeoObjectCollection
+struct Response: Codable {
+    let geoObjectCollection: GeoObjectCollection
 
-        enum CodingKeys: String, CodingKey {
-            case geoObjectCollection = "GeoObjectCollection"
-        }
+    enum CodingKeys: String, CodingKey {
+        case geoObjectCollection = "GeoObjectCollection"
     }
+}
 
-    struct GeoObjectCollection: Codable {
-        let featureMember: [FeatureMember]
+struct GeoObjectCollection: Codable {
+    let featureMember: [FeatureMember]
+}
+
+struct FeatureMember: Codable {
+    let geoObject: GeoObject
+
+    enum CodingKeys: String, CodingKey {
+        case geoObject = "GeoObject"
     }
+}
 
-    struct FeatureMember: Codable {
-        let geoObject: GeoObject
+struct GeoObject: Codable {
+    let point: Point
 
-        enum CodingKeys: String, CodingKey {
-            case geoObject = "GeoObject"
-        }
+    enum CodingKeys: String, CodingKey {
+        case point = "Point"
     }
+}
 
-    struct GeoObject: Codable {
-        let point: Point
-
-        enum CodingKeys: String, CodingKey {
-            case point = "Point"
-        }
-    }
-
-    struct Point: Codable {
-        let pos: String
-    }
+struct Point: Codable {
+    let pos: String
 }

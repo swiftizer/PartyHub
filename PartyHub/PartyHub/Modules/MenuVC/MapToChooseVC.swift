@@ -239,6 +239,7 @@ final class MapToChooseVC: UIViewController {
 }
 
 // MARK: - Actions
+
 private extension MapToChooseVC {
     @objc
     func clickedCurrentLocationButton() {
@@ -296,6 +297,7 @@ private extension MapToChooseVC {
 }
 
 // MARK: - UISearchResultsUpdating, UISearchBarDelegate
+
 extension MapToChooseVC: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         return
@@ -343,7 +345,7 @@ extension MapToChooseVC: UISearchResultsUpdating, UISearchBarDelegate {
                     let okAction = UIAlertAction(title: "OK", style: .cancel)
                     alertController.addAction(okAction)
                     self?.present(alertController, animated: true, completion: nil)
-                    print("ГГ\nError! \(error.localizedDescription)")
+                    debugPrint("ГГ\nError! \(error.localizedDescription)")
                 }
             }
         }
@@ -351,6 +353,7 @@ extension MapToChooseVC: UISearchResultsUpdating, UISearchBarDelegate {
 }
 
 // MARK: - UISearchControllerDelegate
+
 extension MapToChooseVC: UISearchControllerDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         view.addGestureRecognizer(tapGestureReconizer)
@@ -362,6 +365,7 @@ extension MapToChooseVC: UISearchControllerDelegate {
 }
 
 // MARK: - YMKUserLocationObjectListener
+
 extension MapToChooseVC: YMKUserLocationObjectListener {
     func onObjectAdded(with view: YMKUserLocationView) {
         let pinPlacemark = view.pin.useCompositeIcon()
@@ -386,6 +390,8 @@ extension MapToChooseVC: YMKUserLocationObjectListener {
 
     func onObjectUpdated(with view: YMKUserLocationView, event: YMKObjectEvent) {}
 }
+
+// MARK: - YMKMapCameraListener
 
 extension MapToChooseVC: YMKMapCameraListener {
     func onCameraPositionChanged(with map: YMKMap, cameraPosition: YMKCameraPosition, cameraUpdateReason: YMKCameraUpdateReason, finished: Bool) {
@@ -422,6 +428,7 @@ extension MapToChooseVC: YMKMapCameraListener {
 }
 
 // MARK: - CLLocationManagerDelegate
+
 extension MapToChooseVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last!

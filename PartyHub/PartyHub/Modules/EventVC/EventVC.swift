@@ -10,43 +10,21 @@ import PinLayout
 import CoreLocation
 import YandexMapsMobile
 
-final class MyMapView: YMKMapView {
-    weak var rootVC: EventVC?
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if let res = super.hitTest(point, with: event) {
-            print(#function, #line)
-            rootVC?.scrollView.isScrollEnabled = false
-            rootVC?.checkSum -= 1
-            return res
-        }
-        return nil
-    }
-}
-
-final class MyScrollView: UIScrollView {
-    weak var rootVC: EventVC?
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if let res = super.hitTest(point, with: event) {
-            print(#function, #line)
-            if rootVC?.checkSum ?? 1 == 1 {
-                rootVC?.scrollView.isScrollEnabled = true
-            } else {
-                rootVC?.checkSum = 1
-            }
-            return res
-        }
-        return nil
-    }
-}
-
 final class EventVC: UIViewController {
-
     enum Navigation {
         case back
         case go
     }
 
     var navigation: ((Navigation) -> Void)?
+    var currentLocation: CLLocation?
+    var checkSum = 1
+
+    let scrollView: MyScrollView = {
+        let scrollView = MyScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
 
     // MARK: - Private properties
 
@@ -65,22 +43,12 @@ final class EventVC: UIViewController {
     private let participantsLabel = UILabel()
     private var flagStartDragMap = false
 
-    var resPoint = GeoPoint(name: "place", latitude: nil, longtitude: nil)
-    var currentLocation: CLLocation?
-    var checkSum = 1
     private var userLocationLayer: YMKUserLocationLayer!
     private var flagLocation = false
     private var locationManager = CLLocationManager()
     private let mapView = MyMapView()
     private let currentLocationButton = CurLocationButton()
     private let currentTagButton = UIButton()
-    private var scrollViewContentSize = CGSize(width: 1, height: 1)
-
-    let scrollView: MyScrollView = {
-        let scrollView = MyScrollView()
-        scrollView.showsVerticalScrollIndicator = false
-        return scrollView
-    }()
 
     private let eventNameLabel: UILabel = {
         let label = UILabel()
@@ -102,7 +70,7 @@ final class EventVC: UIViewController {
 
     private lazy var goForEventButton: UIButton = {
         let button = UIButton(type: .system)
-        EventManager.shared.isEventFollowedByUser(event: event) { [weak self] res in
+        EventManager.shared.isEventFollowedByUser(event: event) { [weak self] res in // TODO : - вынести отсюда
             switch res {
             case .success(let variant):
                 if variant {
@@ -115,8 +83,6 @@ final class EventVC: UIViewController {
                 button.repaintButton(to: .go)
             }
         }
-//        button.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
-//        button.setTitle("Иду!", for: .normal)
         button.layer.cornerRadius = 15
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.addTarget(self, action: #selector(didTapGoButton), for: .touchUpInside)
@@ -154,7 +120,7 @@ final class EventVC: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        setupUI()
+
         setUpLayout()
     }
 
@@ -162,68 +128,7 @@ final class EventVC: UIViewController {
 
     @objc
     private func didTapGoButton() {
-        let group = DispatchGroup()
-        goForEventButton.isUserInteractionEnabled = false
-
-        group.enter()
-        if self.goForEventButton.titleLabel?.text == "Иду!" {
-            EventManager.shared.goToEvent(event: event) { [weak self] res in
-                switch res {
-                case.success:
-                    self?.goForEventButton.repaintButton(to: .cancel)
-                    group.leave()
-                case .failure(let error):
-                    FeedbackGenerator.shared.errorFeedbackGenerator()
-                    self?.goForEventButton.isUserInteractionEnabled = true
-                }
-            }
-
-            group.enter()
-            EventManager.shared.updateParticipantsCount(for: event, to: event.countOfParticipants + 1) { [weak self] res in
-
-                switch res {
-                case.success:
-                    self?.event.countOfParticipants += 1
-                    group.leave()
-                case .failure(let error):
-                    FeedbackGenerator.shared.errorFeedbackGenerator()
-                    self?.goForEventButton.isUserInteractionEnabled = true
-                }
-            }
-        } else {
-            EventManager.shared.cancelGoToEvent(event: event) { [weak self] res in
-                switch res {
-                case.success:
-                    self?.goForEventButton.repaintButton(to: .go)
-                    group.leave()
-                case .failure(let error):
-                    FeedbackGenerator.shared.errorFeedbackGenerator()
-                    self?.goForEventButton.isUserInteractionEnabled = true
-                }
-            }
-
-            group.enter()
-            EventManager.shared.updateParticipantsCount(for: event, to: event.countOfParticipants - 1) { [weak self] res in
-
-                switch res {
-                case.success:
-                    self?.event.countOfParticipants -= 1
-                    group.leave()
-                case .failure(let error):
-                    FeedbackGenerator.shared.errorFeedbackGenerator()
-                    self?.goForEventButton.isUserInteractionEnabled = true
-                }
-            }
-        }
-
-        group.notify(queue: DispatchQueue.main) {
-            self.setupIconWithLabel(label: self.participantsLabel,
-                                    iconName: self.participantsImageName,
-                                    text: "\(self.event.countOfParticipants)")
-            FeedbackGenerator.shared.succesFeedbackGenerator()
-            self.goForEventButton.isUserInteractionEnabled = true
-        }
-
+        checkTitleButton()
         navigation?(.go)
     }
 
@@ -236,12 +141,8 @@ final class EventVC: UIViewController {
 
     @objc
     private func contactsLabelClicked() {
-        debugPrint(#function, event.contacts.trimmingCharacters(in: .whitespacesAndNewlines))
-
         guard let url = URL(string: event.contacts.trimmingCharacters(in: .whitespacesAndNewlines)) else { return }
-
         let application = UIApplication.shared
-
         application.open(url)
     }
 
@@ -292,6 +193,8 @@ final class EventVC: UIViewController {
         )
     }
 
+    // MARK: - Methods
+
     func getUserLocation() {
         locationManager.requestAlwaysAuthorization()
 
@@ -320,6 +223,70 @@ final class EventVC: UIViewController {
     }
 
     // MARK: - Private methods
+
+    private func checkTitleButton() {
+        let group = DispatchGroup()
+        goForEventButton.isUserInteractionEnabled = false
+
+        group.enter()
+        if self.goForEventButton.titleLabel?.text == "Иду!" {
+            EventManager.shared.goToEvent(event: event) { [weak self] res in
+                switch res {
+                case.success:
+                    self?.goForEventButton.repaintButton(to: .cancel)
+                    group.leave()
+                case .failure:
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self?.goForEventButton.isUserInteractionEnabled = true
+                }
+            }
+
+            group.enter()
+            EventManager.shared.updateParticipantsCount(for: event, to: event.countOfParticipants + 1) { [weak self] res in
+                switch res {
+                case.success:
+                    self?.event.countOfParticipants += 1
+                    group.leave()
+                case .failure:
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self?.goForEventButton.isUserInteractionEnabled = true
+                }
+            }
+        } else {
+            EventManager.shared.cancelGoToEvent(event: event) { [weak self] res in
+                switch res {
+                case.success:
+                    self?.goForEventButton.repaintButton(to: .go)
+                    group.leave()
+                case .failure:
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self?.goForEventButton.isUserInteractionEnabled = true
+                }
+            }
+
+            group.enter()
+            EventManager.shared.updateParticipantsCount(for: event, to: event.countOfParticipants - 1) { [weak self] res in
+                switch res {
+                case.success:
+                    self?.event.countOfParticipants -= 1
+                    group.leave()
+                case .failure:
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self?.goForEventButton.isUserInteractionEnabled = true
+                }
+            }
+        }
+
+        group.notify(queue: DispatchQueue.main) {
+            self.setupIconWithLabel(
+                label: self.participantsLabel,
+                iconName: self.participantsImageName,
+                text: "\(self.event.countOfParticipants)"
+            )
+            FeedbackGenerator.shared.succesFeedbackGenerator()
+            self.goForEventButton.isUserInteractionEnabled = true
+        }
+    }
 
     private func setupUI() {
         let eventPlace = String(describing: event.place.split(separator: "|")[0])
@@ -501,12 +468,16 @@ final class EventVC: UIViewController {
             .width(view.frame.width * Constants.labelWidthMultiplier)
             .height(Constants.buttonHeight)
 
-        scrollViewContentSize = CGSize(width: UIScreen.main.bounds.width,
-                                      height: UIScreen.main.bounds.height + descriptionLabel.frame.height + eventNameLabel.frame.height + mapView.frame.height - 100)
+        let scrollViewContentSize = CGSize(
+            width: UIScreen.main.bounds.width,
+            height: UIScreen.main.bounds.height + descriptionLabel.height + eventNameLabel.height + mapView.height - 100
+        )
 
         scrollView.contentSize = scrollViewContentSize
     }
 }
+
+// MARK: - YMKUserLocationObjectListener
 
 extension EventVC: YMKUserLocationObjectListener {
     func onObjectAdded(with view: YMKUserLocationView) {
@@ -545,7 +516,6 @@ extension EventVC: CLLocationManagerDelegate {
     }
 }
 
-
 // TODO: - вынести отсюда
 
 enum GoButtonState {
@@ -557,11 +527,11 @@ extension UIButton {
     func repaintButton(to state: GoButtonState) {
         switch state {
         case .go:
-            self.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
-            self.setTitle("Иду!", for: .normal)
+            backgroundColor = .systemIndigo.withAlphaComponent(0.8)
+            setTitle("Иду!", for: .normal)
         case .cancel:
-            self.backgroundColor = .red.withAlphaComponent(0.6)
-            self.setTitle("Отказаться", for: .normal)
+            backgroundColor = .red.withAlphaComponent(0.6)
+            setTitle("Отказаться", for: .normal)
         }
     }
 }

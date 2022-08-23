@@ -16,10 +16,9 @@ protocol ImageManagerDescription {
 }
 
 final class ImageManager: ImageManagerDescription {
-    static let shared: ImageManagerDescription = ImageManager()
+    static let shared = ImageManager()
 
     private let storageRef = Storage.storage().reference()
-
     private let cache = ImageCache.default
 
     private init() {}
@@ -63,7 +62,7 @@ final class ImageManager: ImageManagerDescription {
 
     func deleteImage(imageName: String, completion: @escaping (Result<String, NetworkError>) -> Void) {
         storageRef.child(imageName).delete { error in
-            if let error = error {
+            if error != nil {
                 completion(.failure(NetworkError.badAttempt))
             } else {
                 self.cache.removeImage(forKey: imageName)
