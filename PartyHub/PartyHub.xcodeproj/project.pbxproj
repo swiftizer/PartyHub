@@ -61,6 +61,7 @@
 		B330662B28A2578800528BCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330662A28A2578800528BCE /* AppDelegate.swift */; };
 		B330663428A2578900528BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B330663328A2578900528BCE /* Assets.xcassets */; };
 		B330663728A2578900528BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B330663528A2578900528BCE /* LaunchScreen.storyboard */; };
+		B34BA1BE28B5057900F8A6E8 /* LoadindIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34BA1BD28B5057900F8A6E8 /* LoadindIndicatorView.swift */; };
 		B3F62C1B28B2D8320081E0FC /* ProfileTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */; };
 		B3F62C1D28B2D83C0081E0FC /* ProfileToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */; };
 		B3F62C1F28B2D8450081E0FC /* FavoriteEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */; };
@@ -125,6 +126,7 @@
 		B330663328A2578900528BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B330663628A2578900528BCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B330663828A2578900528BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B34BA1BD28B5057900F8A6E8 /* LoadindIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadindIndicatorView.swift; sourceTree = "<group>"; };
 		B3F62C1A28B2D8320081E0FC /* ProfileTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewAdapter.swift; sourceTree = "<group>"; };
 		B3F62C1C28B2D83C0081E0FC /* ProfileToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToggleView.swift; sourceTree = "<group>"; };
 		B3F62C1E28B2D8450081E0FC /* FavoriteEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEventsVC.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				2C81639B28AE7EC900D9D564 /* RegistrationVC */,
 				2C6E103728AFA861006FDE82 /* ProfileVC */,
 				2C6E103C28AFFEA7006FDE82 /* MapVC */,
+				B34BA1BD28B5057900F8A6E8 /* LoadindIndicatorView.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 				2CCB627D28AD5CA4005586AF /* MapVC.swift in Sources */,
 				2CCB627728AD5BE6005586AF /* MenuTableViewCell.swift in Sources */,
 				2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */,
+				B34BA1BE28B5057900F8A6E8 /* LoadindIndicatorView.swift in Sources */,
 				2C06FBAA28B35D6700B7633B /* DocIDsModel.swift in Sources */,
 				B330662B28A2578800528BCE /* AppDelegate.swift in Sources */,
 				B3F62C2128B2D84E0081E0FC /* CreatedEventsVC.swift in Sources */,
@@ -665,7 +669,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 69S65245DU;
+				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Требуется доступ к камере";
@@ -699,7 +703,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 69S65245DU;
+				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Требуется доступ к камере";

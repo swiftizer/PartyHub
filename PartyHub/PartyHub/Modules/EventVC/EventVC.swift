@@ -331,8 +331,8 @@ final class EventVC: UIViewController {
     private func setupImage() {
         ImageManager.shared.downloadImage(with: event.imageName) { [weak self] result in
             switch result {
-            case .success(let image):
-                self?.eventImageView.image = image
+            case .success(let imageRes):
+                self?.eventImageView.image = imageRes.image
             case .failure(let error):
                 debugPrint(error.rawValue)
             }

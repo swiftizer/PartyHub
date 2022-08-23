@@ -25,18 +25,11 @@ final class AddNewEventVC: UIViewController {
     private let separatorLabel = UILabel()
     private let eventImageView = EventImageView()
     private var didPhotoTakenFlag = false
-    private let activityIndicatorView = UIView()
-    private let successView = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
     private let rubleView = UIImageView()
     private var currentEditingDateTextField = UITextField()
     private var imagePicker: ImagePicker?
     private let datePicker = UIDatePicker()
-    private let activityIndicator = NVActivityIndicatorView(
-        frame: CGRect(x: 0, y: 0, width: 67, height: 67),
-        type: .ballClipRotateMultiple,
-        color: UIColor.label,
-        padding: 0
-    )
+    private let activityIndicator = LoadindIndicatorView()
 
     private let eventTitleTextField: UITextField = {
         let textField = UITextField()
@@ -206,16 +199,6 @@ final class AddNewEventVC: UIViewController {
         rubleView.image = UIImage(systemName: "rublesign.square")
         rubleView.tintColor = .label
 
-        activityIndicatorView.backgroundColor = .systemGray4
-        activityIndicatorView.layer.masksToBounds = true
-        activityIndicatorView.layer.cornerRadius = 15
-        activityIndicatorView.alpha = 0
-        activityIndicator.alpha = 0
-        activityIndicator.color = .label
-
-        successView.tintColor = .label
-        successView.alpha = 0
-
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide),
@@ -245,10 +228,9 @@ final class AddNewEventVC: UIViewController {
         scrollView.addSubview(endDateTextField)
         scrollView.addSubview(addButton)
         scrollView.addSubview(separatorLabel)
-        view.addSubview(activityIndicatorView)
+        view.addSubview(activityIndicator)
+        activityIndicator.pinToRootVC(rootVC: self)
         costTextField.addSubview(rubleView)
-        activityIndicatorView.addSubview(activityIndicator)
-        activityIndicatorView.addSubview(successView)
     }
 
     func updateAdress() {
@@ -373,18 +355,6 @@ final class AddNewEventVC: UIViewController {
             .marginTop(24)
             .width(of: placeButton)
             .height(50)
-
-        activityIndicatorView.pin
-            .center()
-            .width(100)
-            .height(100)
-
-        activityIndicator.pin.center()
-
-        successView.pin
-            .center()
-            .width(70)
-            .height(70)
     }
 }
 
@@ -416,17 +386,11 @@ private extension AddNewEventVC {
     @objc
     func didTapAddButton() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        view.isUserInteractionEnabled = false
         if costTextField.text?.isEmpty ?? false {
             costTextField.text = "0"
         }
 
-        UIView.animate(withDuration: 0.3, delay: 0) {
-            self.activityIndicatorView.alpha = 1
-            self.activityIndicator.alpha = 1
-        }
-        activityIndicatorView.isHidden = false
-        activityIndicator.startAnimating()
+        activityIndicator.start()
 
         guard let title = eventTitleTextField.text,
               eventTitleTextField.text != "",
@@ -449,9 +413,7 @@ private extension AddNewEventVC {
             }
 
             FeedbackGenerator.shared.errorFeedbackGenerator()
-            self.activityIndicatorView.isHidden = true
-            self.activityIndicator.stopAnimating()
-            view.isUserInteractionEnabled = true
+            activityIndicator.stopFailure()
 
             return
         }
@@ -464,18 +426,7 @@ private extension AddNewEventVC {
         EventManager.shared.uploadEvent(event: event) { result in
             switch result {
             case .success:
-                UIView.animate(withDuration: 0.3, delay: 0) {
-                    self.activityIndicator.alpha = 0
-                }
-                UIView.animate(withDuration: 0.2, delay: 0.3) {
-                    self.activityIndicator.stopAnimating()
-                    self.successView.alpha = 1
-                }
-                UIView.animate(withDuration: 0.3, delay: 0.6) {
-                    self.successView.alpha = 0
-                    self.activityIndicatorView.alpha = 0
-                }
-                self.view.isUserInteractionEnabled = true
+                self.activityIndicator.stopSuccess()
                 FeedbackGenerator.shared.succesFeedbackGenerator()
                 NotificationCenter.default.post(name: NSNotification.Name("EventManager.UploadEvent.Sirius.PartyHub"), object: nil)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -488,9 +439,8 @@ private extension AddNewEventVC {
                 self.present(alertController, animated: true, completion: nil)
                 print("ГГ")
                 print("Error! \(error.localizedDescription)")
-                self.activityIndicatorView.isHidden = true
-                self.activityIndicator.stopAnimating()
-                self.view.isUserInteractionEnabled = true
+                self.activityIndicator.stopFailure()
+                FeedbackGenerator.shared.errorFeedbackGenerator()
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
             }
         }
@@ -498,6 +448,7 @@ private extension AddNewEventVC {
 
     @objc
     func choosePlace() {
+        dismissKeyboard(UITapGestureRecognizer())
         navigation?(.choosePlace)
     }
 
