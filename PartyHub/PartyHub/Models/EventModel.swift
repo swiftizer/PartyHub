@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Event {
+struct Event: Equatable {
     var image: UIImage?
     let imageName: String
     let title: String

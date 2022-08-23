@@ -477,7 +477,6 @@ private extension AddNewEventVC {
                 }
                 self.view.isUserInteractionEnabled = true
                 FeedbackGenerator.shared.succesFeedbackGenerator()
-                NotificationCenter.default.post(name: NSNotification.Name("EventManager.UploadEvent.Sirius.PartyHub"), object: nil)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.navigation?(.registration)
                 }

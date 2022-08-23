@@ -28,7 +28,6 @@ final class MapVC: UIViewController {
     private var locationManager = CLLocationManager()
     private var tapGestureReconizer = UITapGestureRecognizer()
     private var events: [Event] = []
-
     private let mapView = YMKMapView()
     private let currentLocationButton = CurLocationButton()
 
@@ -45,13 +44,22 @@ final class MapVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupEvents()
         setup()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupLayout()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupEvents()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
     }
 
     // MARK: - Methods
@@ -108,17 +116,11 @@ final class MapVC: UIViewController {
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
 
-        // TODO: - вынести в константы
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(updatePlacemarks),
-            name: NSNotification.Name("EventManager.UploadEvent.Sirius.PartyHub"),
-            object: nil
-        )
         getUserLocation()
     }
 
     private func setEvents() {
+        checkPoints()
         for event in events {
             let latitude = Double(event.place.split(separator: "|")[1]) ?? 0
             let longitude = Double(event.place.split(separator: "|")[2]) ?? 0
@@ -139,6 +141,18 @@ final class MapVC: UIViewController {
                 ), renderingMode: .alwaysOriginal) ?? UIImage()
             )
             dictionaryPoints.updateValue(event, forKey: placemark)
+        }
+    }
+
+    private func checkPoints() {
+        var index = 0
+        for (key, _) in dictionaryPoints {
+            guard events.count != index else { break }
+            if dictionaryPoints.values.contains(where: { $0 != events[index] }) {
+                mapView.mapWindow.map.mapObjects.remove(with: key as YMKMapObject)
+                dictionaryPoints[key] = nil
+            }
+            index += 1
         }
     }
 

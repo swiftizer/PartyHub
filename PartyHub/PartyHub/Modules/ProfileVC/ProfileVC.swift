@@ -10,6 +10,7 @@ import FirebaseAuth
 import PinLayout
 
 class ProfileVC: UIViewController {
+
     // MARK: - Internal properties
 
     enum Navigation {
