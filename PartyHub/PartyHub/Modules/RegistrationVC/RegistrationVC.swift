@@ -11,7 +11,6 @@ final class RegistrationVC: UIViewController {
     enum Navigation {
         case back
         case enter
-        case alert
     }
 
     var navigation: ((Navigation) -> Void)?
@@ -59,8 +58,8 @@ final class RegistrationVC: UIViewController {
 // MARK: - RegistrationViewDelegate
 
 extension RegistrationVC: RegistrationViewDelegate {
-    func showAlert() {
-        self.navigation?(.alert)
+    func failureRegistration(with error: Error) {
+        presentAlert(with: error)
     }
 
     func registerationButtonTapped() {

@@ -52,8 +52,6 @@ final class AuthRegCoordinator: Coordinator {
                         fatalError()
                     }
                 }
-            case .alert:
-                break
             }
         }
         router.present(nav, animated: true, isModalInPresentation: false, completion: nil)
