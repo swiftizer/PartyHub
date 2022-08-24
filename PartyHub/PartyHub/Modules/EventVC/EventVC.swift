@@ -42,6 +42,7 @@ final class EventVC: UIViewController {
     private let contactsLabel = UILabel()
     private let participantsLabel = UILabel()
     private var flagStartDragMap = false
+    private let activityIndicator = LoadindIndicatorView()
 
     private var userLocationLayer: YMKUserLocationLayer!
     private var flagLocation = false
@@ -229,6 +230,7 @@ final class EventVC: UIViewController {
         goForEventButton.isUserInteractionEnabled = false
 
         group.enter()
+        activityIndicator.start()
         if self.goForEventButton.titleLabel?.text == "Иду!" {
             EventManager.shared.goToEvent(event: event) { [weak self] res in
                 switch res {
@@ -236,6 +238,7 @@ final class EventVC: UIViewController {
                     self?.goForEventButton.repaintButton(to: .cancel)
                     group.leave()
                 case .failure:
+                    self?.activityIndicator.stopFailure(duration: 0.2, delay: 0.2)
                     FeedbackGenerator.shared.errorFeedbackGenerator()
                     self?.goForEventButton.isUserInteractionEnabled = true
                 }
@@ -248,6 +251,7 @@ final class EventVC: UIViewController {
                     self?.event.countOfParticipants += 1
                     group.leave()
                 case .failure:
+                    self?.activityIndicator.stopFailure(duration: 0.2, delay: 0.2)
                     FeedbackGenerator.shared.errorFeedbackGenerator()
                     self?.goForEventButton.isUserInteractionEnabled = true
                 }
@@ -259,6 +263,7 @@ final class EventVC: UIViewController {
                     self?.goForEventButton.repaintButton(to: .go)
                     group.leave()
                 case .failure:
+                    self?.activityIndicator.stopFailure(duration: 0.2, delay: 0.2)
                     FeedbackGenerator.shared.errorFeedbackGenerator()
                     self?.goForEventButton.isUserInteractionEnabled = true
                 }
@@ -271,6 +276,7 @@ final class EventVC: UIViewController {
                     self?.event.countOfParticipants -= 1
                     group.leave()
                 case .failure:
+                    self?.activityIndicator.stopFailure(duration: 0.2, delay: 0.2)
                     FeedbackGenerator.shared.errorFeedbackGenerator()
                     self?.goForEventButton.isUserInteractionEnabled = true
                 }
@@ -283,6 +289,7 @@ final class EventVC: UIViewController {
                 iconName: self.participantsImageName,
                 text: "\(self.event.countOfParticipants)"
             )
+            self.activityIndicator.stopSuccess(duration: 0.2, delay: 0.2)
             FeedbackGenerator.shared.succesFeedbackGenerator()
             self.goForEventButton.isUserInteractionEnabled = true
         }
@@ -470,6 +477,8 @@ final class EventVC: UIViewController {
             .hCenter()
             .width(view.frame.width * Constants.labelWidthMultiplier)
             .height(Constants.buttonHeight)
+
+        activityIndicator.pinToRootButton(rootButton: goForEventButton, frame: goForEventButton.frame)
 
         let scrollViewContentSize = CGSize(
             width: UIScreen.main.bounds.width,

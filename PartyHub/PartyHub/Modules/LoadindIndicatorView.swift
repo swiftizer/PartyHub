@@ -14,7 +14,7 @@ final class LoadindIndicatorView: UIView {
     // MARK: - Private Properties
 
     private weak var rootVC: UIViewController?
-    private var dismissDelay = 0.8
+    private var dismissDelay = 0.2
     private let activityIndicator = NVActivityIndicatorView(
         frame: CGRect(x: 0, y: 0, width: 67, height: 67),
         type: .ballClipRotateMultiple,
@@ -65,6 +65,27 @@ final class LoadindIndicatorView: UIView {
         ])
     }
 
+    func pinToRootButton(rootButton: UIButton, frame: CGRect? = nil) {
+        rootButton.addSubview(self)
+        self.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            self.centerXAnchor.constraint(equalTo: rootButton.centerXAnchor),
+            self.centerYAnchor.constraint(equalTo: rootButton.centerYAnchor),
+            self.widthAnchor.constraint(equalToConstant: frame?.width ?? 100),
+            self.heightAnchor.constraint(equalToConstant: frame?.height ?? 100),
+
+            activityIndicator.widthAnchor.constraint(equalToConstant: min(frame?.width ?? 100, frame?.height ?? 100) * 0.7),
+            activityIndicator.heightAnchor.constraint(equalToConstant: min(frame?.width ?? 100, frame?.height ?? 100) * 0.7),
+
+            successView.widthAnchor.constraint(equalToConstant: min(frame?.width ?? 100, frame?.height ?? 100) * 0.8),
+            successView.heightAnchor.constraint(equalToConstant: min(frame?.width ?? 100, frame?.height ?? 100) * 0.8),
+
+            failureView.widthAnchor.constraint(equalToConstant: min(frame?.width ?? 100, frame?.height ?? 100) * 0.8),
+            failureView.heightAnchor.constraint(equalToConstant: min(frame?.width ?? 100, frame?.height ?? 100) * 0.8)
+        ])
+    }
+
     func start() {
         isHidden = false
 
@@ -79,39 +100,43 @@ final class LoadindIndicatorView: UIView {
         }
     }
 
-    func stopSuccess() {
+    func stopSuccess(duration: Double = 0.3, delay: Double = 0.5) {
         self.successView.alpha = 1
-        UIView.animate(withDuration: 0.3, delay: 0.5) {
+        UIView.animate(withDuration: duration, delay: delay) {
             self.activityIndicator.stopAnimating()
             self.alpha = 0
             self.successView.alpha = 0
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + dismissDelay) {
-            self.isHidden = true
-            if self.rootVC != nil {
-                self.rootVC?.view.isUserInteractionEnabled = true
+        } completion: { res in
+            if res{
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                    self.isHidden = true
+                    if self.rootVC != nil {
+                        self.rootVC?.view.isUserInteractionEnabled = true
+                    }
+                }
             }
         }
     }
 
-    func stopFailure() {
+    func stopFailure(duration: Double = 0.3, delay: Double = 0.5) {
         self.failureView.alpha = 1
-        UIView.animate(withDuration: 0.3, delay: 0.5) {
+        UIView.animate(withDuration: duration, delay: delay) {
             self.activityIndicator.stopAnimating()
             self.alpha = 0
             self.failureView.alpha = 0
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + dismissDelay) {
-            self.isHidden = true
-            if self.rootVC != nil {
-                self.rootVC?.view.isUserInteractionEnabled = true
+        } completion: { res in
+            if res{
+                DispatchQueue.main.asyncAfter(deadline: .now() + self.dismissDelay) {
+                    self.isHidden = true
+                    if self.rootVC != nil {
+                        self.rootVC?.view.isUserInteractionEnabled = true
+                    }
+                }
             }
         }
     }
 
-    func instantStop() {
+    func stopInstantly() {
         self.activityIndicator.stopAnimating()
         self.alpha = 0
         self.isHidden = true

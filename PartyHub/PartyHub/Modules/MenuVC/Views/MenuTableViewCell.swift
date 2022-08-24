@@ -159,7 +159,7 @@ extension MenuTableViewCell {
             switch result {
             case .success(let downloadedImageRes):
                 if downloadedImageRes.way == .cashe {
-                    self.activityIndicator.instantStop()
+                    self.activityIndicator.stopInstantly()
                 } else {
                     self.activityIndicator.stopSuccess()
                 }
