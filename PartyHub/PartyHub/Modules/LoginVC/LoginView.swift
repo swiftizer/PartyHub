@@ -12,6 +12,7 @@ import FirebaseAuth
 protocol LoginViewDelegate: AnyObject {
     func loginingButtonTapped()
     func registrationButtonTapped()
+    func failureRegistration(with error: Error)
 }
 
 /// Кастомная view логина
@@ -75,11 +76,12 @@ final class LoginView: UIView {
                 switch result {
                 case .success:
                     self.delegate?.loginingButtonTapped()
-                case .failure:
+                case .failure(let error):
                     FeedbackGenerator.shared.errorFeedbackGenerator()
                     self.loginButton.invalidAnimation()
                     self.emailTextField.repaintBorder()
                     self.passwordTextField.repaintBorder()
+                    self.delegate?.failureRegistration(with: error)
                 }
             }
         }

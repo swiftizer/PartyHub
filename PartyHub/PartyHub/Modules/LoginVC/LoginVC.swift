@@ -60,6 +60,10 @@ final class LoginVC: UIViewController {
 // MARK: - LoginViewDelegate
 
 extension LoginVC: LoginViewDelegate {
+    func failureRegistration(with error: Error) {
+        presentAlert(with: error)
+    }
+
     func loginingButtonTapped() {
         FeedbackGenerator.shared.customFeedbackGeneration(.medium)
         navigation?(.enter)

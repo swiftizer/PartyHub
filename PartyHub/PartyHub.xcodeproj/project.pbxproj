@@ -17,6 +17,7 @@
 		2C06FBBA28B4CE7200B7633B /* Extension+MapToChooseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBB928B4CE7200B7633B /* Extension+MapToChooseVC.swift */; };
 		2C06FBBE28B4E91300B7633B /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBBD28B4E91300B7633B /* Reachability.swift */; };
 		2C06FBC028B563BE00B7633B /* LoadindIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBBF28B563BE00B7633B /* LoadindIndicatorView.swift */; };
+		2C06FBC228B60F1800B7633B /* UIView+PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06FBC128B60F1800B7633B /* UIView+PresentAlert.swift */; };
 		2C19D2A328B31A8C00F799B7 /* AddNewEventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19D2A228B31A8C00F799B7 /* AddNewEventCoordinator.swift */; };
 		2C30710C28B2145A00BB6C60 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710B28B2145A00BB6C60 /* EventVC.swift */; };
 		2C30710F28B2185B00BB6C60 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C30710D28B2185B00BB6C60 /* LoginView.swift */; };
@@ -80,6 +81,7 @@
 		2C06FBB928B4CE7200B7633B /* Extension+MapToChooseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+MapToChooseVC.swift"; sourceTree = "<group>"; };
 		2C06FBBD28B4E91300B7633B /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		2C06FBBF28B563BE00B7633B /* LoadindIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadindIndicatorView.swift; sourceTree = "<group>"; };
+		2C06FBC128B60F1800B7633B /* UIView+PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+PresentAlert.swift"; sourceTree = "<group>"; };
 		2C19D2A228B31A8C00F799B7 /* AddNewEventCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewEventCoordinator.swift; sourceTree = "<group>"; };
 		2C30710B28B2145A00BB6C60 /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		2C30710D28B2185B00BB6C60 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				2C30712628B22BE600BB6C60 /* String+EncodeURL+Strip.swift */,
 				2C30712828B22C0500BB6C60 /* CLLocation.swift */,
 				2C06FBB928B4CE7200B7633B /* Extension+MapToChooseVC.swift */,
+				2C06FBC128B60F1800B7633B /* UIView+PresentAlert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 				2C06FBAE28B35DE000B7633B /* GeoPointModel.swift in Sources */,
 				B3F62C1D28B2D83C0081E0FC /* ProfileToggleView.swift in Sources */,
 				2C06FBB228B4AC2300B7633B /* MyScrollView.swift in Sources */,
+				2C06FBC228B60F1800B7633B /* UIView+PresentAlert.swift in Sources */,
 				B3178CE628B2577700D72091 /* MapToChooseVC.swift in Sources */,
 				2C81639828AE796800D9D564 /* RegistrationView.swift in Sources */,
 				2C81638F28AE77EA00D9D564 /* FeedbackGenerator.swift in Sources */,
@@ -669,7 +673,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
+				DEVELOPMENT_TEAM = 69S65245DU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Требуется доступ к камере";
@@ -688,7 +692,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PoelPospalPoprogal.PartyHub;
+				PRODUCT_BUNDLE_IDENTIFIER = qwe.choney.123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -703,7 +707,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = Q9ZS8V8CB6;
+				DEVELOPMENT_TEAM = 69S65245DU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PartyHub/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Требуется доступ к камере";
@@ -722,7 +726,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PoelPospalPoprogal.PartyHub;
+				PRODUCT_BUNDLE_IDENTIFIER = qwe.choney.123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

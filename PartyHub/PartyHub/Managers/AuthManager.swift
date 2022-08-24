@@ -6,6 +6,7 @@
 //
 
 import FirebaseAuth
+import UIKit
 
 protocol AuthManagerDescription {
     func currentUser() -> User?
@@ -28,6 +29,7 @@ final class AuthManager: AuthManagerDescription {
         currentUser()?.delete { error in
             if let error = error {
                 completion(.failure(error))
+
           } else {
               completion(.success(()))
           }

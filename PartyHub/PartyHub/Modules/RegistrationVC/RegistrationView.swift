@@ -11,6 +11,7 @@ import FirebaseAuth
 
 protocol RegistrationViewDelegate: AnyObject {
     func registerationButtonTapped()
+    func failureRegistration(with error: Error)
 }
 
 /// Кастомная view регистрации
@@ -91,7 +92,7 @@ final class RegistrationView: UIView {
             case .success:
                 self.delegate?.registerationButtonTapped()
             case .failure(let error):
-                debugPrint(error.localizedDescription)
+                self.delegate?.failureRegistration(with: error)
             }
         }
     }

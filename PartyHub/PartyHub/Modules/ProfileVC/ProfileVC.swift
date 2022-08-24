@@ -40,16 +40,6 @@ class ProfileVC: UIViewController {
         return label
     }()
 
-    private lazy var removebutton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Удалить аккаунт", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
-        button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
-        button.tintColor = .red.withAlphaComponent(0.8)
-        return button
-    }()
-
     private let toggleView = ProfileToggleView()
 
     private let scrollView: UIScrollView = {
@@ -82,28 +72,27 @@ class ProfileVC: UIViewController {
     // MARK: - Actions
 
     @objc
-    private func exitButtonTapped() {
-        navigation?(.exit)
-        tabBarController?.selectedIndex = 0
-    }
-
-    @objc
-    private func removeButtonTapped() {
-        presentAlert()
+    private func moreButtonTapped() {
+        presentActionSheet()
     }
 
     // MARK: - Private Methods
 
-    private func presentAlert() {
-        let alert = UIAlertController(title: "Подтверждение", message: "Вы уверены, что хотите удалить аккаунт?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
-        let removeAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+    private func presentActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let removeAction = UIAlertAction(title: "Удалить аккаунт", style: .destructive) { [weak self] _ in
             self?.navigation?(.removeAccount)
         }
-        alert.addAction(cancelAction)
-        alert.addAction(removeAction)
+        let exitAction = UIAlertAction(title: "Выйти", style: .default) { [weak self] _ in
+            self?.navigation?(.exit)
+        }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
 
-        present(alert, animated: true, completion: nil)
+        actionSheet.addAction(exitAction)
+        actionSheet.addAction(removeAction)
+        actionSheet.addAction(cancelAction)
+
+        present(actionSheet, animated: true, completion: nil)
     }
 
     private func setupEmail() {
@@ -112,21 +101,20 @@ class ProfileVC: UIViewController {
     }
 
     private func setupUI() {
-        let exitNavigationItem = UIBarButtonItem(
-            image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
+        let moreNavigationItem = UIBarButtonItem(
+            image: UIImage(systemName: "ellipsis"),
             style: .plain,
             target: self,
-            action: #selector(exitButtonTapped)
+            action: #selector(moreButtonTapped)
         )
 
-        exitNavigationItem.tintColor = .label
-        navigationItem.rightBarButtonItem = exitNavigationItem
+        moreNavigationItem.tintColor = .label
+        navigationItem.rightBarButtonItem = moreNavigationItem
 
         view.backgroundColor = .systemBackground
 
         view.addSubview(iconImageView)
         view.addSubview(emailLabel)
-        view.addSubview(removebutton)
         view.addSubview(scrollView)
         view.addSubview(toggleView)
     }
@@ -147,21 +135,15 @@ class ProfileVC: UIViewController {
             .width(view.frame.width*0.8)
             .height(24)
 
-        removebutton.pin
-            .top(emailLabel.frame.maxY + basicPadding)
-            .right(12)
-            .left(12)
-            .height(24)
-
         scrollView.pin
-            .top(removebutton.frame.maxY + basicPadding*2)
+            .top(emailLabel.frame.maxY + basicPadding*2)
             .right()
             .left()
             .bottom()
         scrollView.contentSize = CGSize(width: view.width * 2, height: scrollView.height)
 
         toggleView.pin
-            .top(removebutton.frame.maxY + basicPadding)
+            .top(emailLabel.frame.maxY + basicPadding)
             .width(view.frame.width)
             .height(55)
     }
@@ -210,10 +192,14 @@ extension ProfileVC: UIScrollViewDelegate {
 
 extension ProfileVC: ProfileToggleViewDelegate {
     func profileToggleViewDidTapFavorites(_ toggleView: ProfileToggleView) {
-        scrollView.setContentOffset(.zero, animated: true)
+        UIView.animate(withDuration: 0.3) {
+            self.scrollView.contentOffset = .zero
+        }
     }
 
     func profileToggleViewDidTapCreated(_ toggleView: ProfileToggleView) {
-        scrollView.setContentOffset(CGPoint(x: view.width, y: 0), animated: true)
+        UIView.animate(withDuration: 0.3) {
+            self.scrollView.contentOffset = CGPoint(x: self.view.width, y: 0)
+        }
     }
 }
