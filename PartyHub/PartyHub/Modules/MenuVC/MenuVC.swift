@@ -16,6 +16,7 @@ final class MenuVC: UIViewController {
 
     private let menuTableView = UITableView()
     private let group: DispatchGroup = DispatchGroup()
+    private let searchController = UISearchController()
     private var events = [Event]()
     private var distanses = [Double]()
 
@@ -43,6 +44,7 @@ final class MenuVC: UIViewController {
         super.viewDidLoad()
 
         setupUI()
+        setupSearchController()
     }
 
     override func viewDidLayoutSubviews() {
@@ -57,6 +59,7 @@ final class MenuVC: UIViewController {
     @objc
     private func didPullToRefresh() {
         loadData()
+        searchController.searchBar.text = ""
     }
 
     // MARK: - Methods
@@ -92,9 +95,22 @@ final class MenuVC: UIViewController {
             self.getDistances()
             self.adapter.relodeCells(events: self.events, location: self.currentLocation!, distances: self.distanses)
         }
+        if !searchController.isActive { return }
+        view.endEditing(true)
+        navigationController?.view.endEditing(true)
     }
 
     // MARK: - Private Methods
+
+    private func setupSearchController() {
+        searchController.searchBar.placeholder = "Поиск"
+        searchController.searchBar.tintColor = .label
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.definesPresentationContext = true
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+    }
 
     private func setupUI() {
         locationManager.requestAlwaysAuthorization()
@@ -233,3 +249,30 @@ extension MenuVC: CLLocationManagerDelegate {
     }
 }
 
+extension MenuVC: UISearchBarDelegate, UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        return
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchController.searchBar.text,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty
+        else { return }
+        var foundEvents = [Event]()
+        for event in events {
+            if event.title.lowercased().contains(query.lowercased()) {
+                print(query + " is found")
+                foundEvents.append(event)
+            }
+        }
+        self.adapter.relodeCells(events: foundEvents, location: self.currentLocation!, distances: self.distanses)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.adapter.relodeCells(events: self.events, location: self.currentLocation!, distances: self.distanses)
+    }
+
+
+
+}
