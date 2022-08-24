@@ -113,15 +113,15 @@ final class EventVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupImage()
+        setupBackground()
         setupUI()
         setupNavigationBar()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
         setUpLayout()
+        setupBackground()
     }
 
     // MARK: - Actions
@@ -312,20 +312,23 @@ final class EventVC: UIViewController {
         contactsLabel.isUserInteractionEnabled = true
         let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contactsLabelClicked))
         contactsLabel.addGestureRecognizer(guestureRecognizer)
+        scrollView.rootVC = self
 
+        setupMapView()
+    }
+
+    private func setupBackground() {
+        view.backgroundColor = .systemBackground
         view.addSubview(eventImageView)
+        setupImage()
         view.addGradient(
             firstColor: .systemBackground.withAlphaComponent(0),
             secondColor: .systemBackground
         )
-        view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
         scrollView.addSubview(goForEventButton)
         scrollView.addSubview(eventNameLabel)
         scrollView.addSubview(descriptionLabel)
-        scrollView.rootVC = self
-
-        setupMapView()
     }
 
     private func setupImage() {

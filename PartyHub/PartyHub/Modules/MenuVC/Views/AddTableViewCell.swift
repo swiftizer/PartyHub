@@ -14,6 +14,7 @@ final class AddTableViewCell: UITableViewCell {
 
     let containerView: UIView = {
         let view = UIView()
+        view.backgroundColor = .systemIndigo
         view.layer.cornerRadius = 15
         return view
     }()
@@ -23,15 +24,14 @@ final class AddTableViewCell: UITableViewCell {
     private let plusImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "plus"))
         imageView.contentMode = .scaleToFill
-        imageView.tintColor = .label
+        imageView.tintColor = .white
         return imageView
     }()
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .label
+        label.textColor = .white
         label.font = .boldSystemFont(ofSize: 15)
-
         label.text = "Создать мероприятие"
         label.textAlignment = .left
         return label
@@ -51,9 +51,9 @@ final class AddTableViewCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         if highlighted {
-            containerView.backgroundColor = .systemGray5
+            containerView.backgroundColor = .systemIndigo.withAlphaComponent(0.4)
         } else {
-            containerView.backgroundColor = .systemBackground
+            containerView.backgroundColor = .systemIndigo
         }
     }
 
@@ -67,7 +67,6 @@ final class AddTableViewCell: UITableViewCell {
     // MARK: - Private Methods
 
     private func setupContainer() {
-        setupBackgroundColor()
         selectionStyle = .none
         backgroundColor = .clear
 
@@ -75,15 +74,6 @@ final class AddTableViewCell: UITableViewCell {
         containerView.addSubview(plusImageView)
         containerView.addSubview(titleLabel)
         dropShadow()
-    }
-
-    private func setupBackgroundColor() {
-        switch traitCollection.userInterfaceStyle {
-        case .light:
-            containerView.backgroundColor = .systemBackground
-        default:
-            containerView.backgroundColor = .secondarySystemBackground
-        }
     }
 
     private func setupLayout() {

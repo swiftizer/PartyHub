@@ -42,7 +42,7 @@ final class AddNewEventVC: UIViewController {
 
     private lazy var placeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
+        button.backgroundColor = .systemIndigo
         button.layer.cornerRadius = 15
         button.setTitle("Выбрать место", for: .normal)
         button.tintColor = .white
@@ -98,7 +98,7 @@ final class AddNewEventVC: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Создать", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.backgroundColor = .systemIndigo.withAlphaComponent(0.8)
+        button.backgroundColor = .systemIndigo
         button.layer.cornerRadius = 15
         button.tintColor = .white
         button.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)

@@ -39,6 +39,7 @@ final class ProfileCoordinator: Coordinator {
                         AuthManager.shared.deleteAccount { result in
                             switch result {
                             case .success:
+                                NotificationCenter.default.post(name: NSNotification.Name("AuthManager.SignOutDelete.Sirius.PartyHub"), object: nil)
                                 FeedbackGenerator.shared.succesFeedbackGenerator()
                                 module.tabBarController?.selectedIndex = 0
                             case .failure:

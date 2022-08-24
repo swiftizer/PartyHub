@@ -143,6 +143,10 @@ final class MenuVC: UIViewController {
                                                selector: #selector(activityIndicatorStopFailure),
                                                name: NSNotification.Name("MenuTableViewCell.AdminDeleteEventFailure.Sirius.PartyHub"),
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("AuthManager.SignOutDelete.Sirius.PartyHub"),
+                                               object: nil)
 
         loadData()
 
