@@ -16,6 +16,7 @@ final class MenuVC: UIViewController {
 
     private let menuTableView = UITableView()
     private let group: DispatchGroup = DispatchGroup()
+    private let searchController = UISearchController()
     private var events = [Event]()
     private var distanses = [Double]()
 
@@ -43,6 +44,7 @@ final class MenuVC: UIViewController {
         super.viewDidLoad()
 
         setupUI()
+        setupSearchController()
     }
 
     override func viewDidLayoutSubviews() {
@@ -57,6 +59,7 @@ final class MenuVC: UIViewController {
     @objc
     private func didPullToRefresh() {
         loadData()
+        searchController.searchBar.text = ""
     }
 
     // MARK: - Methods
@@ -92,9 +95,22 @@ final class MenuVC: UIViewController {
             self.getDistances()
             self.adapter.relodeCells(events: self.events, location: self.currentLocation!, distances: self.distanses)
         }
+        if !searchController.isActive { return }
+        view.endEditing(true)
+        navigationController?.view.endEditing(true)
     }
 
     // MARK: - Private Methods
+
+    private func setupSearchController() {
+        searchController.searchBar.placeholder = "Поиск"
+        searchController.searchBar.tintColor = .label
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.definesPresentationContext = true
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+    }
 
     private func setupUI() {
         locationManager.requestAlwaysAuthorization()
@@ -145,7 +161,12 @@ final class MenuVC: UIViewController {
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didPullToRefresh),
-                                               name: NSNotification.Name("AuthManager.SignOutDelete.Sirius.PartyHub"),
+                                               name: NSNotification.Name("AuthManager.SignOutDeleteSuccess.Sirius.PartyHub"),
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didPullToRefresh),
+                                               name: NSNotification.Name("AuthManager.SignOutDeleteFailure.Sirius.PartyHub"),
                                                object: nil)
 
         loadData()
@@ -237,3 +258,33 @@ extension MenuVC: CLLocationManagerDelegate {
     }
 }
 
+extension MenuVC: UISearchBarDelegate, UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        return
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let curLoc = self.currentLocation else { return }
+
+        if let query = searchController.searchBar.text,
+           !query.trimmingCharacters(in: .whitespaces).isEmpty {
+            var foundEvents = [Event]()
+            for event in events {
+                if event.title.lowercased().contains(query.lowercased()) || event.description.lowercased().contains(query.lowercased()) {
+                    foundEvents.append(event)
+                }
+            }
+//            menuTableView.beginUpdates()
+            self.adapter.relodeCells(events: foundEvents, location: curLoc, distances: self.distanses)
+//            menuTableView.endUpdates()
+        } else {
+            self.adapter.relodeCells(events: self.events, location: curLoc, distances: self.distanses)
+        }
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.adapter.relodeCells(events: self.events, location: self.currentLocation!, distances: self.distanses)
+    }
+
+}

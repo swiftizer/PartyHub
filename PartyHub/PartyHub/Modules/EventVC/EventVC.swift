@@ -169,7 +169,7 @@ final class EventVC: UIViewController {
         currentTagButton.addTarget(self, action: #selector(clickedCurrentTagButton), for: .touchUpInside)
         currentTagButton.alpha = 1
 
-        routeButton.setImage(UIImage(systemName: "flag.badge.ellipsis"), for: .normal)
+        routeButton.setImage(UIImage(systemName: "arrow.triangle.swap"), for: .normal)
         routeButton.backgroundColor = .systemGray6
         routeButton.tintColor = .label
         routeButton.layer.cornerRadius = 20
@@ -532,7 +532,7 @@ private extension EventVC {
         let destLatitude = Double(event.place.split(separator: "|")[1]) ?? 0
         let destLongitude = Double(event.place.split(separator: "|")[2]) ?? 0
         if UIApplication.shared.canOpenURL(URL(string:"yandexmaps://")!) {
-            let urlString = "yandexmaps://maps.yandex.ru/?rtext=\(curLoc.coordinate.latitude),\(curLoc.coordinate.longitude)~\(destLatitude),\(destLongitude)&rtt=mt"
+            let urlString = "yandexmaps://maps.yandex.ru/?rtext=\(curLoc.coordinate.latitude),\(curLoc.coordinate.longitude)~\(destLatitude),\(destLongitude)"
             UIApplication.shared.open(URL(string: urlString)!)
         }
     }

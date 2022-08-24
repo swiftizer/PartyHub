@@ -52,7 +52,7 @@ extension AppDelegate {
               let profile = UIImage(systemName: "person.circle") else { return }
 
         appCoordinator = TabBarCoordinator(with: [
-            .init(module: menuCordinator, icon: listImage, title: "Меню", tag: 0),
+            .init(module: menuCordinator, icon: listImage, title: "Список", tag: 0),
             .init(module: mapCordinator, icon: mapImage, title: "Карта", tag: 1),
             .init(module: profileCoordinator, icon: profile, title: "Профиль", tag: 2)
         ])

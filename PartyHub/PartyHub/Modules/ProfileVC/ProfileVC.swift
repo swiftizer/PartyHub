@@ -136,7 +136,9 @@ class ProfileVC: UIViewController {
         view.addSubview(scrollView)
         view.addSubview(toggleView)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(didCompleteDeletion), name: NSNotification.Name("AuthManager.SignOutDelete.Sirius.PartyHub"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didCompleteDeletionSuccess), name: NSNotification.Name("AuthManager.SignOutDeleteSuccess.Sirius.PartyHub"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(didCompleteDeletionFailure), name: NSNotification.Name("AuthManager.SignOutDeleteFailure.Sirius.PartyHub"), object: nil)
     }
 
     private func setUpLayout() {
@@ -198,8 +200,13 @@ class ProfileVC: UIViewController {
     }
 
     @objc
-    private func didCompleteDeletion() {
+    private func didCompleteDeletionSuccess() {
         activityIndicator.stopSuccess()
+    }
+
+    @objc
+    private func didCompleteDeletionFailure() {
+        activityIndicator.stopFailure()
     }
 }
 

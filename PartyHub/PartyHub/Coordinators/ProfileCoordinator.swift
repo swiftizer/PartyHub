@@ -40,10 +40,12 @@ final class ProfileCoordinator: Coordinator {
                         AuthManager.shared.deleteAccount { result in
                             switch result {
                             case .success:
-                                NotificationCenter.default.post(name: NSNotification.Name("AuthManager.SignOutDelete.Sirius.PartyHub"), object: nil)
+                                NotificationCenter.default.post(name: NSNotification.Name("AuthManager.SignOutDeleteSuccess.Sirius.PartyHub"), object: nil)
                                 FeedbackGenerator.shared.succesFeedbackGenerator()
                                 module.tabBarController?.selectedIndex = 0
-                            case .failure:
+                            case .failure(let error):
+                                NotificationCenter.default.post(name: NSNotification.Name("AuthManager.SignOutDeleteFailure.Sirius.PartyHub"), object: nil)
+                                debugPrint(error.localizedDescription)
                                 FeedbackGenerator.shared.errorFeedbackGenerator()
                             }
                         }

@@ -18,7 +18,7 @@ final class MenuCoordinator: Coordinator {
     }
 
     func start() {
-        rootModule.title = "Меню"
+        rootModule.title = "Мероприятия поблизости"
         rootModule.adapter.navigation = { [weak self] navType in
             switch navType {
             case .addEvent:
