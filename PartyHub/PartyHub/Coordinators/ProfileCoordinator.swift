@@ -33,7 +33,8 @@ final class ProfileCoordinator: Coordinator {
                     }
                 }
             case .removeAccount:
-                EventManager.shared.deleteCreatedEventsByUser { res in
+                EventManager.shared.deleteCreatedEventsByUser {
+                    res in
                     switch res {
                     case .success:
                         AuthManager.shared.deleteAccount { result in

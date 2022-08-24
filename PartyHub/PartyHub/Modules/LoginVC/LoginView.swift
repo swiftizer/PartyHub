@@ -25,6 +25,7 @@ final class LoginView: UIView {
     private var isFirstTouch: Bool = true
     private let emailTextField = CustomTextField(type: .emailTextField)
     private let passwordTextField = CustomTextField(type: .passwordTextField)
+    private let loginActivityIndicator = LoadindIndicatorView()
 
     // MARK: - Computed Properties
 
@@ -68,6 +69,7 @@ final class LoginView: UIView {
             setupSecondLayout()
             isFirstTouch = false
         } else {
+            loginActivityIndicator.start()
             guard let email = emailTextField.text, let password = passwordTextField.text else {
                 return
             }
@@ -75,9 +77,13 @@ final class LoginView: UIView {
                 guard let self = self else { return }
                 switch result {
                 case .success:
-                    self.delegate?.loginingButtonTapped()
+                    FeedbackGenerator.shared.succesFeedbackGenerator()
+                    self.loginActivityIndicator.stopSuccess(duration: 0.2, delay: 0.2) {
+                        self.delegate?.loginingButtonTapped()
+                    }
                 case .failure(let error):
                     FeedbackGenerator.shared.errorFeedbackGenerator()
+                    self.loginActivityIndicator.stopFailure(duration: 0.2, delay: 0.2)
                     self.loginButton.invalidAnimation()
                     self.emailTextField.repaintBorder()
                     self.passwordTextField.repaintBorder()
@@ -175,6 +181,8 @@ final class LoginView: UIView {
                 .marginTop(12)
                 .width(of: loginButton)
                 .height(50)
+
+            loginActivityIndicator.pinToRootButton(rootButton: loginButton, frame: loginButton.frame)
         }
     }
 

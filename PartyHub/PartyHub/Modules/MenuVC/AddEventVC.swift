@@ -152,6 +152,8 @@ final class AddNewEventVC: UIViewController {
             $0.delegate = self
         }
 
+        contactsTextField.text = AuthManager.shared.currentUser()?.email
+
         beginDateTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 50))
         endDateTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 50))
 
@@ -194,6 +196,8 @@ final class AddNewEventVC: UIViewController {
         eventImageView.image = UIImage(systemName: "camera.on.rectangle")
         eventImageView.tintColor = .label
         eventImageView.contentMode = .scaleToFill
+//        eventImageView.layer.borderWidth = 3
+//        eventImageView.layer.borderColor = UIColor.systemGray6.cgColor
 
         rubleView.layer.masksToBounds = true
         rubleView.image = UIImage(systemName: "rublesign.square")
@@ -281,11 +285,13 @@ final class AddNewEventVC: UIViewController {
         scrollView.pin.all()
         if didPhotoTakenFlag {
             debugPrint("----------1----------")
-            eventImageView.pin
-                .top(24)
-                .height(250 * UIScreen.main.bounds.height/926)
-                .width(250 * UIScreen.main.bounds.height/926)
-                .hCenter()
+//            UIView.animate(withDuration: 0.5, delay: 0.1) {
+                self.eventImageView.pin
+                    .top(24)
+                    .height(250 * UIScreen.main.bounds.height/926)
+                    .width(250 * UIScreen.main.bounds.height/926)
+                    .hCenter()
+//            }
         } else {
             debugPrint("----------2----------")
             eventImageView.pin
@@ -516,7 +522,11 @@ extension AddNewEventVC: ImagePickerDelegate {
         }
         didPhotoTakenFlag = true
 
-        self.eventImageView.image = image
-        viewDidLayoutSubviews()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+            self.eventImageView.image = image
+            UIView.animate(withDuration: 0.5, delay: 0.05) {
+                self.viewDidLayoutSubviews()}
+
+        }
     }
 }

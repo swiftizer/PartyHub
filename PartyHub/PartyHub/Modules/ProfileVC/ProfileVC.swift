@@ -24,6 +24,9 @@ class ProfileVC: UIViewController {
 
     // MARK: - Private properties
 
+    private let activityIndicator = LoadindIndicatorView()
+    private let adminUid = "Wby2Epr5EoOudA6V3xenytjv9yj2"
+
     private let iconImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "person.crop.circle"))
         imageView.layer.masksToBounds = true
@@ -81,7 +84,7 @@ class ProfileVC: UIViewController {
     private func presentActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let removeAction = UIAlertAction(title: "Удалить аккаунт", style: .destructive) { [weak self] _ in
-            self?.navigation?(.removeAccount)
+            self?.presentDeletionAlert()
         }
         let exitAction = UIAlertAction(title: "Выйти", style: .default) { [weak self] _ in
             self?.navigation?(.exit)
@@ -89,10 +92,25 @@ class ProfileVC: UIViewController {
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
 
         actionSheet.addAction(exitAction)
-        actionSheet.addAction(removeAction)
+        if AuthManager.shared.currentUser()?.uid != adminUid {
+            actionSheet.addAction(removeAction)
+        }
         actionSheet.addAction(cancelAction)
 
         present(actionSheet, animated: true, completion: nil)
+    }
+
+    private func presentDeletionAlert() {
+        let alert = UIAlertController(title: "Подтверждение", message: "Вы уверены, что хотите удалить аккаунт?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        let removeAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            self?.activityIndicator.start()
+            self?.navigation?(.removeAccount)
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(removeAction)
+
+        present(alert, animated: true, completion: nil)
     }
 
     private func setupEmail() {
@@ -117,6 +135,8 @@ class ProfileVC: UIViewController {
         view.addSubview(emailLabel)
         view.addSubview(scrollView)
         view.addSubview(toggleView)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(didCompleteDeletion), name: NSNotification.Name("AuthManager.SignOutDelete.Sirius.PartyHub"), object: nil)
     }
 
     private func setUpLayout() {
@@ -146,6 +166,8 @@ class ProfileVC: UIViewController {
             .top(emailLabel.frame.maxY + basicPadding)
             .width(view.frame.width)
             .height(55)
+
+        activityIndicator.pinToRootVC(rootVC: self)
     }
 
     private func setupDelegates() {
@@ -173,6 +195,11 @@ class ProfileVC: UIViewController {
             height: scrollView.height
         )
         createdEventsVC.didMove(toParent: self)
+    }
+
+    @objc
+    private func didCompleteDeletion() {
+        activityIndicator.stopSuccess()
     }
 }
 

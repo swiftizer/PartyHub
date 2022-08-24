@@ -17,7 +17,7 @@ protocol EventManagerDescription {
     func goToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
     func cancelGoToEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
     func uploadEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
-    func deleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
+    func deleteEvent(event: Event, completion: @escaping (Result<Void, NetworkError>) -> Void)
     func deleteCreatedEventsByUser(completion: @escaping (Result<Void, NetworkError>) -> Void)
     func adminDeleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void)
     func initUserStructure(completion: @escaping (Result<String, NetworkError>) -> Void)
@@ -73,23 +73,74 @@ final class EventManager: EventManagerDescription {
         }
     }
 
+//    func deleteCreatedEventsByUser(completion: @escaping (Result<Void, NetworkError>) -> Void) {
+//        guard let userID = AuthManager.shared.currentUser()?.uid else {
+//            completion(.failure(NetworkError.invalidUrl))
+//            return
+//        }
+//
+//        downloadEventIDsForUser { result in
+//            switch result {
+//            case .success(let docs):
+//                let group = DispatchGroup()
+//                for doc in docs.created {
+//                    group.enter()
+//                    self.database.collection("events").document(doc).delete { error in
+//                        if error != nil {
+//                            completion(.failure(NetworkError.badAttempt))
+//                        } else {
+//                            group.leave()
+//                        }
+//                    }
+//                }
+//
+//                group.notify(queue: DispatchQueue.main) {
+//                    completion(.success(()))
+//                }
+//
+//            case .failure:
+//                completion(.failure(NetworkError.badAttempt))
+//            }
+//        }
+//    }
+
     func deleteCreatedEventsByUser(completion: @escaping (Result<Void, NetworkError>) -> Void) {
-        guard let userID = AuthManager.shared.currentUser()?.uid else {
+        guard AuthManager.shared.currentUser()?.uid != nil else {
             completion(.failure(NetworkError.invalidUrl))
             return
         }
 
-        downloadEventIDsForUser { result in
+        downloadEventIDsForUser { [weak self] result in
             switch result {
             case .success(let docs):
+                if docs.created.count == 0 {
+                    completion(.success(()))
+                    return
+                }
+//                var events = [Event]()
+
                 let group = DispatchGroup()
                 for doc in docs.created {
                     group.enter()
-                    self.database.collection("events").document(doc).delete { error in
+                    self?.database.collection("events").document(doc).getDocument { document, error in
+                        guard let data = document?.data() else {
+                            completion(.failure(NetworkError.emptyData))
+                            return
+                        }
                         if error != nil {
-                            completion(.failure(NetworkError.badAttempt))
+                            completion(.failure(NetworkError.emptyData))
+                        } else if let event = self?.event(from: data) {
+//                            events.append(event)
+                            self?.deleteEvent(event: event) { res in
+                                switch res {
+                                case .success:
+                                    group.leave()
+                                case .failure:
+                                    completion(.failure(NetworkError.emptyData))
+                                }
+                            }
                         } else {
-                            group.leave()
+                            fatalError()
                         }
                     }
                 }
@@ -329,7 +380,7 @@ final class EventManager: EventManagerDescription {
         }
     }
 
-    func deleteEvent(event: Event, completion: @escaping (Result<Event, NetworkError>) -> Void) {
+    func deleteEvent(event: Event, completion: @escaping (Result<Void, NetworkError>) -> Void) {
         guard let userID = AuthManager.shared.currentUser()?.uid else {
             completion(.failure(NetworkError.invalidUrl))
             return
@@ -367,7 +418,7 @@ final class EventManager: EventManagerDescription {
         }
 
         group.notify(queue: DispatchQueue.main) {
-            completion(.success(event))
+            completion(.success(()))
         }
     }
 

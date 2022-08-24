@@ -100,26 +100,30 @@ final class LoadindIndicatorView: UIView {
         }
     }
 
-    func stopSuccess(duration: Double = 0.3, delay: Double = 0.5) {
+    func stopSuccess(duration: Double = 0.3, delay: Double = 0.5, completion: (() -> Void)? = nil) {
         self.successView.alpha = 1
+        if self.rootVC != nil {
+            self.rootVC?.view.isUserInteractionEnabled = true
+        }
         UIView.animate(withDuration: duration, delay: delay) {
             self.activityIndicator.stopAnimating()
             self.alpha = 0
             self.successView.alpha = 0
         } completion: { res in
-            if res{
+            if res {
                 DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                     self.isHidden = true
-                    if self.rootVC != nil {
-                        self.rootVC?.view.isUserInteractionEnabled = true
-                    }
+                    completion?()
                 }
             }
         }
     }
 
-    func stopFailure(duration: Double = 0.3, delay: Double = 0.5) {
+    func stopFailure(duration: Double = 0.3, delay: Double = 0.5, completion: (() -> Void)? = nil) {
         self.failureView.alpha = 1
+        if self.rootVC != nil {
+            self.rootVC?.view.isUserInteractionEnabled = true
+        }
         UIView.animate(withDuration: duration, delay: delay) {
             self.activityIndicator.stopAnimating()
             self.alpha = 0
@@ -128,9 +132,7 @@ final class LoadindIndicatorView: UIView {
             if res{
                 DispatchQueue.main.asyncAfter(deadline: .now() + self.dismissDelay) {
                     self.isHidden = true
-                    if self.rootVC != nil {
-                        self.rootVC?.view.isUserInteractionEnabled = true
-                    }
+                    completion?()
                 }
             }
         }

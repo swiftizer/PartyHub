@@ -17,6 +17,7 @@ final class MyScrollView: UIScrollView {
                 rootVC?.scrollView.isScrollEnabled = true
             } else {
                 rootVC?.checkSum = 1
+                rootVC?.tagButtonAppear()
             }
             return res
         }

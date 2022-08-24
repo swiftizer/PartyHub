@@ -50,6 +50,7 @@ final class EventVC: UIViewController {
     private let mapView = MyMapView()
     private let currentLocationButton = CurLocationButton()
     private let currentTagButton = UIButton()
+    private let routeButton = UIButton()
 
     private let eventNameLabel: UILabel = {
         let label = UILabel()
@@ -125,73 +126,18 @@ final class EventVC: UIViewController {
         setupBackground()
     }
 
-    // MARK: - Actions
+    // MARK: - Internal Functions
 
-    @objc
-    private func didTapGoButton() {
-        checkTitleButton()
-        navigation?(.go)
-    }
-
-    @objc
-    private func backAction() {
-        NotificationCenter.default.post(name: NSNotification.Name( "EventVC.BackAction.Sirius.PartyHub"), object: nil)
-        FeedbackGenerator.shared.customFeedbackGeneration(.medium)
-        navigation?(.back)
-    }
-
-    @objc
-    private func contactsLabelClicked() {
-        guard let url = URL(string: event.contacts.trimmingCharacters(in: .whitespacesAndNewlines)) else { return }
-        let application = UIApplication.shared
-        application.open(url)
-    }
-
-    @objc
-    func clickedCurrentLocationButton() {
-        guard let location = currentLocation else {
-            return
+    func tagButtonAppear() {
+        UIView.animate(withDuration: 0.4, delay: 0) {
+            self.currentTagButton.alpha = 1
         }
-
-        mapView.mapWindow.map.move(
-            with: YMKCameraPosition(
-                target: YMKPoint(
-                    latitude: location.coordinate.latitude,
-                    longitude: location.coordinate.longitude
-                ),
-                zoom: 15,
-                azimuth: 0,
-                tilt: 0
-            ),
-            animationType: YMKAnimation(
-                type: YMKAnimationType.smooth,
-                duration: 0.3
-            ),
-            cameraCallback: nil
-        )
     }
 
-    @objc
-    func clickedCurrentTagButton() {
-        let latitude = Double(event.place.split(separator: "|")[1]) ?? 0
-        let longitude = Double(event.place.split(separator: "|")[2]) ?? 0
-
-        mapView.mapWindow.map.move(
-            with: YMKCameraPosition(
-                target: YMKPoint(
-                    latitude: latitude,
-                    longitude: longitude
-                ),
-                zoom: 15,
-                azimuth: 0,
-                tilt: 0
-            ),
-            animationType: YMKAnimation(
-                type: YMKAnimationType.smooth,
-                duration: 0.4
-            ),
-            cameraCallback: nil
-        )
+    func tagButtonDissappear() {
+        UIView.animate(withDuration: 0.4, delay: 0) {
+            self.currentTagButton.alpha = 0
+        }
     }
 
     // MARK: - Methods
@@ -221,6 +167,13 @@ final class EventVC: UIViewController {
         currentTagButton.tintColor = .label
         currentTagButton.layer.cornerRadius = 20
         currentTagButton.addTarget(self, action: #selector(clickedCurrentTagButton), for: .touchUpInside)
+        currentTagButton.alpha = 1
+
+        routeButton.setImage(UIImage(systemName: "flag.badge.ellipsis"), for: .normal)
+        routeButton.backgroundColor = .systemGray6
+        routeButton.tintColor = .label
+        routeButton.layer.cornerRadius = 20
+        routeButton.addTarget(self, action: #selector(clickedRouteButton), for: .touchUpInside)
     }
 
     // MARK: - Private methods
@@ -364,6 +317,7 @@ final class EventVC: UIViewController {
         scrollView.addSubview(mapView)
         mapView.addSubview(currentLocationButton)
         mapView.addSubview(currentTagButton)
+        mapView.addSubview(routeButton)
         getUserLocation()
 
         mapView.layer.masksToBounds = true
@@ -444,6 +398,10 @@ final class EventVC: UIViewController {
             labelTop += 8
         }
 
+        addressLabel.isUserInteractionEnabled = true
+        let tapOnAdressGR = UITapGestureRecognizer(target: self, action: #selector(clickedRouteButton))
+        addressLabel.addGestureRecognizer(tapOnAdressGR)
+
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: participantsLabel.bottomAnchor, constant: 12),
@@ -472,6 +430,12 @@ final class EventVC: UIViewController {
             .marginLeft(15)
             .marginBottom(15)
 
+        routeButton.pin
+            .vCenter()
+            .height(40)
+            .width(40)
+            .right(15)
+
         goForEventButton.pin
             .top(mapView.frame.maxY + 24)
             .hCenter()
@@ -486,6 +450,91 @@ final class EventVC: UIViewController {
         )
 
         scrollView.contentSize = scrollViewContentSize
+    }
+}
+
+// MARK: - Actions
+
+private extension EventVC {
+    @objc
+    func didTapGoButton() {
+        checkTitleButton()
+        navigation?(.go)
+    }
+
+    @objc
+    func backAction() {
+        NotificationCenter.default.post(name: NSNotification.Name( "EventVC.BackAction.Sirius.PartyHub"), object: nil)
+        FeedbackGenerator.shared.customFeedbackGeneration(.medium)
+        navigation?(.back)
+    }
+
+    @objc
+    func contactsLabelClicked() {
+        guard let url = URL(string: event.contacts.trimmingCharacters(in: .whitespacesAndNewlines)) else { return }
+        let application = UIApplication.shared
+        application.open(url)
+    }
+
+    @objc
+    func clickedCurrentLocationButton() {
+        guard let location = currentLocation else {
+            return
+        }
+
+        mapView.mapWindow.map.move(
+            with: YMKCameraPosition(
+                target: YMKPoint(
+                    latitude: location.coordinate.latitude,
+                    longitude: location.coordinate.longitude
+                ),
+                zoom: 15,
+                azimuth: 0,
+                tilt: 0
+            ),
+            animationType: YMKAnimation(
+                type: YMKAnimationType.smooth,
+                duration: 0.3
+            ),
+            cameraCallback: nil
+        )
+    }
+
+    @objc
+    func clickedCurrentTagButton() {
+        let latitude = Double(event.place.split(separator: "|")[1]) ?? 0
+        let longitude = Double(event.place.split(separator: "|")[2]) ?? 0
+
+        mapView.mapWindow.map.move(
+            with: YMKCameraPosition(
+                target: YMKPoint(
+                    latitude: latitude,
+                    longitude: longitude
+                ),
+                zoom: 16,
+                azimuth: 0,
+                tilt: 0
+            ),
+            animationType: YMKAnimation(
+                type: YMKAnimationType.smooth,
+                duration: 0.4
+            ),
+            cameraCallback: nil
+        )
+
+        tagButtonDissappear()
+    }
+
+    @objc
+    func clickedRouteButton() {
+        guard let curLoc = currentLocation else { return }
+
+        let destLatitude = Double(event.place.split(separator: "|")[1]) ?? 0
+        let destLongitude = Double(event.place.split(separator: "|")[2]) ?? 0
+        if UIApplication.shared.canOpenURL(URL(string:"yandexmaps://")!) {
+            let urlString = "yandexmaps://maps.yandex.ru/?rtext=\(curLoc.coordinate.latitude),\(curLoc.coordinate.longitude)~\(destLatitude),\(destLongitude)&rtt=mt"
+            UIApplication.shared.open(URL(string: urlString)!)
+        }
     }
 }
 

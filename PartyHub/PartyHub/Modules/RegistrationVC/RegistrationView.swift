@@ -24,6 +24,7 @@ final class RegistrationView: UIView {
     private let emailTextField = CustomTextField(type: .emailTextField)
     private let passwordTextField = CustomTextField(type: .passwordTextField)
     private let confirmPasswordTextField = CustomTextField(type: .confirmPasswordTextField)
+    private let regActivityIndicator = LoadindIndicatorView()
 
     // MARK: - Computed Properties
 
@@ -86,12 +87,19 @@ final class RegistrationView: UIView {
             return
         }
 
+        regActivityIndicator.start()
         AuthManager.shared.registration(email: email, password: password) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success:
-                self.delegate?.registerationButtonTapped()
+                FeedbackGenerator.shared.succesFeedbackGenerator()
+                self.regActivityIndicator.stopSuccess(duration: 0.2, delay: 0.2) {
+                    self.delegate?.registerationButtonTapped()
+                }
             case .failure(let error):
+                FeedbackGenerator.shared.errorFeedbackGenerator()
+                self.regActivityIndicator.stopFailure(duration: 0.2, delay: 0.2)
+                self.registerButton.invalidAnimation()
                 self.delegate?.failureRegistration(with: error)
             }
         }
@@ -177,6 +185,8 @@ final class RegistrationView: UIView {
             .marginTop(28)
             .width(of: confirmPasswordTextField)
             .height(50)
+
+        regActivityIndicator.pinToRootButton(rootButton: registerButton, frame: registerButton.frame)
     }
 
 }
