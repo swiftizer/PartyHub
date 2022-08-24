@@ -255,24 +255,23 @@ extension MenuVC: UISearchBarDelegate, UISearchResultsUpdating {
         return
     }
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let query = searchController.searchBar.text,
-              !query.trimmingCharacters(in: .whitespaces).isEmpty
-        else { return }
-        var foundEvents = [Event]()
-        for event in events {
-            if event.title.lowercased().contains(query.lowercased()) {
-                print(query + " is found")
-                foundEvents.append(event)
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if let query = searchController.searchBar.text,
+           !query.trimmingCharacters(in: .whitespaces).isEmpty {
+            var foundEvents = [Event]()
+            for event in events {
+                if event.title.lowercased().contains(query.lowercased()) {
+                    foundEvents.append(event)
+                }
             }
+            self.adapter.relodeCells(events: foundEvents, location: self.currentLocation!, distances: self.distanses)
+        } else {
+            self.adapter.relodeCells(events: self.events, location: self.currentLocation!, distances: self.distanses)
         }
-        self.adapter.relodeCells(events: foundEvents, location: self.currentLocation!, distances: self.distanses)
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.adapter.relodeCells(events: self.events, location: self.currentLocation!, distances: self.distanses)
     }
-
-
 
 }
