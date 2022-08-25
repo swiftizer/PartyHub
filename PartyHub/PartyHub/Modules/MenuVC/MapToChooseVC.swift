@@ -370,8 +370,8 @@ extension MapToChooseVC: YMKUserLocationObjectListener {
     func onObjectAdded(with view: YMKUserLocationView) {
         let pinPlacemark = view.pin.useCompositeIcon()
         pinPlacemark.setIconWithName(
-            "searchResult",
-            image: UIImage(named: "searchResult") ?? UIImage(),
+            "SearchResult",
+            image: UIImage(named: "SearchResult") ?? UIImage(),
             style: YMKIconStyle(
                 anchor: CGPoint(x: 0.5, y: 0.5) as NSValue,
                 rotationType: YMKRotationType.rotate.rawValue as NSNumber,
