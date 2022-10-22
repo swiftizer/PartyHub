@@ -22,7 +22,7 @@ final class EventVC: UIViewController {
 
     let scrollView: MyScrollView = {
         let scrollView = MyScrollView()
-        scrollView.showsVerticalScrollIndicator = false
+//        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
 
@@ -36,6 +36,8 @@ final class EventVC: UIViewController {
 
     private var event: Event
     private let eventImageView = UIImageView()
+    private let eventImageViewDupl = UIImageView()
+    private var gradient = CAGradientLayer()
     private let dateLabel = UILabel()
     private let addressLabel = UILabel()
     private let priceLabel = UILabel()
@@ -117,13 +119,13 @@ final class EventVC: UIViewController {
 
         setupBackground()
         setupUI()
-        setupNavigationBar()
+//        setupNavigationBar()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setUpLayout()
         setupBackground()
+        setUpLayout()
     }
 
     // MARK: - Internal Functions
@@ -279,9 +281,10 @@ final class EventVC: UIViewController {
 
     private func setupBackground() {
         view.backgroundColor = .systemBackground
+        view.addSubview(eventImageViewDupl)
         view.addSubview(eventImageView)
         setupImage()
-        view.addGradient(
+        gradient = view.addGradient(
             firstColor: .systemBackground.withAlphaComponent(0),
             secondColor: .systemBackground
         )
@@ -296,6 +299,8 @@ final class EventVC: UIViewController {
             switch result {
             case .success(let imageRes):
                 self?.eventImageView.image = imageRes.image
+                let flippedImg = UIImage(cgImage: imageRes.image.cgImage!, scale: 1.0, orientation: .downMirrored)
+                self?.eventImageViewDupl.image = flippedImg
             case .failure(let error):
                 debugPrint(error.rawValue)
             }
@@ -369,10 +374,18 @@ final class EventVC: UIViewController {
 
     private func setUpLayout() {
         eventImageView.pin
-            .top()
+            .top(view.safeAreaInsets.top)
             .left()
             .right()
             .height(view.frame.height/2)
+
+        eventImageViewDupl.pin
+            .above(of: eventImageView)
+            .left()
+            .right()
+            .height(view.frame.height/2)
+
+        gradient.frame = eventImageView.frame
 
         scrollView.pin
             .top(view.safeAreaInsets.top)

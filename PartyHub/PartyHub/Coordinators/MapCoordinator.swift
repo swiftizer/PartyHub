@@ -10,6 +10,7 @@ import UIKit
 final class MapCoordinator: Coordinator {
     var result: ((FlowResult<Void>) -> Void)?
     let router = DefaultRouter(with: nil)
+    let rootModule = MapVC()
 
     init() {
         (router.toPresent() as? UINavigationController)?.setNavigationBarHidden(false, animated: false)
@@ -17,15 +18,14 @@ final class MapCoordinator: Coordinator {
     }
 
     func start() {
-        let module = MapVC()
-        module.title = "Карта"
-        module.navigation = { [weak self] result in
+        rootModule.title = "Карта"
+        rootModule.navigation = { [weak self] result in
             switch result {
             case .description(event: let event):
                 self?.presentEventDescription(event)
             }
         }
-        router.setRootModule(module)
+        router.setRootModule(rootModule)
     }
 
     func presentEventDescription(_ event: Event) {
@@ -41,12 +41,8 @@ final class MapCoordinator: Coordinator {
                 }
             }
         }
-        let nav = UINavigationController(rootViewController: module)
-        nav.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        nav.navigationBar.shadowImage = UIImage()
-        nav.navigationBar.tintColor = .label
-        nav.modalPresentationStyle = .overFullScreen
-        router.present(nav, animated: true, completion: nil)
+
+        router.push(module, animated: true)
     }
 
     func presentLogin() {

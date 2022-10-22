@@ -8,6 +8,7 @@
 import UIKit
 import NVActivityIndicatorView
 
+
 final class AddNewEventVC: UIViewController {
     enum Navigation {
         case back
@@ -29,6 +30,7 @@ final class AddNewEventVC: UIViewController {
     private var currentEditingDateTextField = UITextField()
     private var imagePicker: ImagePicker?
     private let datePicker = UIDatePicker()
+    private let imagePickerButton = UIButton()
     private let activityIndicator = LoadindIndicatorView()
 
     private let eventTitleTextField: UITextField = {
@@ -189,15 +191,18 @@ final class AddNewEventVC: UIViewController {
         createDatePicker(for: endDateTextField)
 
         eventImageView.layer.cornerRadius = 15
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapEventImageView))
         eventImageView.layer.masksToBounds = true
-        eventImageView.addGestureRecognizer(tapGestureRecognizer)
-        eventImageView.isUserInteractionEnabled = true
         eventImageView.image = UIImage(systemName: "camera.on.rectangle")
         eventImageView.tintColor = .label
         eventImageView.contentMode = .scaleToFill
-//        eventImageView.layer.borderWidth = 3
-//        eventImageView.layer.borderColor = UIColor.systemGray6.cgColor
+
+        if #available(iOS 14.0, *) {
+            imagePickerButton.menu = imagePicker?.createImagePickerMenu()
+            imagePickerButton.showsMenuAsPrimaryAction = true
+        } else {
+            imagePickerButton.addTarget(self, action: #selector(didTapEventImageView), for: .touchUpInside)
+        }
+
 
         rubleView.layer.masksToBounds = true
         rubleView.image = UIImage(systemName: "rublesign.square")
@@ -232,6 +237,8 @@ final class AddNewEventVC: UIViewController {
         scrollView.addSubview(endDateTextField)
         scrollView.addSubview(addButton)
         scrollView.addSubview(separatorLabel)
+        scrollView.addSubview(imagePickerButton)
+//        eventImageView.addSubview(imagePickerButton)
         view.addSubview(activityIndicator)
         activityIndicator.pinToRootVC(rootVC: self)
         costTextField.addSubview(rubleView)
@@ -281,25 +288,54 @@ final class AddNewEventVC: UIViewController {
         UIApplication.shared.open(url)
     }
 
+    private func createImagePickerMenu() -> UIMenu {
+        let photoAction = UIAction(
+            title: "Camera",
+            image: UIImage(systemName: "camera")
+          ) { (_) in
+            print("New Photo from Camera")
+          }
+
+          let albumAction = UIAction(
+            title: "Photo Album",
+            image: UIImage(systemName: "square.stack")
+          ) { (_) in
+            print("Photo from photo album")
+          }
+
+          let fromWebAction = UIAction(
+            title: "From the Web",
+            image: UIImage(systemName: "globe")
+          ) { (_) in
+            print("Photo from the internet")
+          }
+
+          let menuActions = [photoAction, albumAction, fromWebAction]
+
+          let addNewMenu = UIMenu(
+            title: "",
+            children: menuActions)
+
+          return addNewMenu
+    }
+
     private func setupLayout() {
         scrollView.pin.all()
         if didPhotoTakenFlag {
-            debugPrint("----------1----------")
-//            UIView.animate(withDuration: 0.5, delay: 0.1) {
-                self.eventImageView.pin
-                    .top(24)
-                    .height(250 * UIScreen.main.bounds.height/926)
-                    .width(250 * UIScreen.main.bounds.height/926)
-                    .hCenter()
-//            }
+            eventImageView.pin
+                .top(24)
+                .height(250 * UIScreen.main.bounds.height/926)
+                .width(250 * UIScreen.main.bounds.height/926)
+                .hCenter()
         } else {
-            debugPrint("----------2----------")
             eventImageView.pin
                 .top(24)
                 .height(100)
                 .width(130)
                 .hCenter()
         }
+
+        imagePickerButton.frame = eventImageView.frame
 
         eventTitleTextField.pin
             .below(of: eventImageView)
@@ -385,7 +421,7 @@ private extension AddNewEventVC {
     @objc
     func didTapEventImageView(_ sender: UIButton) {
         dismissKeyboard(UITapGestureRecognizer())
-        self.imagePicker?.present(from: sender)
+        imagePicker?.presentByAlert(from: sender)
     }
 
     // MARK: - разбить на функции

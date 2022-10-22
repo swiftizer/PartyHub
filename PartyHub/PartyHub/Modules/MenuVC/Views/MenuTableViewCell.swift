@@ -20,7 +20,6 @@ final class MenuTableViewCell: UITableViewCell {
 
     // MARK: - Private properties
 
-    private let adminUid = "Wby2Epr5EoOudA6V3xenytjv9yj2"
     private let cellContainerView = UIView()
     private let eventImageView = UIImageView()
     private let titleLabel = UILabel()
@@ -175,7 +174,7 @@ extension MenuTableViewCell {
             return
         }
 
-        if UID == adminUid || (!(adapter?.needAddSection ?? true)) && (adapter?.isCreatedTV ?? false) {
+        if UID == AuthManager.shared.adminUid || (!(adapter?.needAddSection ?? true)) && (adapter?.isCreatedTV ?? false) {
             deleteButton.isHidden = false
         } else {
             deleteButton.isHidden = true

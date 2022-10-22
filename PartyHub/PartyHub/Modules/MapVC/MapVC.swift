@@ -157,6 +157,17 @@ final class MapVC: UIViewController {
     }
 
     private func setupLayout() {
+        let NCColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.backgroundColor = NCColor
+        barAppearance.shadowImage = UIImage()
+
+        navigationController?.navigationBar.standardAppearance = barAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = barAppearance
+        navigationController?.navigationBar.tintColor = .label
+        navigationController?.modalPresentationStyle = .overFullScreen
+
         mapView.pin
             .bottom(view.pin.safeArea)
             .left()

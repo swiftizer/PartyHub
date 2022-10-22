@@ -14,10 +14,12 @@ protocol AuthManagerDescription {
     func signIn(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
     func signOut(completion: @escaping (Result<Void, Error>) -> Void)
     func registration(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
+    var adminUid: String { get }
 }
 
 final class AuthManager: AuthManagerDescription {
     static let shared: AuthManagerDescription = AuthManager()
+    let adminUid = "cESqBYViFph8WnMKVk03PpFi1Ni1"
 
     private init() {}
 

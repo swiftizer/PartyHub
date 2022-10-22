@@ -23,8 +23,10 @@ final class MenuCoordinator: Coordinator {
             switch navType {
             case .addEvent:
                 if AuthManager.shared.currentUser() != nil {
+                    FeedbackGenerator.shared.customFeedbackGeneration(.medium)
                     self?.presentAddEvent()
                 } else {
+                    FeedbackGenerator.shared.errorFeedbackGenerator()
                     self?.presentLogin()
                 }
             case .description(event: let event):
@@ -36,11 +38,6 @@ final class MenuCoordinator: Coordinator {
 
     func presentDescription(event: Event) {
         let module = EventVC(event: event)
-        let nav = UINavigationController(rootViewController: module)
-        nav.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        nav.navigationBar.shadowImage = UIImage()
-        nav.navigationBar.tintColor = .label
-        nav.modalPresentationStyle = .overFullScreen
         module.navigation = { [weak self] result in
             switch result {
             case .back:
@@ -52,7 +49,8 @@ final class MenuCoordinator: Coordinator {
                 }
             }
         }
-        router.present(nav, animated: true, completion: nil)
+
+        router.push(module, animated: true)
     }
 
     func presentAddEvent() {

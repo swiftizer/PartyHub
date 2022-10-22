@@ -30,52 +30,55 @@ open class ImagePicker: NSObject {
         self.pickerController.mediaTypes = ["public.image"]
     }
 
-    private func action(for type: UIImagePickerController.SourceType, title: String) -> UIAlertAction? {
+    private func performAction(type: UIImagePickerController.SourceType) {
+        if type == .camera {
+            if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+                // already authorized
+                print("already authorized")
+                self.pickerController.sourceType = type
+                self.presentationController?.present(self.pickerController, animated: true)
+            } else {
+                AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
+                    if granted {
+                        // access allowed
+                        print("access allowed")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.pickerController.sourceType = type
+                            self.presentationController?.present(self.pickerController, animated: true)
+                        }
+                    } else {
+                        // access denied
+                        print("access denied")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.presentationController?.createDeniedAlertController()
+                        }
+                    }
+                })
+            }
+        } else {
+            self.pickerController.sourceType = type
+            self.presentationController?.present(self.pickerController, animated: true)
+        }
+    }
+
+    private func getAlertAction(for type: UIImagePickerController.SourceType, title: String) -> UIAlertAction? {
         guard UIImagePickerController.isSourceTypeAvailable(type) else {
             return nil
         }
 
         return UIAlertAction(title: title, style: .default) { [unowned self] _ in
-            if type == .camera {
-                if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
-                    // already authorized
-                    print("already authorized")
-                    self.pickerController.sourceType = type
-                    self.presentationController?.present(self.pickerController, animated: true)
-                } else {
-                    AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
-                        if granted {
-                            // access allowed
-                            print("access allowed")
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                self.pickerController.sourceType = type
-                                self.presentationController?.present(self.pickerController, animated: true)
-                            }
-                        } else {
-                            // access denied
-                            print("access denied")
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                self.presentationController?.createDeniedAlertController()
-                            }
-                        }
-                    })
-                }
-            } else {
-                self.pickerController.sourceType = type
-                self.presentationController?.present(self.pickerController, animated: true)
-            }
+            performAction(type: type)
         }
     }
 
-    public func present(from sourceView: UIView) {
-
+    public func presentByAlert(from sourceView: UIView) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        if let action = self.action(for: .camera, title: "Камера") {
+        if let action = self.getAlertAction(for: .camera, title: "Камера") {
             alertController.addAction(action)
         }
 
-        if let action = self.action(for: .photoLibrary, title: "Галерея") {
+        if let action = self.getAlertAction(for: .photoLibrary, title: "Галерея") {
             alertController.addAction(action)
         }
 
@@ -88,6 +91,30 @@ open class ImagePicker: NSObject {
         }
 
         self.presentationController?.present(alertController, animated: true)
+    }
+
+    public func createImagePickerMenu() -> UIMenu {
+        let photoAction = UIAction(
+            title: "Камера",
+            image: UIImage(systemName: "camera")
+          ) { [unowned self] (_) in
+              self.performAction(type: .camera)
+          }
+
+        let albumAction = UIAction(
+            title: "Галерея",
+            image: UIImage(systemName: "square.stack")
+        ) { [unowned self] (_) in
+            self.performAction(type: .photoLibrary)
+        }
+
+        let menuActions = [photoAction, albumAction]
+
+        let addNewMenu = UIMenu(
+            title: "",
+            children: menuActions)
+
+          return addNewMenu
     }
 
     private func pickerController(_ controller: UIImagePickerController, didSelect image: UIImage?) {
@@ -111,3 +138,4 @@ extension ImagePicker: UIImagePickerControllerDelegate, UINavigationControllerDe
         self.pickerController(picker, didSelect: image)
     }
 }
+//

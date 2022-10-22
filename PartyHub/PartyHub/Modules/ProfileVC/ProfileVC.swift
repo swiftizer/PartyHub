@@ -21,11 +21,16 @@ class ProfileVC: UIViewController {
     var navigation: ((Navigation) -> Void)?
     let favoriteEventsVC = FavoriteEventsVC()
     let createdEventsVC = CreatedEventsVC()
+    private let moreNavigationItem = UIBarButtonItem(
+        image: UIImage(systemName: "ellipsis"),
+        style: .plain,
+        target: self,
+        action: nil
+    )
 
     // MARK: - Private properties
 
     private let activityIndicator = LoadindIndicatorView()
-    private let adminUid = "Wby2Epr5EoOudA6V3xenytjv9yj2"
 
     private let iconImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "person.crop.circle"))
@@ -65,6 +70,11 @@ class ProfileVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupEmail()
+        if #available(iOS 14.0, *) {
+            moreNavigationItem.menu = createAccountMenu()
+        } else {
+            // Fallback on earlier versions
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -92,12 +102,40 @@ class ProfileVC: UIViewController {
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
 
         actionSheet.addAction(exitAction)
-        if AuthManager.shared.currentUser()?.uid != adminUid {
+        if AuthManager.shared.currentUser()?.uid != AuthManager.shared.adminUid {
             actionSheet.addAction(removeAction)
         }
         actionSheet.addAction(cancelAction)
 
         present(actionSheet, animated: true, completion: nil)
+    }
+
+    private func createAccountMenu() -> UIMenu {
+        let removeAction = UIAction(
+            title: "Удалить аккаунт",
+            image: UIImage(systemName: "trash"),
+            attributes: .destructive
+          ) { [unowned self] (_) in
+              self.presentDeletionAlert()
+          }
+
+        let exitAction = UIAction(
+            title: "Выйти",
+            image: UIImage(systemName: "rectangle.portrait.and.arrow.right")
+        ) { [unowned self] (_) in
+            self.navigation?(.exit)
+        }
+
+        var menuActions = [exitAction]
+        if AuthManager.shared.currentUser()?.uid != AuthManager.shared.adminUid {
+            menuActions.append(removeAction)
+        }
+
+        let addNewMenu = UIMenu(
+            title: "",
+            children: menuActions)
+
+          return addNewMenu
     }
 
     private func presentDeletionAlert() {
@@ -119,12 +157,11 @@ class ProfileVC: UIViewController {
     }
 
     private func setupUI() {
-        let moreNavigationItem = UIBarButtonItem(
-            image: UIImage(systemName: "ellipsis"),
-            style: .plain,
-            target: self,
-            action: #selector(moreButtonTapped)
-        )
+        if #available(iOS 14.0, *) {
+            moreNavigationItem.menu = createAccountMenu()
+        } else {
+            // Fallback on earlier versions
+        }
 
         moreNavigationItem.tintColor = .label
         navigationItem.rightBarButtonItem = moreNavigationItem

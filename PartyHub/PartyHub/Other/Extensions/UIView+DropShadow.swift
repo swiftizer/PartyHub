@@ -25,14 +25,16 @@ extension UIView {
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
 
-    func addGradient(firstColor: UIColor, secondColor: UIColor) {
-            let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height/2)
-            gradientLayer.colors = [
-                firstColor.cgColor,
-                firstColor.cgColor,
-                secondColor.cgColor
-            ]
-            self.layer.addSublayer(gradientLayer)
-        }
+    func addGradient(firstColor: UIColor, secondColor: UIColor) -> CAGradientLayer {
+        let gradientLayer = CAGradientLayer()
+
+        gradientLayer.frame = CGRect(x: 0, y: self.pin.safeArea.top, width: self.bounds.width, height: self.bounds.width)
+        gradientLayer.colors = [
+            firstColor.cgColor,
+            firstColor.cgColor,
+            secondColor.cgColor
+        ]
+        self.layer.addSublayer(gradientLayer)
+        return gradientLayer
+    }
 }
