@@ -3,7 +3,7 @@
   
 ## PartyHub
 Приложение для поиска тусовок поблизости.
-(Ссылка)[https://apps.apple.com/app/id1641171451] на релиз приложения
+[Ссылка](https://apps.apple.com/app/id1641171451) на релиз приложения
   
 ## Команда  
 :boy: **ТимЛид:** [savagebuff](https://github.com/savagebuff)  
